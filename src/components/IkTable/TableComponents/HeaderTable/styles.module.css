@@ -1,0 +1,20 @@
+.headerTable {
+	position: sticky;
+	top: 0px;
+	z-index: 9;
+}
+
+.tableCellHeader {
+	cursor: pointer !important;
+	padding: 0.375rem 0.375rem !important;
+	/* 	background-color: hsl(0, 0%, 80%) !important; */
+	vertical-align: inherit !important;
+}
+
+.headerMenu {
+	padding: 0.25rem !important;
+}
+
+.headerMenuItem {
+	margin: 0 !important;
+}

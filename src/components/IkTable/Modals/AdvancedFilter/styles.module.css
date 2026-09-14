@@ -1,0 +1,102 @@
+.modal {
+	width: 45% !important;
+}
+
+@media only screen and (max-width: 1200px) {
+	.modal {
+		width: 50% !important;
+	}
+}
+
+@media only screen and (max-width: 850px) {
+	.modal {
+		width: 65% !important;
+	}
+}
+
+@media only screen and (max-width: 670px) {
+	.modal {
+		width: 90% !important;
+	}
+}
+
+.modalHeader {
+	padding-top: 10px !important;
+	padding-bottom: 10px !important;
+	color: var(--fontsHeader) !important;
+	background-color: var(--header) !important;
+}
+
+.modalFooter {
+	display: flex !important;
+	justify-content: space-between;
+	padding-top: 10px !important;
+	padding-bottom: 10px !important;
+	/* color: var(--fontHeader) !important;
+	background-color: var(--header) !important; */
+}
+
+.inputChannel {
+	margin-bottom: 0.5rem !important;
+}
+
+.booleanField {
+	display: flex !important;
+	flex-direction: column !important;
+	margin-bottom: 0.5rem !important;
+}
+
+.booleanLabel {
+	font-weight: 700 !important;
+	color: #000000 !important;
+	margin-bottom: 0.3rem !important;
+	font-size: 0.92857143em;
+}
+
+.positiveButton {
+	margin: 0 1.5rem 0 0 !important;
+	padding: 0.3rem 0.4rem !important;
+	min-width: 10rem !important;
+	color: var(--fontsButtons) !important;
+	border: 1px solid var(--fontsButtons) !important;
+	border-radius: 1.5rem !important;
+	background-color: transparent !important;
+}
+
+.positiveButton:hover {
+	color: var(--fontsButtons) !important;
+	background-color: var(--buttons) !important;
+}
+
+.negativeButton {
+	margin: 0 1.5rem 0 0 !important;
+	padding: 0.3rem 0.4rem !important;
+	min-width: 10rem !important;
+	color: #e90d0d !important;
+	border: 1px solid #e90d0d !important;
+	border-radius: 1.5rem !important;
+	background-color: #ffffff !important;
+}
+
+.negativeButton:hover {
+	background-color: #e90d0d !important;
+	color: #ffffff !important;
+}
+
+.clearButton {
+	padding: 0.5rem 2rem !important;
+	color: #ffffff !important;
+	background-color: var(--gray500) !important;
+}
+
+.gridColumnLeft {
+	margin: 0 !important;
+	padding: 0 !important;
+	padding-right: 0.5rem !important;
+}
+
+.gridColumnRight {
+	margin: 0 !important;
+	padding: 0 !important;
+	padding-left: 0.5rem !important;
+}

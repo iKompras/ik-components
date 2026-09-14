@@ -1,0 +1,283 @@
+.cardsContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 0.2rem;
+}
+
+.card {
+	background-color: #ffffff;
+	border: 1px solid #e0e0e0;
+	border-radius: 8px;
+	padding: 1rem;
+	cursor: pointer;
+	transition: background-color 0.2s ease, box-shadow 0.2s ease;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+	background-color: var(--blue100) !important;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.cardHeader {
+	background-color: #dddddd;
+	color: #000000;
+	font-weight: bold;
+	padding: 0.75rem 1rem;
+	border-radius: 8px 8px 0 0;
+	margin-top: 0.5rem;
+}
+
+.cardField {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 0.75rem;
+	padding-bottom: 0.75rem;
+	border-bottom: 1px solid #f0f0f0;
+}
+
+.cardField:last-child {
+	border-bottom: none;
+	margin-bottom: 0;
+	padding-bottom: 0;
+}
+
+.cardLabel {
+	font-weight: 600;
+	font-size: 0.85rem;
+	color: #666;
+	margin-bottom: 0.25rem;
+}
+
+.cardValue {
+	font-size: 0.95rem;
+	color: #000;
+	word-wrap: break-word;
+}
+
+.cardActions {
+	display: flex;
+	gap: 0.5rem;
+	margin-top: 0.75rem;
+	padding-top: 0.75rem;
+	border-top: 1px solid #f0f0f0;
+	justify-content: flex-end;
+}
+
+.cardActionsMenu {
+	position: absolute;
+	top: 0.5rem;
+	right: 0.5rem;
+	z-index: 100;
+	cursor: pointer;
+}
+
+.cardActionsMenu .ui.dropdown {
+	z-index: 101;
+}
+
+.cardMenuIcon {
+	color: #666;
+	transition: color 0.2s ease;
+	cursor: pointer;
+}
+
+.cardMenuIcon:hover {
+	color: #000;
+}
+
+.card {
+	position: relative;
+}
+
+/* Estilos para el menú dentro del popup */
+.cardActionsMenu .ui.popup {
+	padding: 0.35rem !important;
+	margin: 0 !important;
+	border-radius: 6px !important;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+	border: 1px solid #e5e7eb !important;
+	background: #ffffff !important;
+	min-width: auto !important;
+}
+
+.cardMenu {
+	margin: 0 !important;
+	border-radius: 0 !important;
+	border: none !important;
+	box-shadow: none !important;
+	background: transparent !important;
+	display: flex !important;
+	flex-direction: column !important;
+	gap: 0.15rem !important;
+}
+
+.cardMenu .item {
+	padding: 0.6rem 0.8rem !important;
+	font-size: 1rem !important;
+	cursor: pointer;
+	display: flex !important;
+	align-items: center;
+	justify-content: flex-start;
+	border: none !important;
+	line-height: 1.3 !important;
+	border-radius: 4px !important;
+	margin: 0 !important;
+	transition: all 0.2s ease !important;
+	background: transparent !important;
+	color: #374151 !important;
+	font-weight: 500 !important;
+	min-width: auto !important;
+	width: 100% !important;
+}
+
+.cardMenu .item:hover {
+	background-color: transparent !important;
+	color: #111827 !important;
+}
+
+.cardMenu .item:active {
+	background-color: transparent !important;
+	transform: scale(0.98);
+}
+
+.cardMenuPopupContent {
+	padding: 0 !important;
+}
+
+.cardMenuItem {
+	display: flex !important;
+	align-items: center !important;
+	font-size: 1.1rem !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	background: transparent !important;
+	min-width: 1px !important;
+}
+
+.cardMenuIconItem {
+	margin: 0 0.6rem 0 0 !important;
+	width: auto !important;
+	font-size: 1.5rem !important;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	opacity: 0.9;
+}
+
+.cardMenuText {
+	flex: 1;
+}
+
+.cardMenu .item:hover .cardMenuIconItem {
+	opacity: 1;
+}
+
+.cardActionsMenuPopup {
+	padding: 0.5rem !important;
+	align-items: center !important;
+	min-width: 1px !important;
+}
+
+.emptyState {
+	display: flex;
+	justify-content: center;
+	padding: 2rem 1rem;
+}
+
+.emptyIcon {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 0.5rem;
+}
+
+.cardLine1 {
+	display: flex;
+	align-items: center;
+	row-gap: 0;
+	column-gap: 1rem;
+	flex-wrap: wrap;
+}
+
+.cardLine2 {
+	display: flex;
+	align-items: center;
+	row-gap: 0;
+	column-gap: 1rem;
+	flex-wrap: wrap;
+}
+
+.cardLine3 {
+	display: flex;
+	align-items: center;
+	row-gap: 0;
+	column-gap: 1rem;
+	flex-wrap: wrap;
+}
+
+.cardLine4 {
+	display: flex;
+	align-items: center;
+	row-gap: 0;
+	column-gap: 1rem;
+	flex-wrap: wrap;
+}
+
+.cardLine1Item,
+.cardLine2Item,
+.cardLine3Item,
+.cardLine4Item {
+	display: flex;
+	align-items: center;
+}
+
+.cardCheckbox {
+	display: flex;
+	align-items: center;
+	margin-right: 0.5rem;
+}
+
+.cardInlineField {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.cardInlineLabel {
+	font-weight: 600;
+	font-size: 1.1rem;
+	color: #000000;
+	white-space: nowrap;
+}
+
+.cardInlineValue {
+	font-size: 1.1rem;
+	color: #171717;
+	word-wrap: break-word;
+}
+
+.sentinelCard {
+	width: 100%;
+	min-height: 20px;
+	padding: 0.5rem 1rem;
+	text-align: center;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.loadingMore {
+	text-align: center;
+	padding: 1rem;
+	color: #666;
+	font-size: 0.9rem;
+}
+
+.noMoreData {
+	text-align: center;
+	padding: 1rem;
+	color: #999;
+	font-size: 0.9rem;
+	font-style: italic;
+}

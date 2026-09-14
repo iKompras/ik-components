@@ -1,0 +1,33 @@
+.container {
+	padding-top: 15px;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.containerUser {
+	display: flex;
+}
+
+.containerLeft {
+	white-space: nowrap;
+}
+.containerRight {
+	display: flex;
+	width: 100% !important;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.headerTitle {
+	font-weight: 600 !important;
+	margin-right: 0.2rem;
+}
+
+.containerCenter {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.tableContainer {
+	padding-top: 0.5rem;
+}

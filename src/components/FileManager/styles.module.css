@@ -1,0 +1,148 @@
+.attachmentsContainer {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	border: none !important;
+	border-radius: 0.5rem;
+
+	padding: 0.25rem;
+	overflow-x: auto;
+	overflow-y: hidden;
+	color: var(--red650);
+}
+
+.attachment {
+	position: relative !important;
+	display: flex !important;
+	flex-direction: column !important;
+	justify-content: center !important;
+	align-items: center !important;
+	z-index: 0 !important;
+
+	border: 1px solid rgb(188, 188, 188) !important;
+	border-radius: 0.25rem !important;
+	/* margin-right: 0.5rem !important; */
+}
+
+/* .classImage{
+	width: 100% !important;
+	height: auto !important;
+} */
+
+.attachment:hover {
+	cursor: pointer;
+}
+
+.noShowInput {
+	display: none;
+}
+
+.image {
+	width: 100% !important;
+	height: 100% !important;
+	border-radius: 0.25rem !important;
+	object-fit: contain !important;
+}
+
+.icon {
+	display: flex !important;
+	/* 	width: 100% !important;
+	height: 100% !important; */
+	justify-content: center !important;
+	align-items: center !important;
+	/* 	font-size: 3rem !important; */
+}
+
+.fileButton .icon {
+	margin-top: 0.5rem !important;
+}
+
+.fileButton {
+	width: 100% !important;
+	height: 100% !important;
+	padding: 0.5rem !important;
+	display: flex !important;
+	flex-direction: column !important;
+	justify-content: center !important;
+	align-items: center !important;
+	text-align: center !important;
+	cursor: pointer !important;
+	background: transparent !important;
+	border: none !important;
+	color: inherit !important;
+}
+
+.fileButton:focus-visible {
+	outline: 2px solid #2185d0 !important;
+	outline-offset: 2px !important;
+}
+
+.fileButtonLabel {
+	font-size: 0.75rem !important;
+	margin-top: 0.25rem !important;
+	padding: 0 0.25rem !important;
+	white-space: nowrap !important;
+	overflow: hidden !important;
+	text-overflow: ellipsis !important;
+	width: 100% !important;
+}
+
+.fixedIcon {
+	position: absolute !important;
+	top: -0.2rem !important;
+	right: -0.2rem !important;
+	color: var(--red500) !important;
+	z-index: 10 !important;
+}
+
+.stateIndicator {
+	position: absolute !important;
+	top: 0.3rem !important;
+	left: 0.3rem !important;
+	width: 0.9rem !important;
+	height: 0.9rem !important;
+	border-radius: 50% !important;
+	z-index: 10 !important;
+	border: 1px solid black !important;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+.noImageText {
+	position: absolute !important;
+	bottom: 0.5rem !important;
+	left: 50% !important;
+	transform: translateX(-50%) !important;
+	font-size: 1rem !important;
+	color: #999 !important;
+	text-align: center !important;
+	width: 100% !important;
+}
+
+.rounded {
+	border-radius: 50% !important;
+}
+
+.roundedImage {
+	border-radius: 50% !important;
+	object-fit: cover !important;
+}
+
+.printImageWrapper {
+	display: none;
+}
+
+@media print {
+	.printImageWrapper {
+		display: flex !important;
+		justify-content: center !important;
+		align-items: center !important;
+		width: 100% !important;
+	}
+
+	.printImageOnly {
+		max-width: 100% !important;
+		max-height: calc(100vh - 220px) !important;
+		object-fit: contain !important;
+		page-break-inside: avoid !important;
+	}
+}

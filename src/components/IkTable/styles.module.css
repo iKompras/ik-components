@@ -1,0 +1,65 @@
+.tableDesktopOnly {
+	width: 100%;
+}
+
+@media (max-width: 768px) {
+	.tableDesktopOnly {
+		display: none !important;
+	}
+}
+
+.cardsContainerMobile {
+	display: none;
+}
+
+@media (max-width: 768px) {
+	.cardsContainerMobile {
+		display: block;
+		width: 100%;
+	}
+}
+
+.sentinelCell {
+	text-align: center;
+	padding: 1rem !important;
+	background-color: transparent !important;
+}
+
+.loadingMore {
+	text-align: center;
+	padding: 1rem;
+	color: #666;
+	font-size: 0.9rem;
+}
+
+.noMoreData {
+	text-align: center;
+	padding: 1rem;
+	color: #999;
+	font-size: 0.85rem;
+	font-style: italic;
+}
+
+.tableScroll {
+	display: block;
+	max-height: calc(100vh - 200px);
+	overflow-y: auto;
+}
+
+.tableScrollWrapper {
+	overflow-x: auto;
+	width: 100%;
+}
+
+.tableWidthAuto {
+	width: max-content !important;
+	min-width: 100% !important;
+}
+
+.stickyFooterTable {
+	margin-top: 0 !important;
+	border-top: none !important;
+	position: sticky !important;
+	bottom: -1px !important;
+	z-index: 10 !important;
+}
