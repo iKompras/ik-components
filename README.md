@@ -6,12 +6,16 @@ Librería de componentes de interfaz de usuario (UI) reutilizables creados en Re
 
 Para poder instalar y consumir esta librería en otros proyectos de la empresa, necesitas estar autenticado en GitHub Packages.
 
-Asegúrate de tener configurado tu archivo `.npmrc` (ya sea global en `~/.npmrc` o local en el proyecto que consumirá la librería) con el registro apuntando a GitHub y tu token de acceso personal (PAT) con permisos de lectura de paquetes:
+La **mejor práctica** (para no tener que configurar cada proyecto individualmente y por seguridad) es configurar tu Token de Acceso Personal (PAT) de GitHub a nivel **global** en tu computadora. El token debe tener el permiso `read:packages`.
 
-```ini
-@ikompras:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=TU_GITHUB_PERSONAL_ACCESS_TOKEN
+Abre tu terminal y ejecuta los siguientes comandos (reemplazando `TU_GITHUB_PERSONAL_ACCESS_TOKEN` con tu token real):
+
+```bash
+npm config set @ikompras:registry https://npm.pkg.github.com
+npm config set //npm.pkg.github.com/:_authToken TU_GITHUB_PERSONAL_ACCESS_TOKEN
 ```
+
+Esto guardará las credenciales de forma segura en tu usuario del sistema (archivo `~/.npmrc`) y te permitirá instalar la librería en cualquier proyecto de forma automática.
 
 ## 📦 Instalación
 
