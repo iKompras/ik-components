@@ -1,0 +1,164 @@
+.divHeaderNav {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: flex-start !important;
+	background-color: #ffffff !important;
+	flex-wrap: nowrap !important;
+	overflow: visible !important;
+	min-width: 0 !important;
+	border-bottom: 2px solid #f0f0f0 !important;
+}
+
+.navButton {
+	background-color: transparent !important;
+	color: #000000 !important;
+	margin: 0 !important;
+	font-size: 1rem !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	display: flex !important;
+	gap: 5px !important;
+	padding: 10px 16px !important;
+	transition: all 0.2s ease-in-out !important;
+}
+
+.errorsButon {
+	border: 2px solid red !important;
+	background-color: rgba(255, 0, 0, 0.05) !important;
+	color: red !important;
+	padding: 8px 16px !important;
+	border-radius: 4px !important;
+	font-weight: bold !important;
+	animation: pulseError 2s infinite !important;
+}
+
+@keyframes pulseError {
+	0% {
+		box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4);
+	}
+	70% {
+		box-shadow: 0 0 0 6px rgba(255, 0, 0, 0);
+	}
+	100% {
+		box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
+	}
+}
+
+.volatileError {
+	position: absolute !important;
+	top: 120% !important;
+	left: 50% !important;
+	transform: translateX(-50%) !important;
+	z-index: 100 !important;
+	white-space: nowrap !important;
+	color: #db2828 !important;
+	border: 1px solid #db2828 !important;
+	background-color: #fff !important;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
+	padding: 0.5em 1em !important;
+	font-size: 0.85rem !important;
+	font-weight: bold !important;
+	border-radius: 4px !important;
+	animation: slideDown 0.3s ease-out !important;
+}
+
+.volatileError::before {
+	content: "" !important;
+	position: absolute !important;
+	top: -5px !important;
+	left: 50% !important;
+	transform: translateX(-50%) rotate(45deg) !important;
+	width: 10px !important;
+	height: 10px !important;
+	background-color: #fff !important;
+	border-left: 1px solid #db2828 !important;
+	border-top: 1px solid #db2828 !important;
+	z-index: -1 !important;
+}
+
+@keyframes slideDown {
+	from {
+		opacity: 0;
+		transform: translateX(-50%) translateY(-10px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
+}
+
+.buttonContainer {
+	display: flex !important;
+	flex-direction: column !important;
+	width: auto !important;
+	position: relative !important;
+}
+
+.navButton:not(.errorsButon):not(.redButton):hover {
+	color: #000000 !important;
+	background-color: rgba(0, 0, 0, 0.03) !important;
+}
+
+.errorsButon:hover {
+	color: red !important;
+	background-color: rgba(255, 0, 0, 0.1) !important;
+}
+
+.redButton {
+	color: #db2828 !important;
+}
+
+.redButton:hover {
+	color: #db2828 !important;
+	background-color: transparent !important;
+}
+
+.navButton.active {
+	position: relative !important;
+	font-weight: bold !important;
+}
+
+.navButton.active::after {
+	content: "" !important;
+	position: absolute !important;
+	width: 100% !important;
+	height: 3px !important;
+	background-color: var(--header, #000000) !important;
+	bottom: 0 !important;
+	left: 0 !important;
+}
+
+.moreWrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.moreButton {
+	background: none !important;
+	border: none !important;
+	color: black !important;
+	font-size: 16px !important;
+	cursor: pointer !important;
+	padding: 0 8px !important;
+}
+
+.moreDropdown {
+	position: absolute;
+	top: 100%;
+	right: 0;
+	background: white;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	padding: 5px 0;
+	z-index: 99;
+}
+
+@media (max-width: 600px) {
+	.navButton {
+		margin: 0 2px !important;
+		padding: 8px 6px !important;
+		font-size: 16px !important;
+	}
+}

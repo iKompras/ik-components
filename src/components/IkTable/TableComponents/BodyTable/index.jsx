@@ -21,7 +21,7 @@ import {
 // Styles
 import styles from "./styles.module.css";
 import CardTable from "../CardTable";
-import ImageViewer from "../../../ImageViewer";
+import ImageViewer from "../../components/ImageViewer";
 
 const BodyTable = ({
 	isPDF,

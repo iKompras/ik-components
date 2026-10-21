@@ -1,5 +1,6 @@
 // React
 import React, { useState, useEffect, useRef } from "react";
+import { connect } from "react-redux";
 import { useReactToPrint } from "react-to-print";
 
 // Libraries
@@ -13,7 +14,7 @@ import { Download, Video, Fullscreen, Zoom } from "yet-another-react-lightbox/pl
 import { compressImage, getFileTypeFromDataUrl, getFileTypeByName } from "../../utils/functionality";
 
 // Components
-import PrintRender from "../PrintRender";
+import PrintRender from "../IkTable/components/PrintRender";
 
 // Styles
 import styles from "./styles.module.css";
@@ -243,7 +244,6 @@ const FileManager = ({
 	};
 
 	// Prevenir navegación hacia atrás cuando el lightbox está abierto
-
 
 	const handleRotateLeft = () => {
 		return setRotationAngle((prev) => {
@@ -491,6 +491,14 @@ const FileManager = ({
 };
 
 FileManager.propTypes = {
+	downloadFileFetcher: PropTypes.func,
+	images: PropTypes.array,
+	setImages: PropTypes.func,
+	imagesD: PropTypes.array,
+	setImagesD: PropTypes.func,
+	multiple: PropTypes.bool,
+	disabled: PropTypes.bool,
+	rounded: PropTypes.bool,
 	width: PropTypes.number,
 	height: PropTypes.number,
 	icon: PropTypes.string,

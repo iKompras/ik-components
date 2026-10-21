@@ -1,0 +1,42 @@
+.container {
+	width: 100%;
+}
+
+.section {
+	margin-bottom: 2.5rem;
+}
+
+.title {
+	font-size: 1.15rem;
+	font-weight: 700;
+	margin: 0 0 1rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.playgroundCard {
+	background: rgba(15, 23, 42, 0.7);
+	backdrop-filter: blur(12px);
+	border: 1px solid var(--border-card, rgba(148, 163, 184, 0.15));
+	border-radius: 12px;
+	padding: 2rem;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+	max-width: 540px;
+}
+
+.modeOption {
+	margin-bottom: 1rem;
+}
+
+.checkboxLabel {
+	cursor: pointer;
+	color: var(--text-secondary, #94a3b8);
+	font-size: 0.85rem;
+	display: inline-flex;
+	align-items: center;
+}
+
+.checkbox {
+	margin-right: 8px;
+}

@@ -1,13 +1,8 @@
 /* eslint-disable react/jsx-props-no-spreading */
-// React
 import React, { useEffect, useRef, forwardRef, useState } from "react";
-
-// Libraries
 import PropTypes from "prop-types";
 import { Form, Button, Icon, Select } from "semantic-ui-react";
 import { isEmpty, omit } from "lodash";
-
-// Styles
 import styles from "./styles.module.css";
 
 const Input = forwardRef((props, ref) => {
@@ -25,12 +20,14 @@ const Input = forwardRef((props, ref) => {
 		onKeyPress,
 		onClear,
 		dropdown,
+		dropdownPosition = "left", // nueva prop (default left)
 		required = false,
 		fluid = true,
+		type = "text",
 	} = props;
 	const input = useRef(null);
 	const [isFocused, setIsFocused] = useState(false);
-	const [type, setType] = useState(isPassword ? "password" : "text");
+	const [inputType, setInputType] = useState(isPassword ? "password" : "text");
 	const [passwordIcon, setPasswordIcon] = useState("eye slash");
 
 	useEffect(() => {
@@ -78,41 +75,62 @@ const Input = forwardRef((props, ref) => {
 			(ref || input).current.style.setProperty("border-top-right-radius", "0", "important");
 			(ref || input).current.style.setProperty("border-bottom-right-radius", "0", "important");
 		}
+
 		if (!isEmpty(dropdown)) {
-			(ref || input).current.style.setProperty("border-top-right-radius", "0", "important");
-			(ref || input).current.style.setProperty("border-bottom-right-radius", "0", "important");
-			(ref || input).current.style.setProperty("border-right", "0", "important");
+			if (dropdownPosition === "left") {
+				(ref || input).current.style.setProperty("border-top-left-radius", "0", "important");
+				(ref || input).current.style.setProperty("border-bottom-left-radius", "0", "important");
+				(ref || input).current.style.setProperty("border-left-color", "transparent", "important");
+			} else if (dropdownPosition === "right") {
+				(ref || input).current.style.setProperty("border-top-right-radius", "0", "important");
+				(ref || input).current.style.setProperty("border-bottom-right-radius", "0", "important");
+				(ref || input).current.style.setProperty("border-right-color", "transparent", "important");
+				// Asegurar que el borde izquierdo tenga el border-radius y color correcto siempre
+				(ref || input).current.style.setProperty("border-top-left-radius", "0.25rem", "important");
+				(ref || input).current.style.setProperty("border-bottom-left-radius", "0.25rem", "important");
+				(ref || input).current.style.setProperty(
+					"border-left",
+					`1px solid ${isFocused ? "var(--inputFocus)" : "var(--inputShader)"}`,
+					"important"
+				);
+			}
 		}
-	}, [value, isFocused]);
+	}, [value, isFocused, dropdown, isPassword, disabled, rounded, ref, input]);
 
 	const trimValue = (e) => {
-		const data = { name, value: value.trim() };
-		onChange({ ...e, target: data }, data);
+		if (!isEmpty(value)) {
+			const data = { name, value: value.trim() };
+			onChange({ ...e, target: data }, data);
+		}
 	};
 
 	const handleEnter = (e) => {
 		const { key } = e;
-		if (onKeyPress) {
-			trimValue(e);
-			onKeyPress(e);
-			return;
-		}
 		if (key === "Enter") {
 			e.preventDefault();
 			trimValue(e);
+			if (onKeyPress) {
+				onKeyPress(e);
+			}
 		}
 	};
 
 	const handleToggle = () => {
-		const toggle = type === "password";
+		const toggle = inputType === "password";
 		const typeVal = toggle ? "text" : "password";
 		const iconVal = toggle ? "eye" : "eye slash";
-		setType(typeVal);
+		setInputType(typeVal);
 		setPasswordIcon(iconVal);
 	};
 
 	const clearInput = (e) => {
 		const data = { name, value: "" };
+		if (props.fieldIndex !== undefined) {
+			data.fieldIndex = props.fieldIndex;
+		}
+		if (props.id !== undefined) {
+			data.id = props.id;
+		}
 		onChange({ ...e, target: data }, data);
 		if (onClear) {
 			onClear();
@@ -152,12 +170,16 @@ const Input = forwardRef((props, ref) => {
 		"rounded",
 		"isPassword",
 		"required",
+		"type",
+		"dropdown",
+		"dropdownPosition",
 	]);
+	const hasIcon = isPassword || !isEmpty(icon);
 
 	return (
 		<Form.Input
 			{...validProps}
-			className={`${styles.input} ${className}`}
+			className={`${styles.input} ${className || ""}`}
 			disabled={disabled}
 			onChange={onChange}
 			name={name}
@@ -165,18 +187,25 @@ const Input = forwardRef((props, ref) => {
 			label={label}
 			placeholder={isEmpty(placeholder) ? label : placeholder}
 			value={value}
-			type={type}
-			{...(isEmpty(dropdown) ? { iconPosition: "left" } : {})}
+			type={isPassword ? inputType : type}
+			{...(hasIcon ? { iconPosition: "left" } : {})}
 			autoComplete="off"
 			fluid={fluid}
 			onFocus={onFocus}
 			onBlur={onBlur}
 			onKeyPress={handleEnter}
 			action>
-			{isEmpty(dropdown) && (!isEmpty(icon) || isPassword) && <Icon name={isPassword ? "lock" : icon} />}
+			{dropdownPosition === "left" && !isEmpty(dropdown) && <Select labeled {...dropdown} />}
+			{hasIcon && <Icon name={isPassword ? "lock" : icon} />}
 			<input ref={ref || input} />
-
-			{!isEmpty(value) && !disabled && <Button className={getActionStyle()} icon="cancel" onClick={clearInput} tabIndex={-1} />}
+			{dropdownPosition === "right" ? (
+				<>
+					{!isEmpty(value) && !disabled && <Button className={getActionStyle()} icon="cancel" onClick={clearInput} tabIndex={-1} />}
+					{!isEmpty(dropdown) && <Select labeled {...dropdown} />}
+				</>
+			) : (
+				!isEmpty(value) && !disabled && <Button className={getActionStyle()} icon="cancel" onClick={clearInput} tabIndex={-1} />
+			)}
 
 			{isPassword && (
 				<Button
@@ -186,8 +215,6 @@ const Input = forwardRef((props, ref) => {
 					tabIndex={-1}
 				/>
 			)}
-
-			{!isEmpty(dropdown) && <Select labeled {...dropdown} />}
 		</Form.Input>
 	);
 });
@@ -206,9 +233,13 @@ Input.propTypes = {
 	children: PropTypes.node,
 	rounded: PropTypes.bool,
 	dropdown: PropTypes.object,
+	dropdownPosition: PropTypes.oneOf(["left", "right"]),
 	fluid: PropTypes.bool,
 	isPassword: PropTypes.bool,
 	required: PropTypes.bool,
+	type: PropTypes.string,
+	fieldIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 };
 
 export default Input;

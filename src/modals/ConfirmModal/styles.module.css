@@ -1,0 +1,107 @@
+.modal {
+	overflow: hidden !important;
+	border-radius: 0.3rem !important;
+}
+
+.header {
+	padding-top: 10px !important;
+	padding-bottom: 10px !important;
+	color: var(--text, #fff) !important;
+	background: var(--custom-header-color, var(--primary, #1e293b)) !important;
+}
+
+.actions {
+	display: flex !important;
+	justify-content: space-between !important;
+	align-items: center !important;
+	padding: 1rem !important;
+}
+
+.leftActions {
+	display: flex !important;
+	align-items: center !important;
+	gap: 0.75rem !important;
+}
+
+.rightActions {
+	display: flex !important;
+	align-items: center !important;
+	gap: 0.75rem !important;
+}
+
+.positiveButton {
+	margin: 0 0 0 0.5rem !important;
+	padding: 0.5rem 0.75rem !important;
+	min-width: 5rem !important;
+	color: var(--fontsButtons, #1e293b) !important;
+	border: var(--fontsButtons, #1e293b) 1px solid !important;
+	border-radius: 1rem !important;
+	background-color: transparent !important;
+}
+
+.positiveButton:hover {
+	background-color: var(--buttons, #3b82f6) !important;
+}
+
+.negativeButton {
+	margin: 0 0.5rem 0 0 !important;
+	padding: 0.5rem 0.75rem !important;
+	min-width: 5rem !important;
+	color: var(--red500, #db2828) !important;
+	border: var(--red500, #db2828) 1px solid !important;
+	border-radius: 1rem !important;
+	background-color: transparent !important;
+}
+
+.negativeButton:hover {
+	background-color: var(--red500, #db2828) !important;
+	color: var(--white, #fff) !important;
+}
+
+.content {
+	font-size: 1.1rem !important;
+}
+
+.focus {
+	font-weight: 700 !important;
+	margin-left: 0.25rem !important;
+}
+
+.contactHeader {
+	background: var(--backColor, #f3f4f6) !important;
+	color: var(--textColor, #111) !important;
+}
+
+.contactPositiveButton {
+	color: var(--buttonColor, #1e293b) !important;
+	border: 1px solid var(--buttonColor, #1e293b) !important;
+	background: transparent;
+}
+
+.contactPositiveButton:hover {
+	background: var(--buttonHover, #3b82f6) !important;
+}
+
+.centerModal {
+	position: absolute !important;
+	top: 50% !important;
+	left: 50% !important;
+	transform: translate3d(-50%, -50%, 0);
+	margin: 0 !important;
+}
+
+@media only screen and (max-width: 767px) {
+	.content {
+		padding-top: 1rem !important;
+	}
+	.negativeButton {
+		padding: 0.5rem 0.2rem !important;
+	}
+	.positiveButton {
+		padding: 0.5rem 0.2rem !important;
+	}
+	.rightActions {
+		gap: 0 !important;
+		align-items: end !important;
+	}
+}

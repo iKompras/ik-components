@@ -1,0 +1,70 @@
+.container {
+	width: 100%;
+}
+
+.section {
+	margin-bottom: 2.5rem;
+}
+
+.title {
+	font-size: 1.15rem;
+	font-weight: 700;
+	margin: 0 0 1rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.playgroundCard {
+	background: rgba(15, 23, 42, 0.7);
+	backdrop-filter: blur(12px);
+	border: 1px solid var(--border-card, rgba(148, 163, 184, 0.15));
+	border-radius: 12px;
+	padding: 2rem;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+	height: 420px;
+	overflow: hidden;
+	position: relative;
+}
+
+.sidebarWrapper {
+	position: relative;
+	height: 100%;
+	width: 100%;
+	background: #0f172a;
+}
+
+.mainContent {
+	padding: 1.5rem;
+	transition: all 0.3s;
+}
+
+.contentTitle {
+	margin: 0 0 0.5rem;
+	color: #fff;
+}
+
+.currentPathText {
+	color: var(--text-secondary, #94a3b8);
+	font-size: 0.9rem;
+}
+
+.primaryBtn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.6rem 1.2rem;
+	background: #3b82f6;
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	font-weight: 600;
+	font-size: 0.875rem;
+	cursor: pointer;
+	transition: all 0.2s;
+}
+
+.primaryBtn:hover {
+	background: #2563eb;
+	transform: translateY(-1px);
+}

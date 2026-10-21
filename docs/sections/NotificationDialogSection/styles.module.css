@@ -1,0 +1,72 @@
+.container {
+	width: 100%;
+}
+
+.section {
+	margin-bottom: 2.5rem;
+}
+
+.title {
+	font-size: 1.15rem;
+	font-weight: 700;
+	margin: 0 0 1rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.playgroundCard {
+	background: rgba(15, 23, 42, 0.7);
+	backdrop-filter: blur(12px);
+	border: 1px solid var(--border-card, rgba(148, 163, 184, 0.15));
+	border-radius: 12px;
+	padding: 2rem;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+.controlsRow {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.75rem;
+	align-items: center;
+}
+
+.successBtn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.6rem 1.2rem;
+	background: #10b981;
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	font-weight: 600;
+	font-size: 0.875rem;
+	cursor: pointer;
+	transition: all 0.2s;
+}
+
+.successBtn:hover {
+	background: #059669;
+	transform: translateY(-1px);
+}
+
+.errorBtn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	padding: 0.6rem 1.2rem;
+	background: #ef4444;
+	color: #fff;
+	border: none;
+	border-radius: 8px;
+	font-weight: 600;
+	font-size: 0.875rem;
+	cursor: pointer;
+	transition: all 0.2s;
+}
+
+.errorBtn:hover {
+	background: #dc2626;
+	transform: translateY(-1px);
+}

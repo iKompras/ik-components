@@ -1,0 +1,25 @@
+.container {
+	width: 100%;
+}
+
+.section {
+	margin-bottom: 2.5rem;
+}
+
+.title {
+	font-size: 1.15rem;
+	font-weight: 700;
+	margin: 0 0 1rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.playgroundCard {
+	background: #ffffff;
+	color: #1e293b;
+	overflow-x: auto;
+	border-radius: 12px;
+	padding: 1.5rem;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
