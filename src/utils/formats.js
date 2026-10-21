@@ -1,5 +1,5 @@
 export function getClockLabel(seconds) {
-	if (isNaN(seconds)) return "";
+	if (Number.isNaN(Number(seconds))) return "";
 	const minutes = Math.floor(seconds / 60);
 	const hours = Math.floor(minutes / 60);
 	const days = Math.floor(hours / 24);

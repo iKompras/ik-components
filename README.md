@@ -29,27 +29,27 @@ npm install @ikompras/ik-components
 yarn add @ikompras/ik-components
 ```
 
-*Nota: Esta librería tiene como `peerDependencies` a `react` y `react-dom` (>=16.8.0).*
+_Nota: Esta librería tiene como `peerDependencies` a `react` y `react-dom` (>=16.8.0)._
 
 ## 🛠️ Uso
 
 Importa los componentes que necesites directamente desde la librería en tu aplicación de React:
 
 ```jsx
-import React from 'react';
-import { IkTable, Input, PrintRender } from '@ikompras/ik-components';
+import React from "react";
+import { IkTable, Input, PrintRender } from "@ikompras/ik-components";
 // Asegúrate de importar los estilos si es necesario en el futuro
 
 const MiComponente = () => {
-  return (
-    <div>
-      <Input placeholder="Escribe aquí..." />
-      
-      <IkTable 
-        // props de la tabla
-      />
-    </div>
-  );
+	return (
+		<div>
+			<Input placeholder="Escribe aquí..." />
+
+			<IkTable
+			// props de la tabla
+			/>
+		</div>
+	);
 };
 
 export default MiComponente;
@@ -59,34 +59,44 @@ export default MiComponente;
 
 Actualmente la librería incluye los siguientes componentes principales:
 
-*   **IkTable**: Componente robusto para la renderización de tablas de datos.
-*   **Input**: Campos de entrada de texto estandarizados.
-*   **FileManager**: Gestor y administrador de archivos.
-*   **ImageViewer**: Visor de imágenes integrado (apoyado en `yet-another-react-lightbox`).
-*   **PrintRender**: Componente de utilidad para manejar la impresión de vistas (utilizando `react-to-print`).
+- **IkTable**: Componente robusto para la renderización de tablas de datos.
+- **FileManager**: Gestor y administrador de archivos y adjuntos.
+- **Text**: Componente de texto tipográfico con soporte para markdown estilo WhatsApp (_negrita_, _cursiva_, ~tachado~).
+- **TextArea**: Entrada de texto multilínea con auto-resize (`react-textarea-autosize`), contador de caracteres y soporte para máscara de tokens.
+- **InputLabel**: Etiqueta informativa con indicador de requerido y tooltip opcional.
+- **SideBar**: Menú de navegación lateral colapsable y responsivo.
+- **SideBarMenu**: Elementos y submenús desplegables para el SideBar con popups flotantes.
 
-*(Revisar el código fuente en `src/components/` para ver las `props` detalladas de cada componente).*
+### 🪟 Modales Disponibles (`src/modals/`)
 
-## 👨‍💻 Desarrollo Local
+- **IkModal**: Modal maestro para operaciones CRUD ("Add", "Edit", "Watch"), con pestañas dinámicas con overflow responsivo (`Tabs`), acciones de guardado/cancelación, soporte para impresión y botones adicionales.
+- **ConfirmModal**: Modal de confirmación estilizado con acciones afirmativas, negativas y botones personalizables.
+- **NotificationDialog**: Diálogo flotante para alertas y respuestas de API con soporte de formateo de errores y objetos.
+- **Loading**: Dimmer de pantalla completa con loader animado para estados de carga.
 
-Si deseas contribuir a esta librería o añadir nuevos componentes:
+_(Revisar el código fuente en `src/components/` y `src/modals/` para ver las `props` detalladas de cada componente)._
 
-1. **Clona el repositorio:**
-   ```bash
-   git clone https://github.com/ikompras/ik-components.git
-   cd ik-components
-   ```
+## 👨‍💻 Desarrollo Local y Guía Interactiva
 
-2. **Instala las dependencias:**
-   ```bash
-   yarn install
-   # o npm install
-   ```
+Para iniciar el catálogo visual interactivo de componentes y probarlos en tiempo real:
+
+```bash
+yarn dev
+# o npm run dev
+```
+
+Abre `http://localhost:5173/` (o el puerto asignado) para explorar cada componente, interactuar con su playground y ver ejemplos de código.
+
+Para verificar formateo y linting:
+
+```bash
+yarn run check
+```
 
 3. **Estructura del Proyecto:**
-   * `/src/components`: Crea una nueva carpeta aquí para cada componente nuevo.
-   * `/src/index.js`: **¡Muy importante!** Todo nuevo componente o utilidad debe ser exportado desde este archivo para que sea accesible en el build final.
-   * `/src/utils`: Funciones y utilidades compartidas (formateos, helpers, etc).
+   - `/src/components`: Crea una nueva carpeta aquí para cada componente nuevo.
+   - `/src/index.js`: **¡Muy importante!** Todo nuevo componente o utilidad debe ser exportado desde este archivo para que sea accesible en el build final.
+   - `/src/utils`: Funciones y utilidades compartidas (formateos, helpers, etc).
 
 ## 🏗️ Construcción (Build)
 
@@ -95,6 +105,7 @@ Para compilar la librería para producción, ejecuta:
 ```bash
 yarn build
 ```
+
 Esto generará la carpeta `dist/` utilizando la configuración de Vite (`vite.config.js`), preparando los formatos UMD y ES módulos.
 
 ## 🚀 Publicación de una nueva versión
@@ -110,4 +121,4 @@ Cuando tus cambios estén listos y mergeados, y quieras publicar una nueva versi
    ```bash
    npm publish
    ```
-   *(Asegúrate de que tu usuario tenga permisos de escritura/publicación en el repositorio de la empresa).*
+   _(Asegúrate de que tu usuario tenga permisos de escritura/publicación en el repositorio de la empresa)._

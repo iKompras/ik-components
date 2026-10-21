@@ -1,0 +1,241 @@
+export const COMPONENTS_DATA = [
+	{ id: "ik-modal", name: "IkModal", category: "Modales", tag: "CRUD & Tabs" },
+	{ id: "confirm-modal", name: "ConfirmModal", category: "Modales", tag: "Diálogo" },
+	{ id: "notification-dialog", name: "NotificationDialog", category: "Modales", tag: "Alertas" },
+	{ id: "loading", name: "Loading", category: "Modales", tag: "Dimmer" },
+	{ id: "ik-table", name: "IkTable", category: "Componentes", tag: "Tablas & Datos" },
+	{ id: "text", name: "Text", category: "Componentes", tag: "Tipografía" },
+	{ id: "text-area", name: "TextArea", category: "Componentes", tag: "Formularios" },
+	{ id: "input-label", name: "InputLabel", category: "Componentes", tag: "Formularios" },
+	{ id: "sidebar", name: "SideBar", category: "Componentes", tag: "Navegación" },
+	{ id: "sidebar-menu", name: "SideBarMenu", category: "Componentes", tag: "Navegación" },
+];
+
+export const IK_TABLE_COLUMNS = [
+	{ key: "id", label: "ID", order: true },
+	{ key: "name", label: "Usuario", order: true },
+	{ key: "email", label: "Correo Electrónico", order: true },
+	{ key: "role", label: "Rol", order: true },
+	{ key: "status", label: "Estado", format: "label", order: true },
+];
+
+export const IK_TABLE_SAMPLE_DATA = [
+	{ id: 1, name: "Jeremy Reyes", email: "jeremy@ikompras.com", role: "Super Admin", status: "Activo" },
+	{ id: 2, name: "Ana Torres", email: "ana.torres@ikompras.com", role: "Supervisor", status: "Activo" },
+	{ id: 3, name: "Carlos López", email: "carlos.l@ikompras.com", role: "Agente de Soporte", status: "Inactivo" },
+	{ id: 4, name: "María Gómez", email: "maria.g@ikompras.com", role: "Ventas", status: "Activo" },
+	{ id: 5, name: "Pedro Soto", email: "pedro.s@ikompras.com", role: "Desarrollador", status: "Activo" },
+];
+
+export const SIDEBAR_SAMPLE_MENU = [
+	{ id: "1", name: "Dashboard", icon: "dashboard", path: "/dashboard", type: "menu" },
+	{
+		id: "2",
+		name: "Monitoreo",
+		icon: "desktop",
+		path: "/monitor",
+		type: "menu",
+		subMenu: [
+			{ id: "2-1", name: "Chats Activos", path: "/chats", icon: "comments" },
+			{ id: "2-2", name: "Agentes", path: "/agents", icon: "users" },
+		],
+	},
+	{ id: "3", type: "divider" },
+	{ id: "4", name: "Configuración", icon: "setting", path: "/settings", type: "menu" },
+];
+
+export const COMPONENT_PROPS = {
+	ikModal: [
+		{ name: "title", type: "string", default: '"Title"', description: "Título mostrado en la cabecera del modal." },
+		{
+			name: "mode",
+			type: '"Add" | "Edit" | "Watch"',
+			default: '"Add"',
+			description: "Modo operativo para alternar iconos y botones de acción.",
+		},
+		{ name: "size", type: "string", default: '""', description: 'Tamaño: "mini", "tiny", "small", "large", "fullScreen".' },
+		{ name: "tabs", type: "array", default: "[]", description: "Listado de botones de navegación superior con iconos y badges." },
+		{ name: "onSuccess", type: "func", default: "() => {}", description: "Función llamada al hacer clic en Guardar o Modificar." },
+		{ name: "onClose", type: "func", default: "() => {}", description: "Función llamada al cerrar o presionar atrás." },
+	],
+	confirmModal: [
+		{ name: "visible", type: "bool", default: "false", description: "Controla la visibilidad del modal." },
+		{ name: "header", type: "string", default: '""', description: "Texto del encabezado." },
+		{ name: "content", type: "string", default: '""', description: "Texto descriptivo de la confirmación." },
+		{ name: "focus", type: "string", default: '""', description: "Texto o palabra clave a resaltar en negrita." },
+		{ name: "buttonLabel", type: "string", default: '"Salir"', description: "Etiqueta del botón de confirmación." },
+		{ name: "cancelLabel", type: "string", default: '"Atrás"', description: "Etiqueta del botón de cancelar." },
+		{ name: "onConfirm", type: "func", default: "() => {}", description: "Callback al confirmar la acción." },
+		{ name: "onDismiss", type: "func", default: "() => {}", description: "Callback al cancelar o cerrar." },
+	],
+	notificationDialog: [
+		{ name: "isVisible", type: "bool", default: "false", description: "Indica si el diálogo está abierto." },
+		{ name: "isError", type: "bool", default: "false", description: "Aplica estilo y color rojo de error o verde de éxito." },
+		{
+			name: "text",
+			type: "string | object",
+			default: '""',
+			description: "Mensaje o respuesta de la API (parsea objetos automáticamente).",
+		},
+		{ name: "onDismiss", type: "func", default: "() => {}", description: "Callback al hacer clic en el botón Cerrar." },
+	],
+	loading: [{ name: "isFetching", type: "bool", default: "false", description: "Activa o desactiva el Dimmer con el loader animado." }],
+	text: [
+		{ name: "children", type: "node | string", default: '""', description: "Contenido del texto a renderizar." },
+		{
+			name: "withMarkdown",
+			type: "bool",
+			default: "false",
+			description: "Habilita parseo de sintaxis WhatsApp (*negrita*, _cursiva_, ~tachado~).",
+		},
+		{ name: "as", type: "string", default: '"p"', description: "Elemento semántico HTML (p, h1, span, etc.)." },
+	],
+	textArea: [
+		{ name: "label", type: "string", default: '""', description: "Etiqueta mostrada sobre el campo." },
+		{ name: "value", type: "string", default: '""', description: "Valor actual del campo." },
+		{ name: "onChange", type: "func", default: "() => {}", description: "Handler de cambio de valor." },
+		{ name: "showCount", type: "bool", default: "false", description: "Muestra el conteo de caracteres actuales." },
+		{ name: "maxLength", type: "number", default: "undefined", description: "Límite máximo de caracteres permitidos." },
+		{ name: "isPassword", type: "bool", default: "false", description: "Oculta el texto y muestra el botón de alternar visibilidad." },
+		{ name: "showRequired", type: "bool", default: "false", description: "Muestra el asterisco rojo de campo requerido." },
+		{ name: "minRows", type: "number", default: "1", description: "Cantidad mínima de filas del área de texto." },
+	],
+	inputLabel: [
+		{ name: "children", type: "node", default: "undefined", description: "Texto de la etiqueta." },
+		{ name: "required", type: "bool", default: "false", description: "Muestra un asterisco rojo (*)." },
+		{ name: "hint", type: "string | node", default: "null", description: "Muestra un icono con tooltip informativo al hacer hover." },
+	],
+	sideBar: [
+		{ name: "menu", type: "array", default: "[]", description: "Arreglo de elementos y submenús del SideBar." },
+		{ name: "isExtended", type: "bool", default: "false", description: "Estado de expansión o colapso." },
+		{ name: "handleToggle", type: "func", default: "() => {}", description: "Función para alternar entre expandido y colapsado." },
+		{ name: "companyName", type: "string", default: '""', description: "Nombre de la empresa en la cabecera móvil." },
+		{ name: "onNavigate", type: "func", default: "null", description: "Función de navegación al seleccionar una opción." },
+		{ name: "currentPath", type: "string", default: '""', description: "Ruta activa actual para destacar la selección." },
+	],
+	ikTable: [
+		{ name: "columns", type: "array", default: "[]", description: "Definición de columnas: key, label, order, format." },
+		{ name: "data", type: "array", default: "[]", description: "Listado de objetos a renderizar en las filas." },
+		{ name: "totalRows", type: "number", default: "0", description: "Total de registros para el cálculo de paginación." },
+		{ name: "showAddButton", type: "bool", default: "true", description: "Muestra el botón de añadir en la barra superior." },
+		{ name: "addButton", type: "object", default: "{}", description: "Configuración del botón de añadir (label, icon)." },
+		{ name: "onAddButtonClick", type: "func", default: "null", description: "Disparador al presionar el botón de añadir." },
+		{ name: "searcher", type: "object", default: "{}", description: "Configuración de la barra de búsqueda (placeholder, show)." },
+		{ name: "handlerTable", type: "func", default: "null", description: "Callback de eventos de tabla (paginación, orden, clicks)." },
+	],
+};
+
+export const CODE_SNIPPETS = {
+	ikModal: `import { IkModal } from '@ikompras/ik-components';
+
+<IkModal
+  title="Crear Contacto"
+  mode={mode} // "Add" | "Edit" | "Watch"
+  setMode={setMode}
+  size="small"
+  tabs={[
+    { key: "1", state: "general", label: "General", icon: "user", order: 1 },
+    { key: "2", state: "security", label: "Seguridad", icon: "lock", order: 2 }
+  ]}
+  activeTab={activeTab}
+  onTabChange={setActiveTab}
+  onClose={() => setIsOpen(false)}
+  onSuccess={handleSave}
+>
+  <p>Contenido del formulario...</p>
+</IkModal>`,
+
+	confirmModal: `import { ConfirmModal } from '@ikompras/ik-components';
+
+<ConfirmModal
+  visible={isOpen}
+  header="Eliminar Registro"
+  content="deseas eliminar a"
+  focus="Juan Pérez"
+  buttonLabel="Eliminar"
+  cancelLabel="Atrás"
+  onConfirm={handleDelete}
+  onDismiss={() => setIsOpen(false)}
+/>`,
+
+	notificationDialog: `import { NotificationDialog } from '@ikompras/ik-components';
+
+<NotificationDialog
+  isVisible={isOpen}
+  isError={false}
+  text="Los cambios han sido guardados con éxito."
+  onDismiss={() => setIsOpen(false)}
+/>`,
+
+	loading: `import { Loading } from '@ikompras/ik-components';
+
+<Loading isFetching={isFetchingData} />`,
+
+	text: `import { Text } from '@ikompras/ik-components';
+
+<Text withMarkdown>
+  Hola *Jeremy*, tu código está _listo_ y ~revisado~!
+</Text>`,
+
+	textArea: `import { TextArea } from '@ikompras/ik-components';
+
+<TextArea
+  label="Descripción del Flujo"
+  placeholder="Ingresa los detalles aquí..."
+  value={text}
+  onChange={(e) => setText(e.target.value)}
+  showRequired
+  showCount
+  maxLength={500}
+  minRows={3}
+/>`,
+
+	inputLabel: `import { InputLabel } from '@ikompras/ik-components';
+
+<InputLabel required hint="Información de ayuda para el usuario">
+  Correo Electrónico
+</InputLabel>`,
+
+	sideBar: `import { SideBar } from '@ikompras/ik-components';
+
+<SideBar
+  isExtended={isExtended}
+  handleToggle={() => setIsExtended(!isExtended)}
+  companyName="Mi Empresa"
+  menu={[
+    { id: "1", name: "Inicio", icon: "home", path: "/" },
+    { 
+      id: "2", 
+      name: "Reportes", 
+      icon: "chart bar", 
+      path: "/reports",
+      subMenu: [
+        { id: "2a", name: "Ventas", path: "/sales" }
+      ]
+    }
+  ]}
+  onNavigate={(path) => navigate(path)}
+/>`,
+
+	ikTable: `import { IkTable } from '@ikompras/ik-components';
+
+const columns = [
+  { key: "id", label: "ID", order: true },
+  { key: "name", label: "Nombre", order: true },
+  { key: "email", label: "Correo", order: true },
+  { key: "role", label: "Rol", order: true },
+  { key: "status", label: "Estado", format: "label", order: true },
+];
+
+<IkTable
+  columns={columns}
+  data={usersList}
+  totalRows={totalUsers}
+  defaultParams={{ rows: 10, page: 1 }}
+  showAddButton={true}
+  addButton={{ label: "Crear Usuario", icon: "plus" }}
+  onAddButtonClick={() => setModalOpen(true)}
+  searcher={{ placeholder: "Buscar...", show: true }}
+  handlerTable={(action, data) => handleTableEvents(action, data)}
+/>`,
+};

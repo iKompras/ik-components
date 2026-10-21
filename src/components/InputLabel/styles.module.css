@@ -1,0 +1,19 @@
+.root {
+	display: inline-flex;
+	gap: 0.35rem;
+}
+
+.required {
+	color: var(--red500, #db2828);
+}
+
+.infoIcon {
+	margin: 0 !important;
+	color: #9a9a9a !important;
+	cursor: pointer;
+	font-size: 0.95em !important;
+}
+
+.infoIcon:hover {
+	color: #767676 !important;
+}

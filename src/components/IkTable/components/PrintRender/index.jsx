@@ -9,8 +9,8 @@ import PropTypes from "prop-types";
 import moment from "moment";
 
 // Utils
-import { getTimeLabel } from "../../utils/functionality";
-import { getClockLabel } from "../../utils/formats";
+import { getTimeLabel } from "../../../../utils/functionality";
+import { getClockLabel } from "../../../../utils/formats";
 
 // Styles
 import styles from "./styles.module.css";

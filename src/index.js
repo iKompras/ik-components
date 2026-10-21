@@ -1,2 +1,14 @@
-export { default as IkTable } from './components/IkTable';
-export { default as FileManager } from './components/FileManager';
+// Components
+export { default as IkTable } from "./components/IkTable";
+export { default as FileManager } from "./components/FileManager";
+export { default as Text } from "./components/Text";
+export { default as TextArea } from "./components/TextArea";
+export { default as InputLabel } from "./components/InputLabel";
+export { default as SideBar } from "./components/SideBar";
+export { default as SideBarMenu } from "./components/SideBarMenu";
+
+// Modals
+export { default as IkModal } from "./components/IkModal";
+export { default as ConfirmModal } from "./modals/ConfirmModal";
+export { default as NotificationDialog } from "./modals/NotificationDialog";
+export { default as Loading } from "./modals/Loading";

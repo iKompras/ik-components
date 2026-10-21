@@ -731,7 +731,6 @@ const CardTable = ({
 			await dataHandler({ ...searchParams, page: nextPage }, false, false);
 			setCurrentPage(nextPage);
 		} catch (error) {
-			// eslint-disable-next-line no-console
 			console.error("Error loading more data:", error);
 			isLoadingMoreRef.current = false;
 		} finally {

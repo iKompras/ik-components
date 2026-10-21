@@ -1,0 +1,292 @@
+/* Modal Sizes */
+.fullScreen {
+	width: 94% !important;
+}
+
+.large {
+	width: 75% !important;
+}
+
+.small {
+	width: 60% !important;
+}
+
+.tiny {
+	width: 40% !important;
+}
+
+.mini {
+	width: 25% !important;
+}
+
+.modalHeader {
+	display: flex !important;
+	justify-content: space-between !important;
+	align-items: center !important;
+	color: var(--fontsHeader, #fff) !important;
+	background-color: var(--header, #1e293b) !important;
+	height: 3rem !important;
+	font-size: 1.3rem !important;
+}
+
+.tabsContainer {
+	width: 100%;
+	background-color: #ffffff;
+}
+
+.modalContent {
+	display: flex !important;
+	justify-content: space-between;
+	width: 100% !important;
+	background-color: var(--panelModal, #f9fafb) !important;
+	overflow-y: auto;
+	margin-top: 0 !important;
+}
+
+.modalContentNoFlex {
+	width: 100% !important;
+	background-color: var(--panelModal, #f9fafb) !important;
+	overflow-y: auto;
+	margin-top: 0 !important;
+}
+
+.modalContent::-webkit-scrollbar {
+	width: 6px;
+}
+
+.modalContent::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, 0.3);
+	border-radius: 999px;
+}
+
+.modalContent::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(0, 0, 0, 0.45);
+}
+
+.modalFooter {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: flex-end !important;
+	height: 3.5rem !important;
+}
+
+.iconHeader {
+	margin-right: 0.5rem !important;
+}
+
+.topEditButton {
+	background-color: transparent !important;
+	color: var(--fontsHeader, #fff) !important;
+	border: 1px solid var(--fontsHeader, #fff) !important;
+	padding: 0.5rem 0.5rem !important;
+	margin: 0.1rem 0.1rem !important;
+	margin-left: 10px !important;
+}
+
+.topWatchButton {
+	background-color: transparent !important;
+	color: var(--fontsHeader, #fff) !important;
+	border: 1px solid var(--fontsHeader, #fff) !important;
+	padding: 0.5rem 0.5rem !important;
+	margin: 0.1rem 0.1rem !important;
+	margin-left: 10px !important;
+}
+
+.topPrintButton {
+	background-color: transparent !important;
+	color: var(--fontsHeader, #fff) !important;
+	border: 1px solid var(--fontsHeader, #fff) !important;
+	padding: 0.5rem 0.5rem !important;
+	margin: 0.1rem 0.1rem !important;
+	margin-left: 10px !important;
+}
+
+.topWatchButton:hover,
+.topEditButton:hover,
+.topPrintButton:hover {
+	background-color: var(--fontsHeader, #fff) !important;
+	color: var(--header, #1e293b) !important;
+}
+
+.positiveButton {
+	margin: 0 1.5rem 0 0 !important;
+	padding: 0.3rem 0.4rem !important;
+	min-width: 10rem !important;
+	color: var(--fontsButtons, #1e293b) !important;
+	border: 1px solid var(--fontsButtons, #1e293b) !important;
+	border-radius: 1.5rem !important;
+	background-color: transparent !important;
+}
+
+.positiveButton:hover {
+	color: var(--fontsButtons, #fff) !important;
+	background-color: var(--buttons, #3b82f6) !important;
+}
+
+.negativeButton {
+	margin: 0 1.5rem 0 0 !important;
+	padding: 0.3rem 0.4rem !important;
+	min-width: 10rem !important;
+	color: #e90d0d !important;
+	border: 1px solid #e90d0d !important;
+	border-radius: 1.5rem !important;
+	background-color: #ffffff !important;
+}
+
+.negativeButton:hover {
+	background-color: #e90d0d !important;
+	color: #ffffff !important;
+}
+
+.disabled {
+	background-color: var(--gray400, #9ca3af) !important;
+	color: var(--gray800, #1f2937) !important;
+	cursor: not-allowed !important;
+	border-color: var(--primary, #3b82f6) !important;
+}
+
+.rowButton {
+	display: flex !important;
+}
+
+@media (max-width: 768px) {
+	.fullScreen,
+	.large,
+	.small,
+	.tiny,
+	.mini {
+		width: 100% !important;
+		margin: 0 !important;
+		max-width: 100% !important;
+	}
+
+	.modalFooter {
+		justify-content: center !important;
+		gap: 0.75rem;
+		padding: 1rem 1rem !important;
+		flex-wrap: wrap;
+	}
+
+	.positiveButton,
+	.negativeButton {
+		min-width: 8rem !important;
+	}
+
+	.modalFooter {
+		margin-top: 0.1rem !important;
+	}
+
+	.modal {
+		z-index: 999 !important;
+	}
+
+	/* Asegurar que el dimmer no cubra el header */
+	:global(.ui.dimmer) {
+		z-index: 998 !important;
+	}
+
+	.modal {
+		background: var(--panelModal, #f9fafb) !important;
+		-webkit-font-smoothing: antialiased !important;
+		-moz-osx-font-smoothing: grayscale !important;
+		text-rendering: optimizeLegibility !important;
+	}
+
+	/* Mejorar nitidez para modales pequeños centrados */
+	.tiny,
+	.mini {
+		will-change: auto !important;
+	}
+
+	.modalHeaderTitle {
+		font-size: 1.1rem !important;
+	}
+
+	.modalContent::-webkit-scrollbar {
+		width: 4px;
+	}
+
+	.rowButton {
+		display: flex !important;
+		justify-content: flex-end;
+	}
+
+	.topPrintButton {
+		display: none !important;
+	}
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+	.fullScreen {
+		width: 98% !important;
+	}
+
+	.large {
+		width: 85% !important;
+	}
+
+	.small {
+		width: 70% !important;
+	}
+
+	.tiny {
+		width: 50% !important;
+	}
+
+	.mini {
+		width: 35% !important;
+	}
+
+	.modalFooter {
+		justify-content: center !important;
+		gap: 1rem;
+	}
+}
+
+@media (min-width: 1025px) and (max-width: 1300px) {
+	.modalHeader {
+		font-size: 1.1rem !important;
+	}
+
+	.fullScreen {
+		width: 96% !important;
+	}
+
+	.large {
+		width: 80% !important;
+	}
+
+	.small {
+		width: 65% !important;
+	}
+
+	.tiny {
+		width: 45% !important;
+	}
+
+	.mini {
+		width: 30% !important;
+	}
+}
+
+@media (min-width: 1301px) {
+	.fullScreen {
+		width: 94% !important;
+	}
+
+	.large {
+		width: 75% !important;
+	}
+
+	.small {
+		width: 60% !important;
+	}
+
+	.tiny {
+		width: 40% !important;
+	}
+
+	.mini {
+		width: 25% !important;
+	}
+}
