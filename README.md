@@ -63,7 +63,7 @@ Actualmente la librería incluye los siguientes componentes principales:
 - **FileManager**: Gestor y administrador de archivos y adjuntos.
 - **Text**: Componente de texto tipográfico con soporte para markdown estilo WhatsApp (_negrita_, _cursiva_, ~tachado~).
 - **TextArea**: Entrada de texto multilínea con auto-resize (`react-textarea-autosize`), contador de caracteres y soporte para máscara de tokens.
-- **Input**: Campo de entrada con soporte para etiqueta integrada, requerido (*), tooltip flotante (`infoLabel`), modo contraseña y opciones de limpieza.
+- **Input**: Campo de entrada con soporte para etiqueta integrada, requerido (\*), tooltip flotante (`infoLabel`), modo contraseña y opciones de limpieza.
 - **SideBar**: Menú de navegación lateral colapsable y responsivo.
 - **SideBarMenu**: Elementos y submenús desplegables para el SideBar con popups flotantes.
 

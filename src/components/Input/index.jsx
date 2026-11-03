@@ -127,20 +127,7 @@ const Input = forwardRef((props, ref) => {
 				(ref || input).current.style.setProperty("border-right-color", "transparent", "important");
 			}
 		}
-	}, [
-		value,
-		isFocused,
-		dropdown,
-		isPassword,
-		disabled,
-		rounded,
-		hideClear,
-		customBorderRadius,
-		radiusDefault,
-		radiusRounded,
-		ref,
-		input,
-	]);
+	}, [value, isFocused, dropdown, isPassword, disabled, rounded, hideClear, customBorderRadius, radiusDefault, radiusRounded, ref, input]);
 
 	const trimValue = (e) => {
 		if (!isEmpty(value)) {
