@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import TextareaAutosize from "react-textarea-autosize";
 import { Label, Icon } from "semantic-ui-react";
-import InputLabel from "../InputLabel";
 import { size, compact, join, defaultTo } from "lodash";
 import styles from "./styles.module.css";
 
@@ -36,8 +35,9 @@ const TextAreaInput = ({
 		<div className={styles.wrapper}>
 			{label && (
 				<div className={styles.labelRow}>
-					<InputLabel className={styles.label} required={showRequired}>
-						{label}
+					<span className={styles.label}>
+						<span>{label}</span>
+						{showRequired ? <span className={styles.required}> *</span> : null}
 						{isPassword && (
 							<Icon
 								name={show ? "eye slash" : "eye"}
@@ -50,7 +50,7 @@ const TextAreaInput = ({
 								}}
 							/>
 						)}
-					</InputLabel>
+					</span>
 					<div className={styles.labelActions}>
 						{showCount && maxLength && (
 							<span className={styles.charCount}>

@@ -9,7 +9,7 @@ import NotificationDialogSection from "../sections/NotificationDialogSection";
 import LoadingSection from "../sections/LoadingSection";
 import TextSection from "../sections/TextSection";
 import TextAreaSection from "../sections/TextAreaSection";
-import InputLabelSection from "../sections/InputLabelSection";
+import InputSection from "../sections/InputSection";
 import SideBarSection from "../sections/SideBarSection";
 import IkTableSection from "../sections/IkTableSection";
 
@@ -23,7 +23,7 @@ const SECTIONS_MAP = {
 	"ik-table": <IkTableSection />,
 	text: <TextSection />,
 	"text-area": <TextAreaSection />,
-	"input-label": <InputLabelSection />,
+	input: <InputSection />,
 	sidebar: <SideBarSection />,
 	"sidebar-menu": <SideBarSection />,
 };

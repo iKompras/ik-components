@@ -6,7 +6,7 @@ export const COMPONENTS_DATA = [
 	{ id: "ik-table", name: "IkTable", category: "Componentes", tag: "Tablas & Datos" },
 	{ id: "text", name: "Text", category: "Componentes", tag: "Tipografía" },
 	{ id: "text-area", name: "TextArea", category: "Componentes", tag: "Formularios" },
-	{ id: "input-label", name: "InputLabel", category: "Componentes", tag: "Formularios" },
+	{ id: "input", name: "Input", category: "Componentes", tag: "Formularios" },
 	{ id: "sidebar", name: "SideBar", category: "Componentes", tag: "Navegación" },
 	{ id: "sidebar-menu", name: "SideBarMenu", category: "Componentes", tag: "Navegación" },
 ];
@@ -100,10 +100,18 @@ export const COMPONENT_PROPS = {
 		{ name: "showRequired", type: "bool", default: "false", description: "Muestra el asterisco rojo de campo requerido." },
 		{ name: "minRows", type: "number", default: "1", description: "Cantidad mínima de filas del área de texto." },
 	],
-	inputLabel: [
-		{ name: "children", type: "node", default: "undefined", description: "Texto de la etiqueta." },
-		{ name: "required", type: "bool", default: "false", description: "Muestra un asterisco rojo (*)." },
-		{ name: "hint", type: "string | node", default: "null", description: "Muestra un icono con tooltip informativo al hacer hover." },
+	input: [
+		{ name: "label", type: "string | node", default: "undefined", description: "Etiqueta mostrada sobre el input." },
+		{ name: "infoLabel", type: "string | node", default: "null", description: "Tooltip informativo con icono (i) al hacer hover." },
+		{ name: "required", type: "bool", default: "false", description: "Muestra asterisco rojo (*) y aplica required al input." },
+		{ name: "value", type: "string", default: '""', description: "Valor del input." },
+		{ name: "onChange", type: "func", default: "() => {}", description: "Handler disparado al cambiar el valor." },
+		{ name: "placeholder", type: "string", default: '""', description: "Texto provisional (por defecto toma el label si es texto)." },
+		{ name: "isPassword", type: "bool", default: "false", description: "Modo contraseña con botón para alternar visibilidad." },
+		{ name: "disabled", type: "bool", default: "false", description: "Deshabilita la edición del campo con fondo grisáceo." },
+		{ name: "rounded", type: "bool", default: "false", description: "Aplica esquinas redondeadas (border-radius: 1rem)." },
+		{ name: "icon", type: "string", default: "undefined", description: "Nombre del icono de Semantic UI mostrado a la izquierda." },
+		{ name: "onClear", type: "func", default: "null", description: "Callback disparado al presionar el botón de limpiar valor." },
 	],
 	sideBar: [
 		{ name: "menu", type: "array", default: "[]", description: "Arreglo de elementos y submenús del SideBar." },
@@ -190,11 +198,16 @@ export const CODE_SNIPPETS = {
   minRows={3}
 />`,
 
-	inputLabel: `import { InputLabel } from '@ikompras/ik-components';
+	input: `import { Input } from '@ikompras/ik-components';
 
-<InputLabel required hint="Información de ayuda para el usuario">
-  Correo Electrónico
-</InputLabel>`,
+<Input
+  label="Nombre Completo"
+  required
+  infoLabel="Nombre oficial registrado en el documento de identidad"
+  placeholder="Ej: Jeremy Reyes"
+  value={name}
+  onChange={(e, data) => setName(data.value)}
+/>`,
 
 	sideBar: `import { SideBar } from '@ikompras/ik-components';
 

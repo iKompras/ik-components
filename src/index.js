@@ -3,7 +3,7 @@ export { default as IkTable } from "./components/IkTable";
 export { default as FileManager } from "./components/FileManager";
 export { default as Text } from "./components/Text";
 export { default as TextArea } from "./components/TextArea";
-export { default as InputLabel } from "./components/InputLabel";
+export { default as Input } from "./components/Input";
 export { default as SideBar } from "./components/SideBar";
 export { default as SideBarMenu } from "./components/SideBarMenu";
 
