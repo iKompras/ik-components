@@ -12,6 +12,7 @@ import TextAreaSection from "../sections/TextAreaSection";
 import InputSection from "../sections/InputSection";
 import SideBarSection from "../sections/SideBarSection";
 import IkTableSection from "../sections/IkTableSection";
+import CardSection from "../sections/CardSection";
 
 import styles from "./styles.module.css";
 
@@ -21,6 +22,7 @@ const SECTIONS_MAP = {
 	"notification-dialog": <NotificationDialogSection />,
 	loading: <LoadingSection />,
 	"ik-table": <IkTableSection />,
+	card: <CardSection />,
 	text: <TextSection />,
 	"text-area": <TextAreaSection />,
 	input: <InputSection />,

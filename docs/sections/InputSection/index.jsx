@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Icon } from "semantic-ui-react";
 import { Input } from "../../../src/index.js";
 import SectionHeader from "../../components/SectionHeader";
 import CodeBlock from "../../components/CodeBlock";
@@ -20,7 +21,9 @@ const InputSection = () => {
 			/>
 
 			<div className={styles.section}>
-				<h3 className={styles.title}>🧪 Playground Interactivo</h3>
+				<h3 className={styles.title}>
+					<Icon name="sliders horizontal" /> Playground Interactivo
+				</h3>
 				<div className={styles.playgroundCard}>
 					<div className={styles.examplesList}>
 						<div>

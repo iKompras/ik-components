@@ -4,6 +4,7 @@ export const COMPONENTS_DATA = [
 	{ id: "notification-dialog", name: "NotificationDialog", category: "Modales", tag: "Alertas" },
 	{ id: "loading", name: "Loading", category: "Modales", tag: "Dimmer" },
 	{ id: "ik-table", name: "IkTable", category: "Componentes", tag: "Tablas & Datos" },
+	{ id: "card", name: "Card", category: "Componentes", tag: "Contenedores & UI" },
 	{ id: "text", name: "Text", category: "Componentes", tag: "Tipografía" },
 	{ id: "text-area", name: "TextArea", category: "Componentes", tag: "Formularios" },
 	{ id: "input", name: "Input", category: "Componentes", tag: "Formularios" },
@@ -131,6 +132,88 @@ export const COMPONENT_PROPS = {
 		{ name: "searcher", type: "object", default: "{}", description: "Configuración de la barra de búsqueda (placeholder, show)." },
 		{ name: "handlerTable", type: "func", default: "null", description: "Callback de eventos de tabla (paginación, orden, clicks)." },
 	],
+	card: [
+		{
+			name: "variant",
+			type: '"elevated" | "outlined" | "flat" | "soft" | "glass" | "gradient"',
+			default: '"elevated"',
+			description: "Estilo visual de la tarjeta ('soft' es ideal para sub-tarjetas con fondo entintado).",
+		},
+		{
+			name: "collapsible",
+			type: "bool",
+			default: "false",
+			description: "Permite colapsar/expandir el cuerpo de la tarjeta mediante botón o clic en cabecera.",
+		},
+		{
+			name: "defaultCollapsed",
+			type: "bool",
+			default: "false",
+			description: "Estado inicial de colapso no controlado.",
+		},
+		{
+			name: "collapseTrigger",
+			type: '"button" | "header"',
+			default: '"button"',
+			description: "Si el colapso se activa solo con el botón Chevron o con cualquier clic en la cabecera.",
+		},
+		{
+			name: "onCollapseChange",
+			type: "func",
+			default: "undefined",
+			description: "Callback disparado al alternar el estado de colapso: (isCollapsed) => {}.",
+		},
+		{
+			name: "color",
+			type: 'string ("primary" | "secondary" | "success" | "warning" | "danger" | "info" | "dark" | hex)',
+			default: "undefined",
+			description: "Preset temático o color HEX/RGB personalizado.",
+		},
+		{ name: "bgColor", type: "string", default: "undefined", description: "Color de fondo personalizado (HEX, RGB o CSS variable)." },
+		{ name: "textColor", type: "string", default: "undefined", description: "Color de texto personalizado." },
+		{ name: "borderColor", type: "string", default: "undefined", description: "Color de borde personalizado." },
+		{ name: "accentColor", type: "string", default: "undefined", description: "Color de la barra de acento o halo." },
+		{
+			name: "accent",
+			type: '"none" | "top" | "left" | "bottom" | "right"',
+			default: '"none"',
+			description: "Posición del borde decorativo de acento.",
+		},
+		{
+			name: "direction",
+			type: '"vertical" | "horizontal"',
+			default: '"vertical"',
+			description: "Orientación del contenido de la tarjeta.",
+		},
+		{
+			name: "responsive",
+			type: "bool",
+			default: "true",
+			description: "Si es horizontal, conmuta a vertical en dispositivos móviles de forma automática.",
+		},
+		{ name: "hoverable", type: "bool", default: "false", description: "Añade elevación suave y resalte al posar el cursor." },
+		{ name: "glow", type: "bool", default: "false", description: "Efecto de halo o aura de luz resplandeciente en hover." },
+		{
+			name: "clickable",
+			type: "bool",
+			default: "false",
+			description: "Habilita cursor pointer, microinteracción de click y accesibilidad por teclado.",
+		},
+		{ name: "fluid", type: "bool", default: "true", description: "Ocupa el 100% del ancho del contenedor padre." },
+		{
+			name: "radius",
+			type: '"none" | "small" | "medium" | "large" | "xl" | "full" | string',
+			default: '"large"',
+			description: "Curvatura de esquinas (o valor CSS ej: '24px').",
+		},
+		{
+			name: "padding",
+			type: '"none" | "small" | "medium" | "large"',
+			default: "undefined",
+			description: "Padding global opcional del contenedor.",
+		},
+		{ name: "loading", type: "bool", default: "false", description: "Muestra dimmer translúcido con spinner de carga." },
+	],
 };
 
 export const CODE_SNIPPETS = {
@@ -251,4 +334,54 @@ const columns = [
   searcher={{ placeholder: "Buscar...", show: true }}
   handlerTable={(action, data) => handleTableEvents(action, data)}
 />`,
+
+	card: `import { Card } from '@ikompras/ik-components';
+import { Button, Icon } from 'semantic-ui-react';
+
+// 1. Tarjeta Informativa Colapsable con Sub-Tarjetas 'soft'
+<Card variant="elevated" collapsible defaultCollapsed={false}>
+  <Card.Header
+    title="Centro de Información y Políticas Corporativas"
+    subtitle="Normativas vigentes y protocolos de auditoría"
+    avatar={<Card.Icon name="info circle" color="primary" size="small" />}
+    action={<Card.Badge variant="primary">Actualizado 2026</Card.Badge>}
+    divider
+  />
+  <Card.Body>
+    <p>Directrices vigentes para adquisiciones y control presupuestario.</p>
+    
+    {/* Sub-tarjeta 'soft' descriptiva */}
+    <Card variant="soft" color="primary" radius="large" hoverable>
+      <Card.Body>
+        <Card.Icon name="file alternate outline" color="primary" shape="circle" />
+        <h4>POLÍTICA GENERAL DE ADQUISICIONES</h4>
+        <p>Toda compra debe tramitarse exclusivamente a través de la plataforma con una orden autorizada.</p>
+        <Card.Badge variant="primary">
+          <Icon name="check" /> Aprobación Digital
+        </Card.Badge>
+      </Card.Body>
+    </Card>
+  </Card.Body>
+</Card>
+
+// 2. Tarjeta Ejecutiva con Media, Header y Footer
+<Card variant="elevated" hoverable glow color="primary" accent="left">
+  <Card.Media
+    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71"
+    aspectRatio="16/9"
+    badge={<Card.Badge variant="glass">Auditoría Q3</Card.Badge>}
+  />
+  <Card.Header
+    title="Balance Financiero Consolidado"
+    subtitle="Gestión de Tesorería y Cobranzas"
+    divider
+  />
+  <Card.Body>
+    <p>Informe consolidado de transacciones electrónicas y conciliaciones en tiempo real.</p>
+  </Card.Body>
+  <Card.Footer align="between" divider>
+    <Card.Badge variant="success">99.98% SLA</Card.Badge>
+    <Button primary size="small">Ver Informe Completo</Button>
+  </Card.Footer>
+</Card>`,
 };

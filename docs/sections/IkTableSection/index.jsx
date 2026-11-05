@@ -1,4 +1,5 @@
 import React from "react";
+import { Icon } from "semantic-ui-react";
 import { IkTable } from "../../../src/index.js";
 import SectionHeader from "../../components/SectionHeader";
 import CodeBlock from "../../components/CodeBlock";
@@ -25,7 +26,9 @@ const IkTableSection = () => {
 			/>
 
 			<div className={styles.section}>
-				<h3 className={styles.title}>🧪 Playground Interactivo</h3>
+				<h3 className={styles.title}>
+					<Icon name="sliders horizontal" /> Playground Interactivo
+				</h3>
 				<div className={styles.playgroundCard}>
 					<IkTable
 						columns={IK_TABLE_COLUMNS}
