@@ -290,3 +290,57 @@
 		width: 25% !important;
 	}
 }
+
+/* ==========================================================================
+   Inside Close Button (Esquina roja interior a la derecha)
+   ========================================================================== */
+
+.modalCloseInside > :global(.close.icon),
+.modalCloseInside > :global(.close),
+:global(.ui.modal).modalCloseInside > :global(.close.icon),
+:global(.ui.modal).modalCloseInside > :global(.close) {
+	position: absolute !important;
+	top: 0 !important;
+	right: 0 !important;
+	left: auto !important;
+	bottom: auto !important;
+	z-index: 20 !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	width: 3rem !important;
+	height: 3rem !important;
+	padding: 0 !important;
+	margin: 0 !important;
+	font-size: 1.25rem !important;
+	color: #ffffff !important;
+	background: #ef4444 !important;
+	border-top-right-radius: 0.28571429rem !important;
+	border-bottom-left-radius: 0.65rem !important;
+	cursor: pointer !important;
+	opacity: 1 !important;
+	box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3) !important;
+	transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease !important;
+}
+
+.modalCloseInside > :global(.close.icon:hover),
+.modalCloseInside > :global(.close:hover),
+:global(.ui.modal).modalCloseInside > :global(.close.icon:hover),
+:global(.ui.modal).modalCloseInside > :global(.close:hover) {
+	background-color: #dc2626 !important;
+	color: #ffffff !important;
+	opacity: 1 !important;
+	box-shadow: 0 4px 12px rgba(220, 38, 38, 0.45) !important;
+}
+
+.modalCloseInside > :global(.close.icon:active),
+.modalCloseInside > :global(.close:active),
+:global(.ui.modal).modalCloseInside > :global(.close.icon:active),
+:global(.ui.modal).modalCloseInside > :global(.close:active) {
+	transform: scale(0.92) !important;
+}
+
+/* Espacio reservado para que los botones de acción del header no colisionen con la X */
+.modalCloseInside .modalHeader {
+	padding-right: 3.75rem !important;
+}

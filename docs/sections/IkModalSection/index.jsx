@@ -11,6 +11,8 @@ const IkModalSection = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [mode, setMode] = useState("Add");
 	const [activeTab, setActiveTab] = useState("general");
+	const [closeInside, setCloseInside] = useState(false);
+	const [successMsg, setSuccessMsg] = useState("");
 
 	const handleToggleMode = () => {
 		const modes = ["Add", "Edit", "Watch"];
@@ -31,19 +33,37 @@ const IkModalSection = () => {
 					<Icon name="sliders horizontal" /> Playground Interactivo
 				</h3>
 				<div className={styles.playgroundCard}>
-					<p className={styles.subtitle}>Prueba abrir el modal e interactuar con los modos de edición, pestañas y botones de acción:</p>
+					<p className={styles.subtitle}>
+						Prueba abrir el modal e interactuar con los modos de edición, pestañas, posición de la X y botones de acción:
+					</p>
 					<div className={styles.controlsRow}>
 						<button
+							type="button"
 							className={styles.primaryBtn}
 							onClick={() => {
 								return setIsOpen(true);
 							}}>
 							Abrir IkModal ({mode})
 						</button>
-						<button className={styles.secondaryBtn} onClick={handleToggleMode}>
+						<button type="button" className={styles.secondaryBtn} onClick={handleToggleMode}>
 							Cambiar Modo Actual: <strong>{mode}</strong>
 						</button>
+						<button
+							type="button"
+							className={styles.secondaryBtn}
+							onClick={() => {
+								return setCloseInside(!closeInside);
+							}}>
+							<Icon name={closeInside ? "check square" : "square outline"} color={closeInside ? "red" : undefined} />
+							Posición de X: <strong>{closeInside ? "Dentro (Esquina Roja)" : "Fuera (Default)"}</strong>
+						</button>
 					</div>
+
+					{Boolean(successMsg) && (
+						<div style={{ marginTop: "1rem", color: "#22c55e", fontWeight: 600 }}>
+							<Icon name="check circle" /> {successMsg}
+						</div>
+					)}
 
 					{isOpen && (
 						<IkModal
@@ -52,6 +72,7 @@ const IkModalSection = () => {
 							mode={mode}
 							setMode={setMode}
 							size="small"
+							closeInside={closeInside}
 							tabs={[
 								{ key: "1", state: "general", label: "Datos Generales", icon: "user", order: 1 },
 								{ key: "2", state: "permisos", label: "Permisos y Roles", icon: "key", order: 2 },
@@ -65,12 +86,16 @@ const IkModalSection = () => {
 								return setIsOpen(false);
 							}}
 							onSuccess={() => {
-								alert("¡Acción de éxito ejecutada!");
+								setSuccessMsg("¡Acción de éxito ejecutada correctamente!");
 								setIsOpen(false);
+								setTimeout(() => {
+									setSuccessMsg("");
+								}, 4000);
 							}}>
 							<div className={styles.modalBody}>
 								<p className={styles.activeTabInfo}>
-									Pestaña activa: <code>{activeTab}</code>
+									Pestaña activa: <code>{activeTab}</code> | X de Cierre:{" "}
+									<code>{closeInside ? "closeInside={true} (Esquina Roja)" : "closeInside={false} (Exterior)"}</code>
 								</p>
 								<p className={styles.tabDescription}>
 									Este es el cuerpo del modal en modo <strong>{mode}</strong>. Cambia entre pestañas arriba o haz clic en el botón de modo

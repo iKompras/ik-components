@@ -58,6 +58,12 @@ export const COMPONENT_PROPS = {
 		},
 		{ name: "size", type: "string", default: '""', description: 'Tamaño: "mini", "tiny", "small", "large", "fullScreen".' },
 		{ name: "tabs", type: "array", default: "[]", description: "Listado de botones de navegación superior con iconos y badges." },
+		{
+			name: "closeInside",
+			type: "bool",
+			default: "false",
+			description: "Ubica la 'X' de cierre dentro del modal en la esquina superior derecha con fondo rojo estilizado y espacio reservado.",
+		},
 		{ name: "onSuccess", type: "func", default: "() => {}", description: "Función llamada al hacer clic en Guardar o Modificar." },
 		{ name: "onClose", type: "func", default: "() => {}", description: "Función llamada al cerrar o presionar atrás." },
 	],
@@ -346,6 +352,7 @@ export const CODE_SNIPPETS = {
   ]}
   activeTab={activeTab}
   onTabChange={setActiveTab}
+  closeInside={true} // X en la esquina superior derecha interior (roja)
   onClose={() => setIsOpen(false)}
   onSuccess={handleSave}
 >

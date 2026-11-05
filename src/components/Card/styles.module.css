@@ -551,9 +551,9 @@
    Subcomponents: Icon Badge (Circular / Rounded icon containers)
    ========================================================================== */
 
-.card i {
+/* .card i {
 	height: auto !important;
-}
+} */
 
 .iconBadge {
 	display: inline-flex;
