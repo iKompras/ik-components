@@ -1,0 +1,204 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	padding-bottom: 3rem;
+}
+
+.section {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+
+.title {
+	font-size: 1.25rem;
+	font-weight: 700;
+	color: var(--text-primary, #f8fafc);
+	margin: 0;
+	display: flex;
+	align-items: center;
+	gap: 0.65rem;
+}
+
+.playgroundCard {
+	background: var(--bg-card, rgba(30, 41, 59, 0.7));
+	border: 1px solid var(--border-card, rgba(148, 163, 184, 0.15));
+	border-radius: 1rem;
+	padding: 1.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.75rem;
+	box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.25);
+}
+
+.previewStage {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 1.25rem;
+	padding: 2.5rem 2rem;
+	background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 70%), rgba(15, 23, 42, 0.75);
+	border-radius: 0.875rem;
+	border: 1px dashed rgba(148, 163, 184, 0.3);
+	min-height: 180px;
+}
+
+.formatBadgesBar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	justify-content: center;
+	margin-bottom: 0.5rem;
+}
+
+.formatBadge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	padding: 0.25rem 0.6rem;
+	border-radius: 0.5rem;
+	background: rgba(15, 23, 42, 0.6);
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	color: #94a3b8;
+}
+
+.formatBadgeActive {
+	background: rgba(59, 130, 246, 0.15);
+	border-color: rgba(59, 130, 246, 0.4);
+	color: #60a5fa;
+}
+
+.controlsGrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 1.25rem;
+	background: rgba(15, 23, 42, 0.4);
+	padding: 1.25rem;
+	border-radius: 0.75rem;
+	border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.controlItem {
+	display: flex;
+	flex-direction: column;
+	gap: 0.4rem;
+}
+
+.controlItem label {
+	font-size: 0.8rem;
+	font-weight: 700;
+	color: #94a3b8;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.selectInput,
+.textInput {
+	background: #1e293b;
+	color: #ffffff;
+	border: 1px solid #334155;
+	border-radius: 0.5rem;
+	padding: 0.55rem 0.75rem;
+	font-size: 0.875rem;
+	outline: none;
+	width: 100%;
+	box-sizing: border-box;
+	transition: border-color 0.18s ease;
+}
+
+.selectInput:focus,
+.textInput:focus {
+	border-color: #3b82f6;
+}
+
+.switchRow {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.875rem;
+	color: #e2e8f0;
+	cursor: pointer;
+	user-select: none;
+}
+
+.presetsBar {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	background: rgba(15, 23, 42, 0.5);
+	padding: 1rem 1.25rem;
+	border-radius: 0.75rem;
+	border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.presetsLabel {
+	font-size: 0.8rem;
+	font-weight: 700;
+	color: #94a3b8;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.presetsButtons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+}
+
+.presetBtn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	background: #1e293b;
+	color: #e2e8f0;
+	border: 1px solid #334155;
+	border-radius: 0.5rem;
+	padding: 0.4rem 0.75rem;
+	font-size: 0.825rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+}
+
+.presetBtn:hover {
+	background: #273549;
+	border-color: #475569;
+	transform: translateY(-1px);
+}
+
+.cardsGrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	gap: 1.5rem;
+}
+
+.showcaseCard {
+	background: var(--bg-card, rgba(30, 41, 59, 0.7));
+	border: 1px solid var(--border-card, rgba(148, 163, 184, 0.15));
+	border-radius: 1rem;
+	padding: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.showcaseTitle {
+	font-size: 0.95rem;
+	font-weight: 700;
+	color: #f8fafc;
+	margin: 0;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.showcaseDesc {
+	font-size: 0.85rem;
+	color: #94a3b8;
+	margin: 0;
+	line-height: 1.4;
+}

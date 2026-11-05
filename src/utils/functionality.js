@@ -36,8 +36,16 @@ export const getFileTypeFromDataUrl = (dataUrl = "") => {
 	if (includes(mime, "word") || includes(mime, "officedocument.wordprocessingml")) return "doc";
 	if (includes(mime, "excel") || includes(mime, "spreadsheetml")) return "xls";
 	if (includes(mime, "powerpoint") || includes(mime, "presentationml")) return "ppt";
-	if (includes(mime, "zip") || includes(mime, "x-7z-compressed") || includes(mime, "x-rar-compressed")) return "zip";
-	if (includes(mime, "text/")) return "txt";
+	if (
+		includes(mime, "zip") ||
+		includes(mime, "x-7z-compressed") ||
+		includes(mime, "x-rar-compressed") ||
+		includes(mime, "tar") ||
+		includes(mime, "gzip")
+	) {
+		return "zip";
+	}
+	if (includes(mime, "text/") || includes(mime, "json") || includes(mime, "xml")) return "txt";
 	return "file";
 };
 
@@ -50,12 +58,14 @@ const hasAnyExtension = (lookup, ext) => {
 	return includes(lookup, normalized);
 };
 
-const docLookup = buildLookupString(["doc", "docx"]);
-const sheetLookup = buildLookupString(["xls", "xlsx", "csv"]);
-const deckLookup = buildLookupString(["ppt", "pptx"]);
-const archiveLookup = buildLookupString(["zip", "rar", "7z"]);
-const textLookup = buildLookupString(["txt", "md", "rtf"]);
-const imageLookup = buildLookupString(["jpg", "jpeg", "png", "webp", "apng", "avif", "gif", "svg"]);
+const docLookup = buildLookupString(["doc", "docx", "odt"]);
+const sheetLookup = buildLookupString(["xls", "xlsx", "csv", "ods"]);
+const deckLookup = buildLookupString(["ppt", "pptx", "odp"]);
+const archiveLookup = buildLookupString(["zip", "rar", "7z", "tar", "gz", "bz2"]);
+const textLookup = buildLookupString(["txt", "md", "rtf", "json", "xml", "log", "yaml", "yml"]);
+const imageLookup = buildLookupString(["jpg", "jpeg", "png", "webp", "apng", "avif", "gif", "svg", "bmp", "ico", "tiff"]);
+const videoLookup = buildLookupString(["mp4", "webm", "ogg", "mov", "m4v", "mkv", "avi", "wmv", "flv"]);
+const audioLookup = buildLookupString(["mp3", "wav", "ogg", "m4a", "aac", "flac", "wma", "opus", "weba"]);
 
 export const getFileTypeByName = (name = "", mime = "") => {
 	const mimeLower = toLower(mime);
@@ -64,12 +74,14 @@ export const getFileTypeByName = (name = "", mime = "") => {
 	if (mimeLower && startsWith(mimeLower, "video/")) return "video";
 	const ext = getFileExt(name);
 	if (ext === "pdf") return "pdf";
+	if (hasAnyExtension(imageLookup, ext)) return "image";
+	if (hasAnyExtension(videoLookup, ext)) return "video";
+	if (hasAnyExtension(audioLookup, ext)) return "audio";
 	if (hasAnyExtension(docLookup, ext)) return "doc";
 	if (hasAnyExtension(sheetLookup, ext)) return "xls";
 	if (hasAnyExtension(deckLookup, ext)) return "ppt";
 	if (hasAnyExtension(archiveLookup, ext)) return "zip";
 	if (hasAnyExtension(textLookup, ext)) return "txt";
-	if (hasAnyExtension(imageLookup, ext)) return "image";
 	return "file";
 };
 

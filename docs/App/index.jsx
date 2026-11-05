@@ -13,6 +13,8 @@ import InputSection from "../sections/InputSection";
 import SideBarSection from "../sections/SideBarSection";
 import IkTableSection from "../sections/IkTableSection";
 import CardSection from "../sections/CardSection";
+import ToggleSection from "../sections/ToggleSection";
+import FileManagerSection from "../sections/FileManagerSection";
 
 import styles from "./styles.module.css";
 
@@ -23,6 +25,8 @@ const SECTIONS_MAP = {
 	loading: <LoadingSection />,
 	"ik-table": <IkTableSection />,
 	card: <CardSection />,
+	"file-manager": <FileManagerSection />,
+	toggle: <ToggleSection />,
 	text: <TextSection />,
 	"text-area": <TextAreaSection />,
 	input: <InputSection />,
