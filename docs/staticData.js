@@ -5,9 +5,11 @@ export const COMPONENTS_DATA = [
 	{ id: "loading", name: "Loading", category: "Modales", tag: "Dimmer" },
 	{ id: "ik-table", name: "IkTable", category: "Componentes", tag: "Tablas & Datos" },
 	{ id: "card", name: "Card", category: "Componentes", tag: "Contenedores & UI" },
+	{ id: "file-manager", name: "FileManager", category: "Componentes", tag: "Archivos & Multimedia" },
 	{ id: "text", name: "Text", category: "Componentes", tag: "Tipografía" },
 	{ id: "text-area", name: "TextArea", category: "Componentes", tag: "Formularios" },
 	{ id: "input", name: "Input", category: "Componentes", tag: "Formularios" },
+	{ id: "toggle", name: "Toggle", category: "Componentes", tag: "Formularios & Switch" },
 	{ id: "sidebar", name: "SideBar", category: "Componentes", tag: "Navegación" },
 	{ id: "sidebar-menu", name: "SideBarMenu", category: "Componentes", tag: "Navegación" },
 ];
@@ -175,9 +177,10 @@ export const COMPONENT_PROPS = {
 		{ name: "accentColor", type: "string", default: "undefined", description: "Color de la barra de acento o halo." },
 		{
 			name: "accent",
-			type: '"none" | "top" | "left" | "bottom" | "right"',
+			type: 'string | array | object ("left bottom", ["left", "bottom"], "all", etc.)',
 			default: '"none"',
-			description: "Posición del borde decorativo de acento.",
+			description:
+				"Posición o combinación de bordes decorativos de acento. Acepta posiciones individuales ('top', 'left', 'bottom', 'right'), combinaciones por string ('left bottom', 'top, right', 'all') o arrays (['left', 'bottom']).",
 		},
 		{
 			name: "direction",
@@ -213,6 +216,119 @@ export const COMPONENT_PROPS = {
 			description: "Padding global opcional del contenedor.",
 		},
 		{ name: "loading", type: "bool", default: "false", description: "Muestra dimmer translúcido con spinner de carga." },
+	],
+	toggle: [
+		{ name: "checked", type: "bool", default: "undefined", description: "Estado booleano activo/inactivo (modo controlado)." },
+		{ name: "defaultChecked", type: "bool", default: "false", description: "Estado inicial del interruptor (modo no controlado)." },
+		{ name: "onChange", type: "func", default: "undefined", description: "Callback disparado al alternar: (nextChecked, event) => {}." },
+		{ name: "label", type: "string | node", default: "undefined", description: "Etiqueta descriptiva del interruptor." },
+		{
+			name: "labelPosition",
+			type: '"left" | "right"',
+			default: '"right"',
+			description: "Ubicación del texto con respecto al interruptor.",
+		},
+		{
+			name: "description",
+			type: "string | node",
+			default: "undefined",
+			description: "Texto secundario o pista ubicado debajo de la etiqueta.",
+		},
+		{ name: "size", type: '"small" | "medium" | "large"', default: '"medium"', description: "Dimensiones del componente." },
+		{
+			name: "trueColor",
+			type: "string (hex | --variable | preset)",
+			default: '"primary"',
+			description: "Color de fondo en estado activo (true). Acepta hex (#10b981), variable CSS (--accent o var(--accent)) o preset.",
+		},
+		{
+			name: "falseColor",
+			type: "string (hex | --variable | preset)",
+			default: '"#cbd5e1"',
+			description: "Color de fondo en estado inactivo (false). Acepta hex (#f43f5e), variable CSS (--red500 o var(--red500)) o preset.",
+		},
+		{
+			name: "color",
+			type: "string (hex | --variable | preset)",
+			default: '"primary"',
+			description: "Alias para trueColor.",
+		},
+		{ name: "title", type: "string | node", default: "undefined", description: "Texto de cabecera mostrado sobre el interruptor." },
+		{ name: "disabled", type: "bool", default: "false", description: "Deshabilita la interacción con opacidad reducida." },
+	],
+	fileManager: [
+		{
+			name: "files",
+			type: "array | string",
+			default: "[]",
+			description: "Lista de archivos o URLs (fotos, videos, audios, documentos o data URLs).",
+		},
+		{
+			name: "setFiles",
+			type: "func",
+			default: "() => {}",
+			description: "Función para actualizar el estado de los archivos.",
+		},
+		{
+			name: "type",
+			type: '"all" | "image" | "video" | "audio" | "media" | "file"',
+			default: '"all"',
+			description: "Filtro principal. 'all' admite fotos, videos, audios, pdfs, ofimática y zip.",
+		},
+		{
+			name: "accept",
+			type: "string",
+			default: "null",
+			description: "Cadena de tipos MIME o extensiones aceptadas personalizadas (ej: 'image/*,video/*').",
+		},
+		{
+			name: "multiple",
+			type: "bool",
+			default: "false",
+			description: "Permite seleccionar y gestionar múltiples archivos a la vez.",
+		},
+		{
+			name: "width",
+			type: "number",
+			default: "3",
+			description: "Ancho en rem de cada miniatura o tarjeta de archivo.",
+		},
+		{
+			name: "height",
+			type: "number",
+			default: "3",
+			description: "Alto en rem de cada miniatura o tarjeta de archivo.",
+		},
+		{
+			name: "rounded",
+			type: "bool",
+			default: "false",
+			description: "Diseño circular para fotos de perfil o avatares.",
+		},
+		{
+			name: "disabled",
+			type: "bool",
+			default: "false",
+			description: "Deshabilita la subida y eliminación de adjuntos.",
+		},
+		{
+			name: "icon",
+			type: "string",
+			default: '"paperclip"',
+			description: "Nombre del icono Semantic UI para el botón de subida.",
+		},
+		{
+			name: "downloadFileFetcher",
+			type: "func",
+			default: "undefined",
+			description: "Función asíncrona ({ uri }) para resolver URLs firmadas o de descarga.",
+		},
+		{
+			name: "images / setImages",
+			type: "array / func",
+			default: "[]",
+			description: "Props retrocompatibles heredadas de versiones anteriores de FileManager.",
+		},
 	],
 };
 
@@ -383,5 +499,79 @@ import { Button, Icon } from 'semantic-ui-react';
     <Card.Badge variant="success">99.98% SLA</Card.Badge>
     <Button primary size="small">Ver Informe Completo</Button>
   </Card.Footer>
+</Card>
+
+// 3. Tarjeta con Acentos Combinados (Izquierda + Inferior)
+<Card
+  variant="outlined"
+  accent={["left", "bottom"]} // o también accent="left bottom"
+  accentColor="#3b82f6"
+  hoverable
+>
+  <Card.Header title="Monitoreo Continuo" subtitle="Acento combinado en L" />
+  <Card.Body>Permite bordes simultáneos como left + bottom, top + right, o 'all'.</Card.Body>
 </Card>`,
+
+	toggle: `import { Toggle } from '@ikompras/ik-components';
+
+// 1. Con Variables CSS para True y False
+<Toggle
+  checked={isEnabled}
+  onChange={(checked) => setIsEnabled(checked)}
+  trueColor="--accent"
+  falseColor="--red500"
+  label="Modo Alta Prioridad"
+/>
+
+// 2. Con Colores Hexadecimales
+<Toggle
+  defaultChecked={true}
+  trueColor="#10b981"
+  falseColor="#f43f5e"
+  label="Autenticación en Dos Pasos (2FA)"
+/>
+
+// 3. Con Presets del Tema
+<Toggle
+  trueColor="primary"
+  falseColor="secondary"
+  size="large"
+  label="Notificaciones Push"
+/>`,
+
+	fileManager: `import { FileManager } from '@ikompras/ik-components';
+
+// 1. Universal con todos los formatos principales (fotos, videos, audios, pdf, docs, zip)
+const [files, setFiles] = useState([
+  'https://images.unsplash.com/photo-1551288049-bebda4e38f71',
+  'https://www.w3schools.com/html/mov_bbb.mp4',
+  'https://www.w3schools.com/html/horse.mp3',
+  'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf'
+]);
+
+<FileManager
+  files={files}
+  setFiles={setFiles}
+  type="all"
+  multiple={true}
+  width={4.5}
+  height={4.5}
+/>
+
+// 2. Modo estricto de sólo fotos / avatares redondeados
+<FileManager
+  files={avatar}
+  setFiles={setAvatar}
+  type="image"
+  rounded={true}
+  width={5}
+  height={5}
+/>
+
+// 3. Retrocompatibilidad clásica con images / setImages
+<FileManager
+  images={images}
+  setImages={setImages}
+  multiple={true}
+/>`,
 };

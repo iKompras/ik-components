@@ -195,6 +195,11 @@ const CardSection = () => {
 								<option value="left">Izquierda (Left)</option>
 								<option value="bottom">Inferior (Bottom)</option>
 								<option value="right">Derecha (Right)</option>
+								<option value="left bottom">Combinado: Izquierda + Inferior (Left y Bottom)</option>
+								<option value="top left">Combinado: Superior + Izquierda (Top y Left)</option>
+								<option value="top bottom">Combinado: Superior + Inferior (Top y Bottom)</option>
+								<option value="left right">Combinado: Izquierda + Derecha (Left y Right)</option>
+								<option value="all">Completo: Todos los bordes (All)</option>
 							</select>
 						</div>
 
@@ -464,11 +469,18 @@ const CardSection = () => {
 						</Card.Body>
 					</Card>
 
-					{/* Glassmorphism Security Card */}
-					<Card variant="glass" hoverable glow accent="left" accentColor="#8b5cf6" bgColor="rgba(30, 41, 59, 0.85)" textColor="#f8fafc">
+					{/* Glassmorphism Security Card con Acento Combinado (Left + Bottom) */}
+					<Card
+						variant="glass"
+						hoverable
+						glow
+						accent={["left", "bottom"]}
+						accentColor="#8b5cf6"
+						bgColor="rgba(30, 41, 59, 0.85)"
+						textColor="#f8fafc">
 						<Card.Header
 							title="Seguridad y Cumplimiento"
-							subtitle="Certificación PCI-DSS Nivel 1 & ISO 27001"
+							subtitle="Certificación PCI-DSS Nivel 1 & ISO 27001 (Acento Left + Bottom)"
 							avatar={<Icon name="shield" size="large" style={{ color: "#a78bfa" }} />}
 							action={<Card.Badge variant="glass">Verificado</Card.Badge>}
 							divider

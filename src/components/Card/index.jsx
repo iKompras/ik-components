@@ -47,6 +47,44 @@ const accentClassMap = {
 	right: styles.accentRight,
 };
 
+const parseAccentClasses = (accentProp) => {
+	if (!accentProp || accentProp === "none") {
+		return [];
+	}
+	if (Array.isArray(accentProp)) {
+		return accentProp
+			.map((pos) => {
+				return accentClassMap[String(pos).trim().toLowerCase()];
+			})
+			.filter(Boolean);
+	}
+	if (typeof accentProp === "string") {
+		const normalized = accentProp.trim().toLowerCase();
+		if (normalized === "all") {
+			return [styles.accentTop, styles.accentRight, styles.accentBottom, styles.accentLeft];
+		}
+		const parts = normalized.split(/[\s,+/|-]+/).map((s) => {
+			return s.trim();
+		});
+		return parts
+			.map((pos) => {
+				return accentClassMap[pos];
+			})
+			.filter(Boolean);
+	}
+	if (typeof accentProp === "object") {
+		return Object.keys(accentProp)
+			.filter((key) => {
+				return Boolean(accentProp[key]);
+			})
+			.map((pos) => {
+				return accentClassMap[pos.toLowerCase()];
+			})
+			.filter(Boolean);
+	}
+	return [];
+};
+
 const variantClassMap = {
 	elevated: styles.elevated,
 	outlined: styles.outlined,
@@ -167,7 +205,7 @@ const Card = forwardRef((props, ref) => {
 		fluid ? styles.fluid : styles.notFluid,
 		radiusClassMap[radius] || "",
 		padding ? paddingClassMap[padding] : "",
-		accentClassMap[accent] || "",
+		...parseAccentClasses(accent),
 		hoverable ? styles.hoverable : "",
 		glow ? styles.hoverGlow : "",
 		isInteractive ? styles.clickable : "",
@@ -268,7 +306,7 @@ Card.propTypes = {
 	borderColor: PropTypes.string,
 	accentColor: PropTypes.string,
 	glowColor: PropTypes.string,
-	accent: PropTypes.oneOf(["none", "top", "left", "bottom", "right"]),
+	accent: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
 	direction: PropTypes.oneOf(["vertical", "horizontal"]),
 	responsive: PropTypes.bool,
 	hoverable: PropTypes.bool,
