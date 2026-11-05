@@ -40,6 +40,11 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 }
 
+/* Semantic UI Icon Overrides */
+i.icon {
+	height: auto !important;
+}
+
 .docs-layout {
 	display: flex;
 	height: 100vh;
