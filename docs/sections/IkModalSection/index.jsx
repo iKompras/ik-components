@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Icon } from "semantic-ui-react";
 import { IkModal } from "../../../src/index.js";
 import SectionHeader from "../../components/SectionHeader";
 import CodeBlock from "../../components/CodeBlock";
@@ -26,7 +27,9 @@ const IkModalSection = () => {
 			/>
 
 			<div className={styles.section}>
-				<h3 className={styles.title}>🧪 Playground Interactivo</h3>
+				<h3 className={styles.title}>
+					<Icon name="sliders horizontal" /> Playground Interactivo
+				</h3>
 				<div className={styles.playgroundCard}>
 					<p className={styles.subtitle}>Prueba abrir el modal e interactuar con los modos de edición, pestañas y botones de acción:</p>
 					<div className={styles.controlsRow}>

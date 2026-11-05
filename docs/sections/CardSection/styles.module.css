@@ -1,0 +1,171 @@
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 2rem;
+	padding-bottom: 3rem;
+}
+
+.section {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+}
+
+.title {
+	font-size: 1.25rem;
+	font-weight: 700;
+	color: var(--text-primary, #f8fafc);
+	margin: 0;
+	display: flex;
+	align-items: center;
+	gap: 0.65rem;
+}
+
+.playground {
+	background: var(--bg-card, rgba(30, 41, 59, 0.7));
+	border: 1px solid var(--border-card, rgba(148, 163, 184, 0.15));
+	border-radius: 1rem;
+	padding: 1.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.controlsGrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+	gap: 1rem;
+	background: rgba(15, 23, 42, 0.4);
+	padding: 1rem;
+	border-radius: 0.75rem;
+	border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.controlItem {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+}
+
+.controlItem label {
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: #94a3b8;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.select,
+.colorInput {
+	background: #1e293b;
+	color: #ffffff;
+	border: 1px solid #334155;
+	border-radius: 0.5rem;
+	padding: 0.5rem;
+	font-size: 0.875rem;
+	outline: none;
+}
+
+.colorInput {
+	height: 38px;
+	cursor: pointer;
+	padding: 0.2rem 0.5rem;
+}
+
+.switchRow {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.875rem;
+	color: #e2e8f0;
+	cursor: pointer;
+	user-select: none;
+}
+
+.previewStage {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 2rem;
+	background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 70%), rgba(15, 23, 42, 0.6);
+	border-radius: 0.75rem;
+	border: 1px dashed rgba(148, 163, 184, 0.25);
+	min-height: 250px;
+}
+
+.cardsShowcaseGrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	gap: 1.5rem;
+}
+
+.statNumber {
+	font-size: 2rem;
+	font-weight: 800;
+	letter-spacing: -0.02em;
+	color: #f8fafc;
+	margin: 0.25rem 0;
+}
+
+.statSubtext {
+	font-size: 0.85rem;
+	color: #94a3b8;
+	margin: 0;
+}
+
+/* Demo UI informativa corporativa */
+.introText {
+	font-size: 0.95rem;
+	line-height: 1.6;
+	color: #334155;
+	margin: 0 0 1.25rem 0;
+}
+
+.nestedGridTop {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1.25rem;
+	margin-bottom: 1.25rem;
+}
+
+@media (max-width: 768px) {
+	.nestedGridTop {
+		grid-template-columns: 1fr;
+	}
+}
+
+.subCardInner {
+	display: flex;
+	align-items: flex-start;
+	gap: 1.25rem;
+	padding: 0.5rem;
+}
+
+.subCardDetails {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+	flex: 1;
+}
+
+.subCardTitle {
+	font-size: 0.95rem;
+	font-weight: 800;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	margin: 0 0 0.35rem 0;
+}
+
+.subCardText {
+	font-size: 0.875rem;
+	line-height: 1.55;
+	color: #334155;
+	margin: 0 0 0.85rem 0;
+}
+
+.subCardRow {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	flex-wrap: wrap;
+}

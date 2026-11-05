@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Icon } from "semantic-ui-react";
 import { Text } from "../../../src/index.js";
 import SectionHeader from "../../components/SectionHeader";
 import CodeBlock from "../../components/CodeBlock";
@@ -18,7 +19,9 @@ const TextSection = () => {
 			/>
 
 			<div className={styles.section}>
-				<h3 className={styles.title}>🧪 Playground Interactivo</h3>
+				<h3 className={styles.title}>
+					<Icon name="sliders horizontal" /> Playground Interactivo
+				</h3>
 				<div className={styles.playgroundCard}>
 					<label className={styles.label}>Escribe un texto usando sintaxis tipo WhatsApp:</label>
 					<input

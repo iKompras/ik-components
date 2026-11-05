@@ -1,0 +1,693 @@
+/* ==========================================================================
+   ik-components - Card Component Styles
+   ========================================================================== */
+
+.card {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: 100%;
+	min-width: 0;
+	box-sizing: border-box;
+	background-color: var(--ik-card-bg, #ffffff);
+	color: var(--ik-card-text, #0f172a);
+	border: 1px solid var(--ik-card-border, #e2e8f0);
+	border-radius: var(--ik-card-radius, 1rem);
+	overflow: hidden;
+	transition: transform 0.24s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.24s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s ease,
+		background-color 0.2s ease;
+}
+
+/* Fluid / Fixed Widths */
+.fluid {
+	width: 100%;
+}
+
+.notFluid {
+	width: auto;
+	max-width: 24rem;
+}
+
+/* ==========================================================================
+   Variants
+   ========================================================================== */
+
+.elevated {
+	border-color: var(--ik-card-border, #e2e8f0);
+	box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.05), 0 2px 4px -2px rgba(15, 23, 42, 0.04);
+}
+
+.outlined {
+	background-color: var(--ik-card-bg, #ffffff);
+	border: 1px solid var(--ik-card-border, #e2e8f0);
+	box-shadow: none;
+}
+
+.flat {
+	background-color: var(--ik-card-bg, #f8fafc);
+	border-color: transparent;
+	box-shadow: none;
+}
+
+/* Soft / Tinted variant (ideal for sub-cards and categorized widgets) */
+.soft {
+	background-color: var(--ik-card-bg-soft, #f0f7ff);
+	border: 1px solid var(--ik-card-border-soft, #bfdbfe);
+	color: var(--ik-card-text-soft, #1e3a8a);
+	box-shadow: none;
+}
+
+.glass {
+	background: var(--ik-card-bg, rgba(255, 255, 255, 0.7));
+	backdrop-filter: blur(16px);
+	-webkit-backdrop-filter: blur(16px);
+	border: 1px solid var(--ik-card-border, rgba(255, 255, 255, 0.35));
+	box-shadow: 0 8px 32px 0 rgba(15, 23, 42, 0.08);
+}
+
+.gradient {
+	background: var(--ik-card-bg, linear-gradient(135deg, #1e293b 0%, #0f172a 100%));
+	color: var(--ik-card-text, #ffffff);
+	border: 1px solid var(--ik-card-border, rgba(255, 255, 255, 0.1));
+}
+
+/* ==========================================================================
+   Color Themes (Presets)
+   ========================================================================== */
+
+.themePrimary {
+	--ik-card-border: rgba(59, 130, 246, 0.25);
+	--ik-card-accent: #3b82f6;
+	--ik-card-glow: rgba(59, 130, 246, 0.3);
+	--ik-card-bg-soft: #f0f7ff;
+	--ik-card-border-soft: #bfdbfe;
+	--ik-card-text-soft: #1e3a8a;
+	--ik-icon-bg: #dbeafe;
+	--ik-icon-color: #2563eb;
+}
+
+.themeSecondary {
+	--ik-card-border: rgba(148, 163, 184, 0.25);
+	--ik-card-accent: #64748b;
+	--ik-card-glow: rgba(100, 116, 139, 0.25);
+	--ik-card-bg-soft: #f8fafc;
+	--ik-card-border-soft: #cbd5e1;
+	--ik-card-text-soft: #334155;
+	--ik-icon-bg: #f1f5f9;
+	--ik-icon-color: #475569;
+}
+
+.themeSuccess {
+	--ik-card-border: rgba(34, 197, 94, 0.25);
+	--ik-card-accent: #22c55e;
+	--ik-card-glow: rgba(34, 197, 94, 0.3);
+	--ik-card-bg-soft: #f0fdf4;
+	--ik-card-border-soft: #bbf7d0;
+	--ik-card-text-soft: #14532d;
+	--ik-icon-bg: #dcfce7;
+	--ik-icon-color: #16a34a;
+}
+
+.themeWarning {
+	--ik-card-border: rgba(245, 158, 11, 0.25);
+	--ik-card-accent: #f59e0b;
+	--ik-card-glow: rgba(245, 158, 11, 0.3);
+	--ik-card-bg-soft: #fffbeb;
+	--ik-card-border-soft: #fde68a;
+	--ik-card-text-soft: #78350f;
+	--ik-icon-bg: #fef3c7;
+	--ik-icon-color: #d97706;
+}
+
+.themeDanger {
+	--ik-card-border: rgba(239, 68, 68, 0.25);
+	--ik-card-accent: #ef4444;
+	--ik-card-glow: rgba(239, 68, 68, 0.3);
+	--ik-card-bg-soft: #fef2f2;
+	--ik-card-border-soft: #fecaca;
+	--ik-card-text-soft: #7f1d1d;
+	--ik-icon-bg: #fee2e2;
+	--ik-icon-color: #dc2626;
+}
+
+.themeInfo {
+	--ik-card-border: rgba(6, 182, 212, 0.25);
+	--ik-card-accent: #06b6d4;
+	--ik-card-glow: rgba(6, 182, 212, 0.3);
+	--ik-card-bg-soft: #ecfeff;
+	--ik-card-border-soft: #a5f3fc;
+	--ik-card-text-soft: #164e63;
+	--ik-icon-bg: #cffafe;
+	--ik-icon-color: #0891b2;
+}
+
+.themeDark {
+	--ik-card-bg: #1e293b;
+	--ik-card-text: #f8fafc;
+	--ik-card-border: #334155;
+	--ik-card-accent: #38bdf8;
+	--ik-card-glow: rgba(56, 189, 248, 0.25);
+	--ik-card-bg-soft: rgba(30, 41, 59, 0.6);
+	--ik-card-border-soft: #475569;
+	--ik-card-text-soft: #e2e8f0;
+	--ik-icon-bg: #334155;
+	--ik-icon-color: #38bdf8;
+}
+
+/* ==========================================================================
+   Border Radii
+   ========================================================================== */
+
+.radiusNone {
+	border-radius: 0;
+}
+
+.radiusSm {
+	border-radius: 0.375rem;
+}
+
+.radiusMd {
+	border-radius: 0.75rem;
+}
+
+.radiusLg {
+	border-radius: 1rem;
+}
+
+.radiusXl {
+	border-radius: 1.5rem;
+}
+
+.radiusFull {
+	border-radius: 9999px;
+}
+
+/* ==========================================================================
+   Paddings
+   ========================================================================== */
+
+.padNone {
+	padding: 0;
+}
+
+.padSm {
+	padding: 0.75rem;
+}
+
+.padMd {
+	padding: 1.25rem;
+}
+
+.padLg {
+	padding: 2rem;
+}
+
+/* ==========================================================================
+   Accent Borders
+   ========================================================================== */
+
+.accentTop {
+	border-top-width: 4px;
+	border-top-color: var(--ik-card-accent, #3b82f6);
+}
+
+.accentLeft {
+	border-left-width: 4px;
+	border-left-color: var(--ik-card-accent, #3b82f6);
+}
+
+.accentBottom {
+	border-bottom-width: 4px;
+	border-bottom-color: var(--ik-card-accent, #3b82f6);
+}
+
+.accentRight {
+	border-right-width: 4px;
+	border-right-color: var(--ik-card-accent, #3b82f6);
+}
+
+/* ==========================================================================
+   Interactions (Hover, Clickable, Glow)
+   ========================================================================== */
+
+.hoverable:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 16px 24px -4px rgba(15, 23, 42, 0.1), 0 8px 12px -6px rgba(15, 23, 42, 0.06);
+	border-color: var(--ik-card-border-hover, rgba(59, 130, 246, 0.4));
+}
+
+.hoverGlow:hover {
+	box-shadow: 0 0 25px var(--ik-card-glow, rgba(59, 130, 246, 0.35)), 0 12px 24px -4px rgba(15, 23, 42, 0.1);
+}
+
+.clickable {
+	cursor: pointer;
+	user-select: none;
+}
+
+.clickable:active {
+	transform: scale(0.985) translateY(-1px);
+}
+
+.clickable:focus-visible {
+	outline: 2px solid var(--ik-card-accent, #3b82f6);
+	outline-offset: 2px;
+}
+
+/* ==========================================================================
+   Layout Direction & Responsiveness
+   ========================================================================== */
+
+.horizontal {
+	display: flex;
+	flex-direction: row;
+}
+
+.vertical {
+	display: flex;
+	flex-direction: column;
+}
+
+.responsiveHorizontal {
+	display: flex;
+	flex-direction: row;
+}
+
+@media (max-width: 640px) {
+	.responsiveHorizontal {
+		flex-direction: column;
+	}
+
+	.responsiveHorizontal .mediaCover,
+	.responsiveHorizontal .mediaTop,
+	.responsiveHorizontal .mediaLeft {
+		width: 100% !important;
+		min-width: 100% !important;
+	}
+}
+
+/* ==========================================================================
+   Collapsible Animation & Grid
+   ========================================================================== */
+
+.collapseGrid {
+	display: grid;
+	grid-template-rows: 1fr;
+	transition: grid-template-rows 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+	width: 100%;
+}
+
+.collapseGridCollapsed {
+	grid-template-rows: 0fr;
+}
+
+.collapseContent {
+	min-height: 0;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+}
+
+.collapseButton {
+	background: transparent;
+	border: none;
+	padding: 0.35rem 0.5rem;
+	border-radius: 0.5rem;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	color: inherit;
+	transition: background-color 0.15s ease;
+}
+
+.collapseButton:hover {
+	background-color: rgba(148, 163, 184, 0.15);
+}
+
+.chevronIcon {
+	transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+	font-size: 1.1rem;
+	line-height: 1;
+}
+
+.chevronRotated {
+	transform: rotate(180deg);
+}
+
+.headerClickable {
+	cursor: pointer;
+	user-select: none;
+}
+
+.headerClickable:hover {
+	background-color: rgba(148, 163, 184, 0.04);
+}
+
+/* ==========================================================================
+   Subcomponents: Header
+   ========================================================================== */
+
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 1.15rem 1.25rem;
+	transition: background-color 0.15s ease;
+}
+
+.headerWithDivider {
+	border-bottom: 1px solid var(--ik-card-border, #e2e8f0);
+}
+
+.headerLeading {
+	display: flex;
+	align-items: center;
+	gap: 0.875rem;
+	min-width: 0;
+	flex: 1;
+}
+
+.headerAvatar {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.headerTextGroup {
+	display: flex;
+	flex-direction: column;
+	min-width: 0;
+}
+
+.title {
+	margin: 0;
+	font-size: 1.15rem;
+	font-weight: 700;
+	line-height: 1.35;
+	color: inherit;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.subtitle {
+	margin: 0.25rem 0 0 0;
+	font-size: 0.875rem;
+	color: var(--ik-card-muted, #64748b);
+	line-height: 1.4;
+}
+
+.headerExtra {
+	flex-shrink: 0;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+/* ==========================================================================
+   Subcomponents: Body
+   ========================================================================== */
+
+.body {
+	flex: 1 1 auto;
+	padding: 1.25rem;
+	min-width: 0;
+	font-size: 0.9375rem;
+	line-height: 1.55;
+	color: inherit;
+}
+
+.bodyPaddedSm {
+	padding: 0.75rem;
+}
+
+.bodyPaddedMd {
+	padding: 1.25rem;
+}
+
+.bodyPaddedLg {
+	padding: 1.75rem;
+}
+
+.bodyPaddedNone {
+	padding: 0;
+}
+
+/* ==========================================================================
+   Subcomponents: Footer
+   ========================================================================== */
+
+.footer {
+	display: flex;
+	align-items: center;
+	padding: 0.875rem 1.25rem 1.25rem 1.25rem;
+	gap: 0.75rem;
+	flex-wrap: wrap;
+}
+
+.footerWithDivider {
+	border-top: 1px solid var(--ik-card-border, #e2e8f0);
+	padding-top: 1rem;
+}
+
+.alignLeft {
+	justify-content: flex-start;
+}
+
+.alignCenter {
+	justify-content: center;
+}
+
+.alignRight {
+	justify-content: flex-end;
+}
+
+.alignBetween {
+	justify-content: space-between;
+}
+
+/* ==========================================================================
+   Subcomponents: Media
+   ========================================================================== */
+
+.mediaContainer {
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+	background-color: #0f172a;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.mediaImg {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	display: block;
+	transition: transform 0.3s ease;
+}
+
+.mediaZoomOnHover:hover .mediaImg {
+	transform: scale(1.05);
+}
+
+.mediaOverlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.75) 100%);
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-end;
+	padding: 1.25rem;
+	color: #ffffff;
+	pointer-events: none;
+}
+
+.mediaBadgeSlot {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	z-index: 2;
+}
+
+/* Aspect ratios */
+.ratio16x9 {
+	aspect-ratio: 16 / 9;
+}
+
+.ratio4x3 {
+	aspect-ratio: 4 / 3;
+}
+
+.ratio1x1 {
+	aspect-ratio: 1 / 1;
+}
+
+.ratio21x9 {
+	aspect-ratio: 21 / 9;
+}
+
+.ratioAuto {
+	aspect-ratio: auto;
+}
+
+/* Media left in horizontal cards */
+.mediaLeft {
+	width: 38%;
+	min-width: 140px;
+	height: 100%;
+	flex-shrink: 0;
+}
+
+/* ==========================================================================
+   Subcomponents: Icon Badge (Circular / Rounded icon containers)
+   ========================================================================== */
+
+.iconBadge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 2.75rem;
+	height: 2.75rem;
+	border-radius: 0.75rem;
+	background-color: var(--ik-icon-bg, #dbeafe);
+	color: var(--ik-icon-color, #2563eb);
+	flex-shrink: 0;
+	font-size: 1.2rem;
+	transition: transform 0.2s ease;
+}
+
+.iconBadgeCircle {
+	border-radius: 9999px;
+}
+
+.iconBadgeSm {
+	width: 2.25rem;
+	height: 2.25rem;
+	font-size: 1rem;
+}
+
+.iconBadgeLg {
+	width: 3.25rem;
+	height: 3.25rem;
+	font-size: 1.4rem;
+}
+
+/* ==========================================================================
+   Subcomponents: Badge / Chip
+   ========================================================================== */
+
+.badge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.375rem;
+	font-size: 0.75rem;
+	font-weight: 600;
+	line-height: 1;
+	padding: 0.35rem 0.65rem;
+	border-radius: 9999px;
+	letter-spacing: 0.025em;
+	transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.badgeDefault {
+	background-color: rgba(148, 163, 184, 0.2);
+	color: #475569;
+}
+
+.badgePrimary {
+	background-color: #dbeafe;
+	color: #1d4ed8;
+}
+
+.badgeSuccess {
+	background-color: #dcfce7;
+	color: #15803d;
+}
+
+.badgeWarning {
+	background-color: #fef3c7;
+	color: #b45309;
+}
+
+.badgeDanger {
+	background-color: #fee2e2;
+	color: #b91c1c;
+}
+
+.badgeInfo {
+	background-color: #cffafe;
+	color: #0e7490;
+}
+
+.badgeGlass {
+	background: rgba(15, 23, 42, 0.65);
+	backdrop-filter: blur(8px);
+	-webkit-backdrop-filter: blur(8px);
+	color: #ffffff;
+	border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.badgePill {
+	border-radius: 9999px;
+	padding: 0.3rem 0.75rem;
+	font-weight: 700;
+}
+
+/* ==========================================================================
+   Subcomponents: Divider
+   ========================================================================== */
+
+.divider {
+	border: 0;
+	height: 1px;
+	background-color: var(--ik-card-border, #e2e8f0);
+	margin: 0;
+	width: 100%;
+}
+
+/* ==========================================================================
+   Loading Overlay
+   ========================================================================== */
+
+.loadingOverlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(255, 255, 255, 0.7);
+	backdrop-filter: blur(4px);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.75rem;
+	z-index: 10;
+	color: var(--ik-card-text, #0f172a);
+	font-weight: 500;
+	font-size: 0.875rem;
+}
+
+.spinner {
+	width: 2rem;
+	height: 2rem;
+	border: 3px solid rgba(59, 130, 246, 0.2);
+	border-top-color: #3b82f6;
+	border-radius: 50%;
+	animation: cardSpin 0.8s linear infinite;
+}
+
+@keyframes cardSpin {
+	to {
+		transform: rotate(360deg);
+	}
+}
