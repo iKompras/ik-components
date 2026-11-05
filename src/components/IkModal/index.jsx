@@ -38,8 +38,12 @@ const IkModal = ({
 	customHeight = "",
 	closeOnDimmerClick = true,
 	contentStyle = {},
+	closeInside = false,
+	closeIconInside = false,
+	closeIcon = true,
 }) => {
 	const [currentIconName, setCurrentIconName] = useState("list");
+	const isCloseInside = closeInside || closeIconInside;
 
 	useEffect(() => {
 		iconHandler();
@@ -93,10 +97,10 @@ const IkModal = ({
 
 	return (
 		<Modal
-			className={`${!isEmpty(size) ? styles[size] : ""} ${className} ${styles.modal}`}
+			className={`${!isEmpty(size) ? styles[size] : ""} ${className} ${styles.modal} ${isCloseInside ? styles.modalCloseInside : ""}`}
 			style={modalStyle}
 			open
-			closeIcon
+			closeIcon={closeIcon}
 			closeOnDimmerClick={closeOnDimmerClick}
 			onClose={confirmModalHandler}>
 			<Modal.Header className={styles.modalHeader}>
@@ -210,6 +214,9 @@ IkModal.propTypes = {
 	customHeight: PropTypes.string,
 	closeOnDimmerClick: PropTypes.bool,
 	contentStyle: PropTypes.object,
+	closeInside: PropTypes.bool,
+	closeIconInside: PropTypes.bool,
+	closeIcon: PropTypes.bool,
 };
 
 export default IkModal;
