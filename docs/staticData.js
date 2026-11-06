@@ -234,6 +234,30 @@ export const COMPONENT_PROPS = {
 			default: '"No hay resultados"',
 			description: "Mensaje cuando la búsqueda no coincide con opciones.",
 		},
+		{
+			name: "showId",
+			type: "bool",
+			default: "false",
+			description: "Muestra automáticamente un badge con el ID en cada opción (estilo Max Monitor).",
+		},
+		{
+			name: "idKey",
+			type: "string",
+			default: '"id"',
+			description: "Propiedad del objeto de la opción utilizada para extraer el ID cuando showId es true.",
+		},
+		{
+			name: "idBadgeColor",
+			type: "string",
+			default: '"teal"',
+			description: "Color de fondo del badge del ID ('teal', 'blue', 'green', 'orange', 'red' o código hexadecimal).",
+		},
+		{
+			name: "renderOption",
+			type: "func",
+			default: "undefined",
+			description: "Renderizador personalizado para las opciones de la lista desplegable: (option, isSelected) => ReactNode.",
+		},
 	],
 	sideBar: [
 		{ name: "menu", type: "array", default: "[]", description: "Arreglo de elementos y submenús del SideBar." },

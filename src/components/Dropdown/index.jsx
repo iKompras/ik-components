@@ -29,6 +29,31 @@ const DropdownDivider = () => {
 	return null;
 };
 
+const COLOR_MAP = {
+	teal: "#00b5ad",
+	blue: "#2185d0",
+	green: "#21ba45",
+	orange: "#f2711c",
+	red: "#db2828",
+	purple: "#a333c8",
+	pink: "#e03997",
+	yellow: "#fbbd08",
+	olive: "#b5cc18",
+	violet: "#6435c9",
+	grey: "#767676",
+	gray: "#767676",
+	black: "#1b1c1d",
+};
+
+const getBadgeStyle = (color) => {
+	if (!color) {
+		return { backgroundColor: "#00b5ad" };
+	}
+	const normalized = typeof color === "string" ? color.toLowerCase() : "";
+	const mapped = COLOR_MAP[normalized];
+	return { backgroundColor: mapped || color };
+};
+
 const Dropdown = forwardRef((props, ref) => {
 	const {
 		label,
@@ -62,6 +87,11 @@ const Dropdown = forwardRef((props, ref) => {
 		name,
 		onOpen,
 		onClose,
+		showId = false,
+		idKey = "id",
+		idBadgeColor = "teal",
+		renderOption,
+		renderSelected,
 		...rest
 	} = props;
 
@@ -118,6 +148,51 @@ const Dropdown = forwardRef((props, ref) => {
 		};
 	}, [currentValue, onClose, props]);
 
+	const getOptionBadge = (opt) => {
+		if (!opt) {
+			return null;
+		}
+
+		// 1. Formato Semantic UI React Dropdown: label: { color: 'teal', content: 67 }
+		if (opt.label !== undefined && opt.label !== null) {
+			if (typeof opt.label === "object") {
+				const content = opt.label.content !== undefined ? opt.label.content : opt.label.text;
+				if (content !== undefined && content !== null && content !== "") {
+					return {
+						content,
+						color: opt.label.color || idBadgeColor || "teal",
+					};
+				}
+			} else if (typeof opt.label === "string" || typeof opt.label === "number") {
+				return {
+					content: opt.label,
+					color: opt.labelColor || idBadgeColor || "teal",
+				};
+			}
+		}
+
+		// 2. Propiedad directa id: 67
+		if (opt.id !== undefined && opt.id !== null && opt.id !== "") {
+			return {
+				content: opt.id,
+				color: opt.idColor || idBadgeColor || "teal",
+			};
+		}
+
+		// 3. Prop showId a nivel de Dropdown
+		if (showId) {
+			const fallbackId = opt[idKey] !== undefined ? opt[idKey] : opt.key !== undefined ? opt.key : opt.value;
+			if (fallbackId !== undefined && fallbackId !== null && fallbackId !== "") {
+				return {
+					content: fallbackId,
+					color: idBadgeColor || "teal",
+				};
+			}
+		}
+
+		return null;
+	};
+
 	// Filter options
 	const visibleOptions = options.filter((opt) => {
 		// In multiple mode WITHOUT checkboxes, hide already selected items from list
@@ -127,8 +202,19 @@ const Dropdown = forwardRef((props, ref) => {
 		if (!search || !searchQuery.trim()) {
 			return true;
 		}
+		const query = searchQuery.toLowerCase().trim();
 		const labelText = typeof opt.text === "string" ? opt.text : String(opt.text || "");
-		return labelText.toLowerCase().includes(searchQuery.toLowerCase());
+		const badge = getOptionBadge(opt);
+		const badgeText = badge && badge.content !== undefined ? String(badge.content) : "";
+		const valueText = String(opt.value !== undefined ? opt.value : "");
+		const descText = typeof opt.description === "string" ? opt.description : "";
+
+		return (
+			labelText.toLowerCase().includes(query) ||
+			badgeText.toLowerCase().includes(query) ||
+			valueText.toLowerCase().includes(query) ||
+			descText.toLowerCase().includes(query)
+		);
 	});
 
 	const handleOpen = (e) => {
@@ -382,9 +468,23 @@ const Dropdown = forwardRef((props, ref) => {
 						{/* Selected Value */}
 						{selectedOption && (
 							<span className={`${styles.selectedSingle} ${isOpen && searchQuery ? styles.fadedText : ""}`}>
-								{selectedOption.icon && <Icon name={selectedOption.icon} className={styles.optionIcon} />}
-								{selectedOption.flag && <i className={`${selectedOption.flag} flag ${styles.optionFlag}`} />}
-								<span className={styles.optionText}>{selectedOption.text}</span>
+								{renderSelected ? (
+									renderSelected(selectedOption)
+								) : (
+									<>
+										{(() => {
+											const badge = getOptionBadge(selectedOption);
+											return badge ? (
+												<span className={styles.idBadge} style={getBadgeStyle(badge.color)}>
+													{badge.content}
+												</span>
+											) : null;
+										})()}
+										{selectedOption.icon && <Icon name={selectedOption.icon} className={styles.optionIcon} />}
+										{selectedOption.flag && <i className={`${selectedOption.flag} flag ${styles.optionFlag}`} />}
+										<span className={styles.optionText}>{selectedOption.text}</span>
+									</>
+								)}
 							</span>
 						)}
 
@@ -421,8 +521,14 @@ const Dropdown = forwardRef((props, ref) => {
 							const opt = options.find((o) => {
 								return o.value === val;
 							}) || { text: val, value: val };
+							const badge = getOptionBadge(opt);
 							return (
 								<span key={val} className={styles.tag}>
+									{badge && (
+										<span className={styles.idBadgeMini} style={getBadgeStyle(badge.color)}>
+											{badge.content}
+										</span>
+									)}
 									{opt.icon && <Icon name={opt.icon} className={styles.optionIcon} />}
 									{opt.flag && <i className={`${opt.flag} flag ${styles.optionFlag}`} />}
 									<span className={styles.tagText}>{opt.text}</span>
@@ -489,6 +595,7 @@ const Dropdown = forwardRef((props, ref) => {
 						visibleOptions.map((opt, index) => {
 							const isSelected = isMultiple ? selectedValues.includes(opt.value) : String(currentValue) === String(opt.value);
 							const isHighlighted = highlightedIndex === index;
+							const badge = getOptionBadge(opt);
 
 							const itemClasses = [
 								styles.menuItem,
@@ -511,15 +618,29 @@ const Dropdown = forwardRef((props, ref) => {
 									{/* Square Checkbox in withCheckbox mode */}
 									{hasCheckbox && <span className={`${styles.checkboxBox} ${isSelected ? styles.checkboxBoxChecked : ""}`} />}
 
-									{/* Icon / Flag */}
-									{opt.icon && <Icon name={opt.icon} className={styles.optionIcon} />}
-									{opt.flag && <i className={`${opt.flag} flag ${styles.optionFlag}`} />}
+									{renderOption ? (
+										renderOption(opt, isSelected)
+									) : opt.content ? (
+										opt.content
+									) : (
+										<>
+											{badge && (
+												<span className={styles.idBadge} style={getBadgeStyle(badge.color)}>
+													{badge.content}
+												</span>
+											)}
 
-									{/* Text */}
-									<span className={styles.optionText}>{opt.text}</span>
+											{/* Icon / Flag */}
+											{opt.icon && <Icon name={opt.icon} className={styles.optionIcon} />}
+											{opt.flag && <i className={`${opt.flag} flag ${styles.optionFlag}`} />}
 
-									{/* Description */}
-									{opt.description && <span className={styles.optionDescription}>{opt.description}</span>}
+											{/* Text */}
+											<span className={styles.optionText}>{opt.text}</span>
+
+											{/* Description */}
+											{opt.description && <span className={styles.optionDescription}>{opt.description}</span>}
+										</>
+									)}
 								</li>
 							);
 						})
@@ -568,6 +689,10 @@ Dropdown.propTypes = {
 			flag: PropTypes.string,
 			description: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 			disabled: PropTypes.bool,
+			id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+			idColor: PropTypes.string,
+			label: PropTypes.oneOfType([PropTypes.object, PropTypes.string, PropTypes.number]),
+			content: PropTypes.node,
 		})
 	),
 	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number, PropTypes.array, PropTypes.bool]),
@@ -581,6 +706,11 @@ Dropdown.propTypes = {
 	name: PropTypes.string,
 	onOpen: PropTypes.func,
 	onClose: PropTypes.func,
+	showId: PropTypes.bool,
+	idKey: PropTypes.string,
+	idBadgeColor: PropTypes.string,
+	renderOption: PropTypes.func,
+	renderSelected: PropTypes.func,
 };
 
 export default Dropdown;

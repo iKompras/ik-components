@@ -535,6 +535,47 @@
 	background-repeat: no-repeat;
 }
 
+/* ==========================================================================
+   ID Badge / Label Tag (e.g. [67] allMeV, matching Semantic UI teal label)
+   ========================================================================== */
+
+.idBadge {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 1.55rem;
+	height: 1.35rem;
+	padding: 0 0.375rem;
+	background-color: #00b5ad; /* Semantic UI Teal */
+	color: #ffffff;
+	font-size: 0.75rem;
+	font-weight: 700;
+	border-radius: 0.25rem;
+	line-height: 1;
+	flex-shrink: 0;
+	user-select: none;
+	text-align: center;
+	letter-spacing: -0.01em;
+}
+
+.idBadgeMini {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 1.25rem;
+	height: 1.15rem;
+	padding: 0 0.3rem;
+	background-color: #00b5ad;
+	color: #ffffff;
+	font-size: 0.7rem;
+	font-weight: 700;
+	border-radius: 0.2rem;
+	line-height: 1;
+	flex-shrink: 0;
+	user-select: none;
+	letter-spacing: -0.01em;
+}
+
 /* Icons & Flags in Menu Items (Crisp Alignment) */
 .optionIcon {
 	display: inline-flex;
