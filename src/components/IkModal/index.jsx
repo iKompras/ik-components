@@ -81,14 +81,25 @@ const IkModal = ({
 		onSuccess();
 	};
 
+	// Helper to find first non-empty valid color from candidates
+	const getFirstValidColor = (...candidates) => {
+		for (const candidate of candidates) {
+			if (candidate && typeof candidate === "string" && candidate.trim()) {
+				const resolved = resolveColor(candidate);
+				if (resolved) return resolved;
+			}
+		}
+		return undefined;
+	};
+
 	// Optional custom colors:
 	// If color or colors are passed, inject variables. Otherwise CSS defaults to the project's global theme variables.
-	const computedHeaderBg = resolveColor(colors?.header || color);
-	const computedHeaderFont = resolveColor(colors?.headerText);
-	const computedContentBg = resolveColor(colors?.content);
-	const computedButtonBg = resolveColor(colors?.button || color);
-	const computedButtonFont = resolveColor(colors?.buttonText);
-	const computedCloseBg = resolveColor(colors?.close);
+	const computedHeaderBg = getFirstValidColor(colors?.header, color, colors?.primary);
+	const computedHeaderFont = getFirstValidColor(colors?.fontsHeader, colors?.fontHeader, colors?.headerText, colors?.text);
+	const computedContentBg = getFirstValidColor(colors?.panelModal, colors?.panel, colors?.content);
+	const computedButtonBg = getFirstValidColor(colors?.buttons, colors?.button, color, colors?.primary);
+	const computedButtonFont = getFirstValidColor(colors?.fontsButtons, colors?.buttonText);
+	const computedCloseBg = getFirstValidColor(colors?.closeInside, colors?.close);
 
 	const customColorVariables = {
 		...(computedHeaderBg ? { "--header": computedHeaderBg } : {}),

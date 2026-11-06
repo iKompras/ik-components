@@ -8,9 +8,11 @@ const PRESET_MAP = {
 	primary: "var(--primary, #1e293b)",
 	accent: "var(--accent, #3b82f6)",
 	secondary: "var(--text-secondary, #64748b)",
-	success: "#16a34a",
+	success: "var(--toggle, #7ed321)",
 	warning: "#f59e0b",
-	danger: "var(--red500, #ef4444)",
+	danger: "var(--toggleFalse, #ff0000)",
+	toggle: "var(--toggle, #7ed321)",
+	toggleFalse: "var(--toggleFalse, #ff0000)",
 	info: "#0284c7",
 	dark: "#0f172a",
 };

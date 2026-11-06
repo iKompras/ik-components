@@ -332,13 +332,24 @@ export const COMPONENT_PROPS = {
 		{ name: "bgColor", type: "string", default: "undefined", description: "Color de fondo personalizado (HEX, RGB o CSS variable)." },
 		{ name: "textColor", type: "string", default: "undefined", description: "Color de texto personalizado." },
 		{ name: "borderColor", type: "string", default: "undefined", description: "Color de borde personalizado." },
-		{ name: "accentColor", type: "string", default: "undefined", description: "Color de la barra de acento o halo." },
+		{
+			name: "accentColor",
+			type: "string",
+			default: "undefined",
+			description: "Color de la barra de acento o halo (soporta HEX, RGB y variables CSS como '--header').",
+		},
+		{
+			name: "accentWidth",
+			type: "number | string",
+			default: "4px",
+			description: "Grosor del borde de acento en px o unidad CSS (ej. 4, '3px', '6px').",
+		},
 		{
 			name: "accent",
-			type: 'string | array | object ("left bottom", ["left", "bottom"], "all", etc.)',
+			type: 'string | array | object ("left top bottom", ["left", "top", "bottom"], "all", "open-right", etc.)',
 			default: '"none"',
 			description:
-				"Posición o combinación de bordes decorativos de acento. Acepta posiciones individuales ('top', 'left', 'bottom', 'right'), combinaciones por string ('left bottom', 'top, right', 'all') o arrays (['left', 'bottom']).",
+				"Posición o combinación de bordes decorativos de acento. Acepta posiciones individuales ('top', 'left', 'bottom', 'right'), 2 bordes ('left bottom'), 3 bordes ('left top bottom', 'top left bottom', 'open-right', 'c', 'u'), todos ('all') o arrays (['left', 'top', 'bottom']).",
 		},
 		{
 			name: "direction",
@@ -820,6 +831,18 @@ import { Button, Icon } from 'semantic-ui-react';
 >
   <Card.Header title="Monitoreo Continuo" subtitle="Acento combinado en L" />
   <Card.Body>Permite bordes simultáneos como left + bottom, top + right, o 'all'.</Card.Body>
+</Card>
+
+// 4. Tarjeta con 3 Acentos (Left, Top y Bottom / C-Shape)
+<Card
+  variant="elevated"
+  accent="left top bottom" // o ["left", "top", "bottom"] o "open-right"
+  accentColor="--header"
+  accentWidth={4}
+  hoverable
+>
+  <Card.Header title="Auditoría de Procesos" subtitle="3 bordes acentuados" />
+  <Card.Body>Bordes superior, izquierdo e inferior destacados con color del tema.</Card.Body>
 </Card>`,
 
 	toggle: `import { Toggle } from '@ikompras/ik-components';
