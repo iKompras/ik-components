@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Modal, Icon, Button } from "semantic-ui-react";
 import { isEmpty } from "lodash";
+import { resolveColor } from "../../utils/functionality";
 
 // Styles
 import styles from "./styles.module.css";
@@ -41,6 +42,8 @@ const IkModal = ({
 	closeInside = false,
 	closeIconInside = false,
 	closeIcon = true,
+	color = "",
+	colors = {},
 }) => {
 	const [currentIconName, setCurrentIconName] = useState("list");
 	const isCloseInside = closeInside || closeIconInside;
@@ -78,7 +81,25 @@ const IkModal = ({
 		onSuccess();
 	};
 
-	const modalStyle = fullHeight
+	// Optional custom colors:
+	// If color or colors are passed, inject variables. Otherwise CSS defaults to the project's global theme variables.
+	const computedHeaderBg = resolveColor(colors?.header || color);
+	const computedHeaderFont = resolveColor(colors?.headerText);
+	const computedContentBg = resolveColor(colors?.content);
+	const computedButtonBg = resolveColor(colors?.button || color);
+	const computedButtonFont = resolveColor(colors?.buttonText);
+	const computedCloseBg = resolveColor(colors?.close);
+
+	const customColorVariables = {
+		...(computedHeaderBg ? { "--header": computedHeaderBg } : {}),
+		...(computedHeaderFont ? { "--fontsHeader": computedHeaderFont, "--fontHeader": computedHeaderFont } : {}),
+		...(computedContentBg ? { "--panelModal": computedContentBg, "--panel": computedContentBg } : {}),
+		...(computedButtonBg ? { "--buttons": computedButtonBg, "--button": computedButtonBg, "--primary": computedButtonBg } : {}),
+		...(computedButtonFont ? { "--fontsButtons": computedButtonFont } : {}),
+		...(computedCloseBg ? { "--closeInside": computedCloseBg } : {}),
+	};
+
+	const baseModalStyle = fullHeight
 		? {
 				maxHeight: "calc(100vh - 2.5rem)",
 				...style,
@@ -95,6 +116,11 @@ const IkModal = ({
 		  }
 		: { ...style };
 
+	const modalStyle = {
+		...customColorVariables,
+		...baseModalStyle,
+	};
+
 	return (
 		<Modal
 			className={`${!isEmpty(size) ? styles[size] : ""} ${className} ${styles.modal} ${isCloseInside ? styles.modalCloseInside : ""}`}
@@ -103,7 +129,12 @@ const IkModal = ({
 			closeIcon={closeIcon}
 			closeOnDimmerClick={closeOnDimmerClick}
 			onClose={confirmModalHandler}>
-			<Modal.Header className={styles.modalHeader}>
+			<Modal.Header
+				className={styles.modalHeader}
+				style={{
+					...(computedHeaderBg ? { backgroundColor: computedHeaderBg } : {}),
+					...(computedHeaderFont ? { color: computedHeaderFont } : {}),
+				}}>
 				<div className={styles.modalHeaderTitle}>
 					<Icon name={currentIconName} className={styles.iconHeader} />
 					{title}
@@ -152,13 +183,14 @@ const IkModal = ({
 			)}
 			<Modal.Content
 				className={ignoreContent ? styles.modalContentNoFlex : styles.modalContent}
-				style={
-					fullHeight
+				style={{
+					...(computedContentBg ? { backgroundColor: computedContentBg } : {}),
+					...(fullHeight
 						? { minHeight: "calc(95vh - 8rem)", ...contentStyle }
 						: customHeight
 						? { height: customHeight, minHeight: customHeight, ...contentStyle }
-						: { ...contentStyle }
-				}
+						: { ...contentStyle }),
+				}}
 				scrolling>
 				{children}
 			</Modal.Content>
@@ -176,6 +208,10 @@ const IkModal = ({
 				{mode !== "Watch" && onSuccess && (
 					<Button
 						className={`${styles.positiveButton} ${saveDisabled ? styles.disabled : ""}`}
+						style={{
+							...(computedButtonBg ? { borderColor: computedButtonBg } : {}),
+							...(computedButtonFont ? { color: computedButtonFont } : {}),
+						}}
 						onClick={handlerSuccess}
 						disabled={saveDisabled}>
 						{mode === "Add" ? saveLabel : modifyLabel}
@@ -217,6 +253,16 @@ IkModal.propTypes = {
 	closeInside: PropTypes.bool,
 	closeIconInside: PropTypes.bool,
 	closeIcon: PropTypes.bool,
+	// Color customization props
+	color: PropTypes.string,
+	colors: PropTypes.shape({
+		header: PropTypes.string,
+		headerText: PropTypes.string,
+		content: PropTypes.string,
+		button: PropTypes.string,
+		buttonText: PropTypes.string,
+		close: PropTypes.string,
+	}),
 };
 
 export default IkModal;

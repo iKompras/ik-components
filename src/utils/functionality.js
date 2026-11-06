@@ -95,3 +95,68 @@ export const getTimeLabel = (time, format) => {
 	}
 	return date.format(format || "DD MMM YYYY HH:mm");
 };
+
+/**
+ * Normaliza cualquier valor de color a una expresión CSS válida:
+ * - Variables con o sin prefijo (--header o header) -> var(--header)
+ * - Expresiones ya envueltas (var(--...), linear-gradient(...))
+ * - Hex (#fff, #00b5ad), RGB/RGBA (rgba(0,0,0,0.5)), HSL/HSLA
+ * - Palabras clave nativas (white, black, transparent, etc.)
+ */
+export const resolveColor = (colorValue, fallback) => {
+	if (!colorValue || typeof colorValue !== "string") {
+		return fallback;
+	}
+	const trimmed = colorValue.trim();
+	if (!trimmed) {
+		return fallback;
+	}
+
+	// 1. Ya es una función CSS (var, linear-gradient, radial-gradient, etc.)
+	if (trimmed.startsWith("var(") || trimmed.startsWith("linear-gradient(") || trimmed.startsWith("radial-gradient(")) {
+		return trimmed;
+	}
+
+	// 2. Comienza con doble guión (--nombre-variable)
+	if (trimmed.startsWith("--")) {
+		return `var(${trimmed})`;
+	}
+
+	// 3. Hexadecimal (#fff, #1e293b, #00b5ad80)
+	if (/^#[0-9A-Fa-f]{3,8}$/.test(trimmed)) {
+		return trimmed;
+	}
+
+	// 4. Funciones de color nativas: rgb(), rgba(), hsl(), hsla()
+	if (/^(rgb|rgba|hsl|hsla)\(/i.test(trimmed)) {
+		return trimmed;
+	}
+
+	// 5. Palabras clave de color nativas de CSS
+	const standardColors = [
+		"transparent",
+		"currentcolor",
+		"inherit",
+		"initial",
+		"unset",
+		"white",
+		"black",
+		"red",
+		"green",
+		"blue",
+		"yellow",
+		"orange",
+		"purple",
+		"pink",
+		"gray",
+		"grey",
+		"teal",
+		"cyan",
+	];
+	if (standardColors.includes(trimmed.toLowerCase())) {
+		return trimmed;
+	}
+
+	// 6. Si es un identificador simple como "header", "primary", "panelModal", se asume variable CSS:
+	return `var(--${trimmed})`;
+};

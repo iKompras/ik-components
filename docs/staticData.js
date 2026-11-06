@@ -66,6 +66,20 @@ export const COMPONENT_PROPS = {
 			default: "false",
 			description: "Ubica la 'X' de cierre dentro del modal en la esquina superior derecha con fondo rojo estilizado y espacio reservado.",
 		},
+		{
+			name: "color",
+			type: "string",
+			default: '""',
+			description:
+				"Color temático del modal (cabecera, pestañas y botón de acción). Acepta nombres de variable ('primary', 'header'), variables con prefijo ('--header'), Hex (#00b5ad), RGBA o nombres CSS. Opcional: por defecto toma automáticamente las variables de tema del proyecto.",
+		},
+		{
+			name: "colors",
+			type: "object",
+			default: "{}",
+			description:
+				"Objeto opcional para personalización granular de partes específicas: { header, headerText, content, button, buttonText, close }.",
+		},
 		{ name: "onSuccess", type: "func", default: "() => {}", description: "Función llamada al hacer clic en Guardar o Modificar." },
 		{ name: "onClose", type: "func", default: "() => {}", description: "Función llamada al cerrar o presionar atrás." },
 	],
@@ -578,6 +592,7 @@ export const COMPONENT_PROPS = {
 export const CODE_SNIPPETS = {
 	ikModal: `import { IkModal } from '@ikompras/ik-components';
 
+// 1. Modal CRUD Básico
 <IkModal
   title="Crear Contacto"
   mode={mode} // "Add" | "Edit" | "Watch"
@@ -594,6 +609,18 @@ export const CODE_SNIPPETS = {
   onSuccess={handleSave}
 >
   <p>Contenido del formulario...</p>
+</IkModal>
+
+// 2. Con Colores Personalizados (Variables, Hex, RGBA sin tener que poner var(--))
+<IkModal
+  title="Configuración de Empresa"
+  color="#00B5AD"        // Header y tabs en Teal (o 'header', '--header')
+  contentColor="#F8FAFC" // Fondo del modal (o 'panelModal')
+  buttonColor="#10B981"  // Botón guardar en verde
+  closeColor="#EF4444"   // Fondo de la X de cierre
+  closeInside={true}
+>
+  <p>Formulario con colores corporativos personalizados...</p>
 </IkModal>`,
 
 	confirmModal: `import { ConfirmModal } from '@ikompras/ik-components';

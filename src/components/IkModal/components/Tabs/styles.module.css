@@ -36,9 +36,11 @@
 	0% {
 		box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4);
 	}
+
 	70% {
 		box-shadow: 0 0 0 6px rgba(255, 0, 0, 0);
 	}
+
 	100% {
 		box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
 	}
@@ -124,7 +126,7 @@
 	position: absolute !important;
 	width: 100% !important;
 	height: 3px !important;
-	background-color: var(--header, #000000) !important;
+	background-color: var(--header, var(--primary, #000000)) !important;
 	bottom: 0 !important;
 	left: 0 !important;
 }

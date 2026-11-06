@@ -23,8 +23,8 @@
 	display: flex !important;
 	justify-content: space-between !important;
 	align-items: center !important;
-	color: var(--fontsHeader, #fff) !important;
-	background-color: var(--header, #1e293b) !important;
+	color: var(--fontsHeader, var(--fontHeader, var(--text, #ffffff))) !important;
+	background-color: var(--header, var(--primary, #1e293b)) !important;
 	height: 3rem !important;
 	font-size: 1.3rem !important;
 }
@@ -38,14 +38,14 @@
 	display: flex !important;
 	justify-content: space-between;
 	width: 100% !important;
-	background-color: var(--panelModal, #f9fafb) !important;
+	background-color: var(--panelModal, var(--panel, #f9fafb)) !important;
 	overflow-y: auto;
 	margin-top: 0 !important;
 }
 
 .modalContentNoFlex {
 	width: 100% !important;
-	background-color: var(--panelModal, #f9fafb) !important;
+	background-color: var(--panelModal, var(--panel, #f9fafb)) !important;
 	overflow-y: auto;
 	margin-top: 0 !important;
 }
@@ -76,8 +76,8 @@
 
 .topEditButton {
 	background-color: transparent !important;
-	color: var(--fontsHeader, #fff) !important;
-	border: 1px solid var(--fontsHeader, #fff) !important;
+	color: var(--fontsHeader, var(--fontHeader, #ffffff)) !important;
+	border: 1px solid var(--fontsHeader, var(--fontHeader, #ffffff)) !important;
 	padding: 0.5rem 0.5rem !important;
 	margin: 0.1rem 0.1rem !important;
 	margin-left: 10px !important;
@@ -85,8 +85,8 @@
 
 .topWatchButton {
 	background-color: transparent !important;
-	color: var(--fontsHeader, #fff) !important;
-	border: 1px solid var(--fontsHeader, #fff) !important;
+	color: var(--fontsHeader, var(--fontHeader, #ffffff)) !important;
+	border: 1px solid var(--fontsHeader, var(--fontHeader, #ffffff)) !important;
 	padding: 0.5rem 0.5rem !important;
 	margin: 0.1rem 0.1rem !important;
 	margin-left: 10px !important;
@@ -94,8 +94,8 @@
 
 .topPrintButton {
 	background-color: transparent !important;
-	color: var(--fontsHeader, #fff) !important;
-	border: 1px solid var(--fontsHeader, #fff) !important;
+	color: var(--fontsHeader, var(--fontHeader, #ffffff)) !important;
+	border: 1px solid var(--fontsHeader, var(--fontHeader, #ffffff)) !important;
 	padding: 0.5rem 0.5rem !important;
 	margin: 0.1rem 0.1rem !important;
 	margin-left: 10px !important;
@@ -104,7 +104,7 @@
 .topWatchButton:hover,
 .topEditButton:hover,
 .topPrintButton:hover {
-	background-color: var(--fontsHeader, #fff) !important;
+	background-color: var(--fontsHeader, var(--fontHeader, #ffffff)) !important;
 	color: var(--header, #1e293b) !important;
 }
 
@@ -112,15 +112,17 @@
 	margin: 0 1.5rem 0 0 !important;
 	padding: 0.3rem 0.4rem !important;
 	min-width: 10rem !important;
-	color: var(--fontsButtons, #1e293b) !important;
-	border: 1px solid var(--fontsButtons, #1e293b) !important;
+	color: var(--fontsButtons, var(--buttons, var(--button, var(--primary, #1e293b)))) !important;
+	border: 1px solid var(--buttons, var(--button, var(--primary, #1e293b))) !important;
 	border-radius: 1.5rem !important;
 	background-color: transparent !important;
+	transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
 }
 
 .positiveButton:hover {
-	color: var(--fontsButtons, #fff) !important;
-	background-color: var(--buttons, #3b82f6) !important;
+	color: #ffffff !important;
+	background-color: var(--buttons, var(--button, var(--primary, #3b82f6))) !important;
+	border-color: var(--buttons, var(--button, var(--primary, #3b82f6))) !important;
 }
 
 .negativeButton {
@@ -314,23 +316,22 @@
 	margin: 0 !important;
 	font-size: 1.25rem !important;
 	color: #ffffff !important;
-	background: #ef4444 !important;
+	background: var(--closeInside, #ef4444) !important;
 	border-top-right-radius: 0.28571429rem !important;
 	border-bottom-left-radius: 0.65rem !important;
 	cursor: pointer !important;
 	opacity: 1 !important;
-	box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3) !important;
-	transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease !important;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+	transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease, filter 0.15s ease !important;
 }
 
 .modalCloseInside > :global(.close.icon:hover),
 .modalCloseInside > :global(.close:hover),
 :global(.ui.modal).modalCloseInside > :global(.close.icon:hover),
 :global(.ui.modal).modalCloseInside > :global(.close:hover) {
-	background-color: #dc2626 !important;
-	color: #ffffff !important;
+	filter: brightness(0.88) !important;
 	opacity: 1 !important;
-	box-shadow: 0 4px 12px rgba(220, 38, 38, 0.45) !important;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
 }
 
 .modalCloseInside > :global(.close.icon:active),
