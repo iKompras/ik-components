@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Icon } from "semantic-ui-react";
-import { IkModal } from "../../../src/index.js";
+import { IkModal, ColorPicker } from "../../../src/index.js";
 import SectionHeader from "../../components/SectionHeader";
 import CodeBlock from "../../components/CodeBlock";
 import PropsTable from "../../components/PropsTable";
@@ -12,6 +12,7 @@ const IkModalSection = () => {
 	const [mode, setMode] = useState("Add");
 	const [activeTab, setActiveTab] = useState("general");
 	const [closeInside, setCloseInside] = useState(false);
+	const [modalColor, setModalColor] = useState("#00b5ad");
 	const [successMsg, setSuccessMsg] = useState("");
 
 	const handleToggleMode = () => {
@@ -46,7 +47,7 @@ const IkModalSection = () => {
 							Abrir IkModal ({mode})
 						</button>
 						<button type="button" className={styles.secondaryBtn} onClick={handleToggleMode}>
-							Cambiar Modo Actual: <strong>{mode}</strong>
+							Cambiar Modo: <strong>{mode}</strong>
 						</button>
 						<button
 							type="button"
@@ -55,8 +56,9 @@ const IkModalSection = () => {
 								return setCloseInside(!closeInside);
 							}}>
 							<Icon name={closeInside ? "check square" : "square outline"} color={closeInside ? "red" : undefined} />
-							Posición de X: <strong>{closeInside ? "Dentro (Esquina Roja)" : "Fuera (Default)"}</strong>
+							X: <strong>{closeInside ? "Dentro" : "Fuera"}</strong>
 						</button>
+						<ColorPicker label="Color Personalizado:" format="swatch" value={modalColor} onChange={setModalColor} />
 					</div>
 
 					{Boolean(successMsg) && (
@@ -73,6 +75,7 @@ const IkModalSection = () => {
 							setMode={setMode}
 							size="small"
 							closeInside={closeInside}
+							color={modalColor}
 							tabs={[
 								{ key: "1", state: "general", label: "Datos Generales", icon: "user", order: 1 },
 								{ key: "2", state: "permisos", label: "Permisos y Roles", icon: "key", order: 2 },

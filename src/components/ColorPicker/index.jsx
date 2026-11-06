@@ -80,6 +80,7 @@ const ColorPicker = ({
 	const [copied, setCopied] = useState(false);
 
 	const containerRef = useRef(null);
+	const popoverRef = useRef(null);
 	const satBoardRef = useRef(null);
 	const hueSliderRef = useRef(null);
 
@@ -87,24 +88,53 @@ const ColorPicker = ({
 	const [alignRight, setAlignRight] = useState(false);
 	const [flipTop, setFlipTop] = useState(false);
 
-	useEffect(() => {
-		if (!isOpen || !containerRef.current || typeof window === "undefined") {
+	const updatePlacement = useCallback(() => {
+		if (!containerRef.current || typeof window === "undefined") {
 			return;
 		}
 		const rect = containerRef.current.getBoundingClientRect();
-		const wouldOverflowRight = rect.left + 260 > window.innerWidth;
-		setAlignRight(wouldOverflowRight && rect.right >= 260);
+		const cardHeight = popoverRef.current?.offsetHeight || 290;
+		const cardWidth = popoverRef.current?.offsetWidth || 240;
 
+		const spaceBelow = window.innerHeight - rect.bottom - 12;
+		const spaceAbove = rect.top - 12;
+
+		let shouldFlipTop = false;
 		if (popoverPlacement === "top") {
-			setFlipTop(true);
-		} else if (popoverPlacement === "bottom") {
-			setFlipTop(false);
+			// Forced top: only flip down if completely no space above and fits below
+			shouldFlipTop = !(spaceAbove < cardHeight && spaceBelow > spaceAbove);
 		} else {
-			const spaceBelow = window.innerHeight - rect.bottom;
-			const spaceAbove = rect.top;
-			setFlipTop(spaceBelow < 280 && spaceAbove > spaceBelow);
+			// Default ("bottom" or "auto"):
+			// Respects bottom as default, but automatically flips to top if there is not enough room below and more space above
+			shouldFlipTop = spaceBelow < cardHeight && spaceAbove > spaceBelow;
 		}
-	}, [isOpen, popoverPlacement]);
+		setFlipTop(shouldFlipTop);
+
+		const spaceRight = window.innerWidth - rect.left - 12;
+		const spaceLeft = rect.right - 12;
+		// If it overflows right, align right if it fits better to the left
+		const shouldAlignRight = spaceRight < cardWidth && (spaceLeft >= cardWidth || spaceLeft > spaceRight);
+		setAlignRight(shouldAlignRight);
+	}, [popoverPlacement]);
+
+	useEffect(() => {
+		if (!isOpen) return;
+
+		updatePlacement();
+
+		const frameId = requestAnimationFrame(() => {
+			updatePlacement();
+		});
+
+		window.addEventListener("resize", updatePlacement);
+		window.addEventListener("scroll", updatePlacement, true);
+
+		return () => {
+			cancelAnimationFrame(frameId);
+			window.removeEventListener("resize", updatePlacement);
+			window.removeEventListener("scroll", updatePlacement, true);
+		};
+	}, [isOpen, updatePlacement]);
 
 	// Helper to notify changes
 	const notifyChange = useCallback(
@@ -502,11 +532,8 @@ const ColorPicker = ({
 			{/* POPOVER PANEL */}
 			{popover && isOpen && !disabled && (
 				<div
-					className={[
-						styles.popoverWrapper,
-						flipTop || popoverPlacement === "top" ? styles.popoverTop : "",
-						alignRight ? styles.popoverAlignRight : "",
-					]
+					ref={popoverRef}
+					className={[styles.popoverWrapper, flipTop ? styles.popoverTop : "", alignRight ? styles.popoverAlignRight : ""]
 						.filter(Boolean)
 						.join(" ")}>
 					{renderPickerCard()}
