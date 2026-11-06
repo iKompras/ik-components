@@ -119,17 +119,12 @@
 }
 
 .size_small .searchInputSingle {
-	left: 0.75rem;
-	right: 2rem;
-	width: calc(100% - 2.75rem);
 	font-size: 0.8rem;
 	line-height: 32px;
 }
 
 .size_small .placeholderSingle,
 .size_small .selectedSingle {
-	left: 0.75rem;
-	right: 2rem;
 	font-size: 0.8rem;
 }
 
@@ -160,17 +155,12 @@
 }
 
 .size_large .searchInputSingle {
-	left: 1rem;
-	right: 2.5rem;
-	width: calc(100% - 3.5rem);
 	font-size: 1rem;
 	line-height: 44px;
 }
 
 .size_large .placeholderSingle,
 .size_large .selectedSingle {
-	left: 1rem;
-	right: 2.5rem;
 	font-size: 1rem;
 }
 
@@ -270,13 +260,14 @@
 	z-index: 2;
 }
 
-.fadedText {
-	opacity: 0.35;
+.searchInputInactiveCaret {
+	caret-color: transparent;
 }
 
 .hiddenText {
-	display: none;
-	opacity: 0;
+	display: none !important;
+	opacity: 0 !important;
+	visibility: hidden !important;
 }
 
 /* ==========================================================================

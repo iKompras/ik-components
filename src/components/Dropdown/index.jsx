@@ -379,7 +379,9 @@ const Dropdown = forwardRef((props, ref) => {
 	};
 
 	// Determine if clear icon should show
-	const hasValue = isMultiple ? selectedValues.length > 0 : currentValue !== undefined && currentValue !== null && currentValue !== "";
+	const hasValue = isMultiple
+		? selectedValues.length > 0
+		: (currentValue !== undefined && currentValue !== null && currentValue !== "") || Boolean(searchQuery);
 	const showClear = clearable && hasValue && !disabled;
 
 	// Selected option for single mode
@@ -467,7 +469,7 @@ const Dropdown = forwardRef((props, ref) => {
 
 						{/* Selected Value */}
 						{selectedOption && (
-							<span className={`${styles.selectedSingle} ${isOpen && searchQuery ? styles.fadedText : ""}`}>
+							<span className={`${styles.selectedSingle} ${isOpen && searchQuery ? styles.hiddenText : ""}`}>
 								{renderSelected ? (
 									renderSelected(selectedOption)
 								) : (
@@ -495,7 +497,7 @@ const Dropdown = forwardRef((props, ref) => {
 								type="text"
 								name={name}
 								id={id}
-								className={styles.searchInputSingle}
+								className={`${styles.searchInputSingle} ${!searchQuery && selectedOption ? styles.searchInputInactiveCaret : ""}`}
 								value={isOpen ? searchQuery : ""}
 								onChange={(e) => {
 									return setSearchQuery(e.target.value);
