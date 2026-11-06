@@ -164,6 +164,14 @@ export const COMPONENT_PROPS = {
 		{ name: "placeholder", type: "string", default: '""', description: "Texto provisional (por defecto toma el label si es texto)." },
 		{ name: "isPassword", type: "bool", default: "false", description: "Modo contraseña con botón para alternar visibilidad." },
 		{ name: "disabled", type: "bool", default: "false", description: "Deshabilita la edición del campo con fondo grisáceo." },
+		{
+			name: "watch",
+			type: "bool",
+			default: "false",
+			description:
+				"Modo consulta/bloqueado (compatible con IkModal 'Watch'). Deshabilita la edición y oculta automáticamente la 'X' y el botón 'Generar'.",
+		},
+		{ name: "hideGenerate", type: "bool", default: "false", description: "Oculta el botón 'Generar' en inputs de tipo PIN." },
 		{ name: "rounded", type: "bool", default: "false", description: "Aplica esquinas redondeadas (border-radius: 1rem)." },
 		{ name: "icon", type: "string", default: "undefined", description: "Nombre del icono de Semantic UI mostrado a la izquierda." },
 		{ name: "onClear", type: "func", default: "null", description: "Callback disparado al presionar el botón de limpiar valor." },

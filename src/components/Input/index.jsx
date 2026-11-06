@@ -41,14 +41,26 @@ const Input = forwardRef((props, ref) => {
 		type = "text",
 		hideClear = false,
 		hideDropdown = false,
+		hideGenerate = false,
+		readOnly = false,
+		watch = false,
+		isWatch = false,
+		mode,
+		modalOption,
 		customBorderRadius,
 		error,
 	} = props;
 
+	const isBlocked = Boolean(
+		disabled || watch || isWatch || readOnly || mode === "Watch" || mode === "watch" || modalOption === "Watch" || modalOption === "watch"
+	);
+
 	const isLinkType = type === "link" || Boolean(isLink);
 	const isPinType = type === "pin" || Boolean(isPin);
 	const isPasswordType = isPassword || type === "password" || isPinType;
-	const hasRightAction = Boolean(isPassword || isPinType || isLinkType);
+	const showGenerate = isPinType && !hideGenerate && !isBlocked;
+	const showClear = !hideClear && !isEmpty(value) && !isBlocked;
+	const hasRightAction = Boolean(isPasswordType || showGenerate || isLinkType);
 
 	const radiusDefault = customBorderRadius || (rounded ? "1rem" : "0.25rem");
 	const radiusRounded = customBorderRadius || "1rem";
@@ -60,17 +72,21 @@ const Input = forwardRef((props, ref) => {
 	const [copied, setCopied] = useState(false);
 
 	useEffect(() => {
-		// Aplicar background gris cuando esté deshabilitado
-		if (disabled) {
+		// Aplicar background gris cuando esté bloqueado (disabled / watch / readOnly)
+		if (isBlocked) {
 			(ref || input).current.style.setProperty("background-color", "hsl(0, 0%, 90%)", "important");
 			(ref || input).current.style.setProperty("color", "hsl(0, 0%, 0%)", "important");
+			(ref || input).current.style.setProperty("cursor", "not-allowed", "important");
 		} else {
 			(ref || input).current.style.removeProperty("background-color");
 			(ref || input).current.style.removeProperty("cursor");
 		}
 
+		const hasError = !!(error && (typeof error === "object" ? error.content : error));
+		const borderColor = hasError ? "#e0b4b4" : isFocused ? "var(--inputFocus)" : "var(--inputShader)";
+
 		if (rounded) {
-			if (isEmpty(value) || disabled) {
+			if (isEmpty(value) || isBlocked) {
 				(ref || input).current.style.removeProperty("border-top-left-radius");
 				(ref || input).current.style.removeProperty("border-bottom-left-radius");
 				(ref || input).current.style.removeProperty("border-top-right-radius");
@@ -78,11 +94,7 @@ const Input = forwardRef((props, ref) => {
 				(ref || input).current.style.removeProperty("border-right");
 				if (!hasRightAction) {
 					(ref || input).current.style.setProperty("border-radius", radiusRounded, "important");
-					(ref || input).current.style.setProperty(
-						"border-right",
-						`1px solid ${isFocused ? "var(--inputFocus)" : "var(--inputShader)"}`,
-						"important"
-					);
+					(ref || input).current.style.setProperty("border-right", `1px solid ${borderColor}`, "important");
 				} else {
 					(ref || input).current.style.setProperty("border-top-left-radius", radiusRounded, "important");
 					(ref || input).current.style.setProperty("border-bottom-left-radius", radiusRounded, "important");
@@ -93,11 +105,7 @@ const Input = forwardRef((props, ref) => {
 			} else if (hideClear && !hasRightAction) {
 				// Sin botón clear a la derecha: el input debe cerrar su propio borde.
 				(ref || input).current.style.setProperty("border-radius", radiusRounded, "important");
-				(ref || input).current.style.setProperty(
-					"border-right",
-					`1px solid ${isFocused ? "var(--inputFocus)" : "var(--inputShader)"}`,
-					"important"
-				);
+				(ref || input).current.style.setProperty("border-right", `1px solid ${borderColor}`, "important");
 			} else {
 				// Valor con botón clear o acciones a la derecha
 				(ref || input).current.style.removeProperty("border-radius");
@@ -107,14 +115,10 @@ const Input = forwardRef((props, ref) => {
 				(ref || input).current.style.setProperty("border-bottom-right-radius", "0", "important");
 				(ref || input).current.style.setProperty("border-right", "0", "important");
 			}
-		} else if (isEmpty(value) || disabled) {
+		} else if (isEmpty(value) || isBlocked) {
 			(ref || input).current.style.setProperty("border-radius", radiusDefault, "important");
 			if (!hasRightAction) {
-				(ref || input).current.style.setProperty(
-					"border-right",
-					`1px solid ${isFocused ? "var(--inputFocus)" : "var(--inputShader)"}`,
-					"important"
-				);
+				(ref || input).current.style.setProperty("border-right", `1px solid ${borderColor}`, "important");
 			} else {
 				(ref || input).current.style.setProperty("border-right", "0", "important");
 				(ref || input).current.style.setProperty("border-top-right-radius", "0", "important");
@@ -123,11 +127,7 @@ const Input = forwardRef((props, ref) => {
 		} else if (hideClear && !hasRightAction) {
 			// rounded=false: hideClear y sin acciones
 			(ref || input).current.style.setProperty("border-radius", radiusDefault, "important");
-			(ref || input).current.style.setProperty(
-				"border-right",
-				`1px solid ${isFocused ? "var(--inputFocus)" : "var(--inputShader)"}`,
-				"important"
-			);
+			(ref || input).current.style.setProperty("border-right", `1px solid ${borderColor}`, "important");
 			(ref || input).current.style.setProperty("border-top-right-radius", radiusDefault, "important");
 			(ref || input).current.style.setProperty("border-bottom-right-radius", radiusDefault, "important");
 		} else {
@@ -161,7 +161,7 @@ const Input = forwardRef((props, ref) => {
 		dropdownPosition,
 		inlineLabel,
 		hasRightAction,
-		disabled,
+		isBlocked,
 		rounded,
 		hideClear,
 		customBorderRadius,
@@ -225,14 +225,14 @@ const Input = forwardRef((props, ref) => {
 		}, 2000);
 	};
 
-	const handleGeneratePin = (e) => {
+	const handleGeneratePin = async (e) => {
 		e.preventDefault();
-		if (disabled) {
+		if (isBlocked) {
 			return;
 		}
 		let newPin;
 		if (typeof onGeneratePin === "function") {
-			newPin = onGeneratePin();
+			newPin = await onGeneratePin(e);
 		} else {
 			const len = pinLength || 4;
 			const min = 10 ** (len - 1);
@@ -240,19 +240,24 @@ const Input = forwardRef((props, ref) => {
 			newPin = String(Math.floor(min + Math.random() * (max - min + 1)));
 		}
 
-		const data = { name, value: String(newPin) };
-		if (props.fieldIndex !== undefined) {
-			data.fieldIndex = props.fieldIndex;
-		}
-		if (props.id !== undefined) {
-			data.id = props.id;
-		}
-		if (onChange) {
-			onChange({ ...e, target: data }, data);
+		if (newPin !== undefined && newPin !== null && newPin !== "") {
+			const data = { name, value: String(newPin) };
+			if (props.fieldIndex !== undefined) {
+				data.fieldIndex = props.fieldIndex;
+			}
+			if (props.id !== undefined) {
+				data.id = props.id;
+			}
+			if (onChange) {
+				onChange({ ...e, target: data }, data);
+			}
 		}
 	};
 
 	const clearInput = (e) => {
+		if (isBlocked) {
+			return;
+		}
 		const data = { name, value: "" };
 		if (props.fieldIndex !== undefined) {
 			data.fieldIndex = props.fieldIndex;
@@ -335,6 +340,7 @@ const Input = forwardRef((props, ref) => {
 		"dropdownPosition",
 		"hideClear",
 		"hideDropdown",
+		"hideGenerate",
 		"customBorderRadius",
 		"infoLabel",
 		"hint",
@@ -346,6 +352,11 @@ const Input = forwardRef((props, ref) => {
 		"fieldIndex",
 		"id",
 		"error",
+		"watch",
+		"isWatch",
+		"mode",
+		"modalOption",
+		"readOnly",
 	]);
 
 	const resolvedIcon = icon || (isPassword ? "lock" : isPinType ? "key" : isLinkType ? "linkify" : undefined);
@@ -373,8 +384,8 @@ const Input = forwardRef((props, ref) => {
 	return (
 		<Form.Input
 			{...validProps}
-			className={`${styles.input} ${disabled ? styles.disabled : ""} ${className || ""}`}
-			disabled={disabled}
+			className={`${styles.input} ${isBlocked ? styles.disabled : ""} ${className || ""}`}
+			disabled={isBlocked}
 			onChange={onChange}
 			name={name}
 			label={renderLabel()}
@@ -391,22 +402,25 @@ const Input = forwardRef((props, ref) => {
 			action
 			error={error}>
 			{inlineLabel && renderInlineLabel()}
-			{dropdownPosition === "left" && !isEmpty(dropdown) && !hideDropdown && <Select labeled {...dropdown} />}
+			{dropdownPosition === "left" && !isEmpty(dropdown) && !hideDropdown && <Select labeled {...dropdown} disabled={isBlocked} />}
 			{hasIcon && <Icon name={resolvedIcon} />}
-			<input ref={ref || input} required={required} />
+			<input
+				ref={ref || input}
+				required={required}
+				readOnly={Boolean(readOnly || watch || isWatch || mode === "Watch" || mode === "watch")}
+				disabled={isBlocked}
+			/>
 
 			{/* BOTÓN CLEAR ('x') */}
 			{dropdownPosition === "right" ? (
 				<>
-					{!isEmpty(value) && !disabled && !hideClear && (
+					{showClear && (
 						<Button className={getButtonStyle(!hasRightAction)} icon="cancel" onClick={clearInput} tabIndex={-1} title="Limpiar" />
 					)}
-					{!hideDropdown && <Select labeled {...dropdown} />}
+					{!hideDropdown && <Select labeled {...dropdown} disabled={isBlocked} />}
 				</>
 			) : (
-				!hideClear &&
-				!isEmpty(value) &&
-				!disabled && <Button className={getButtonStyle(!hasRightAction)} icon="cancel" onClick={clearInput} tabIndex={-1} title="Limpiar" />
+				showClear && <Button className={getButtonStyle(!hasRightAction)} icon="cancel" onClick={clearInput} tabIndex={-1} title="Limpiar" />
 			)}
 
 			{/* BOTÓN OJITO PARA PASSWORD O PIN */}
@@ -418,7 +432,7 @@ const Input = forwardRef((props, ref) => {
 					content={inputType === "password" ? "Mostrar" : "Ocultar"}
 					trigger={
 						<Button
-							className={`${getButtonStyle(!isPinType)} ${styles.actionIconOnly}`}
+							className={`${getButtonStyle(!showGenerate)} ${styles.actionIconOnly}`}
 							icon={passwordIcon}
 							onClick={handleToggle}
 							tabIndex={-1}
@@ -428,8 +442,8 @@ const Input = forwardRef((props, ref) => {
 				/>
 			)}
 
-			{/* BOTÓN GENERAR PARA PIN */}
-			{isPinType && (
+			{/* BOTÓN GENERAR PARA PIN (se oculta automáticamente en modo watch o bloqueado) */}
+			{showGenerate && (
 				<Popup
 					size="mini"
 					inverted
@@ -510,6 +524,12 @@ Input.propTypes = {
 	id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	hideClear: PropTypes.bool,
 	hideDropdown: PropTypes.bool,
+	hideGenerate: PropTypes.bool,
+	readOnly: PropTypes.bool,
+	watch: PropTypes.bool,
+	isWatch: PropTypes.bool,
+	mode: PropTypes.string,
+	modalOption: PropTypes.string,
 	customBorderRadius: PropTypes.string,
 	error: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.string]),
 };
