@@ -58,6 +58,8 @@ const ToggleSection = () => {
 	const [trueColor, setTrueColor] = useState("#3b82f6");
 	const [falseColor, setFalseColor] = useState("#cbd5e1");
 	const [labelText, setLabelText] = useState("Notificaciones en Tiempo Real");
+	const [titleText, setTitleText] = useState("Modo Operativo");
+	const [tposition, setTposition] = useState("top");
 	const [disabled, setDisabled] = useState(false);
 
 	// Estados independientes para el panel de configuración
@@ -65,6 +67,7 @@ const ToggleSection = () => {
 	const [criticalAlerts, setCriticalAlerts] = useState(false);
 	const [auditMode, setAuditMode] = useState(true);
 	const [autoReconciliation, setAutoReconciliation] = useState(false);
+	const [topTitleSync, setTopTitleSync] = useState(true);
 
 	const isValidHex = (val) => {
 		return /^#[0-9A-Fa-f]{6}$/.test(val);
@@ -172,7 +175,35 @@ const ToggleSection = () => {
 						</div>
 
 						<div className={styles.controlItem}>
-							<label>Texto de la Etiqueta:</label>
+							<label>Posición del Título (`tposition`):</label>
+							<select
+								value={tposition}
+								onChange={(e) => {
+									return setTposition(e.target.value);
+								}}
+								className={styles.selectInput}>
+								<option value="top">top (Arriba del switch)</option>
+								<option value="left">left (A la izquierda)</option>
+								<option value="right">right (A la derecha)</option>
+								<option value="bottom">bottom (Abajo del switch)</option>
+							</select>
+						</div>
+
+						<div className={styles.controlItem}>
+							<label>Texto del Título (`title`):</label>
+							<input
+								type="text"
+								value={titleText}
+								onChange={(e) => {
+									return setTitleText(e.target.value);
+								}}
+								className={styles.textInput}
+								placeholder="Escribe un título..."
+							/>
+						</div>
+
+						<div className={styles.controlItem}>
+							<label>Texto de la Etiqueta (`label`):</label>
 							<input
 								type="text"
 								value={labelText}
@@ -196,6 +227,8 @@ const ToggleSection = () => {
 							trueColor={trueColor}
 							falseColor={falseColor}
 							disabled={disabled}
+							title={titleText}
+							tposition={tposition}
 							label={labelText}
 						/>
 
@@ -323,6 +356,34 @@ const ToggleSection = () => {
 								}}
 								trueColor="info"
 								falseColor="secondary"
+								size="medium"
+							/>
+						</div>
+
+						{/* Caso 5: Título Arriba (tposition="top") */}
+						<div className={styles.settingsItem}>
+							<div className={styles.settingsItemInfo}>
+								<h4 className={styles.settingsItemTitle}>
+									<Icon name="cloud upload" color="blue" /> Sincronización Automática con ERP
+								</h4>
+								<p className={styles.settingsItemDesc}>
+									Actualiza los libros contables con la pasarela central en segundo plano cada 15 minutos.
+								</p>
+								<div style={{ display: "flex", gap: "0.5rem", marginTop: "0.25rem" }}>
+									<span className={styles.colorBadge}>tposition=&quot;top&quot;</span>
+									<span className={styles.colorBadge}>trueColor=&quot;#16a34a&quot;</span>
+								</div>
+							</div>
+							<Toggle
+								title="Estado de la Sincronización"
+								tposition="top"
+								checked={topTitleSync}
+								onChange={(val) => {
+									return setTopTitleSync(val);
+								}}
+								label={topTitleSync ? "En línea y sincronizado" : "Pausado"}
+								trueColor="#16a34a"
+								falseColor="#ef4444"
 								size="medium"
 							/>
 						</div>
