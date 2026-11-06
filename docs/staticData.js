@@ -112,8 +112,53 @@ export const COMPONENT_PROPS = {
 	],
 	input: [
 		{ name: "label", type: "string | node", default: "undefined", description: "Etiqueta mostrada sobre el input." },
-		{ name: "infoLabel", type: "string | node", default: "null", description: "Tooltip informativo con icono (i) al hacer hover." },
+		{
+			name: "infoLabel / hint / info",
+			type: "string | node",
+			default: "undefined",
+			description: "Tooltip informativo flotante con icono (i) al hacer hover.",
+		},
 		{ name: "required", type: "bool", default: "false", description: "Muestra asterisco rojo (*) y aplica required al input." },
+		{
+			name: "type",
+			type: 'string ("text" | "password" | "link" | "pin")',
+			default: '"text"',
+			description: "Tipo de input. Soporta 'link' (botón Copiar), 'pin' (Generar + ojito), 'password' y estándar.",
+		},
+		{
+			name: "isLink",
+			type: "bool",
+			default: "false",
+			description: "Modo enlace con botón automático 'Copiar', ícono linkify y feedback visual '¡Copiado!'.",
+		},
+		{
+			name: "isPin",
+			type: "bool",
+			default: "false",
+			description: "Modo PIN con botón automático 'Generar', ojito para alternar visibilidad e ícono de clave.",
+		},
+		{
+			name: "inlineLabel",
+			type: "string | node",
+			default: "undefined",
+			description:
+				"Etiqueta o prefijo integrado adyacente a la izquierda del campo (por ejemplo 'Min', 'USD', 'https://'), idéntico al patrón de Daykal.",
+		},
+		{
+			name: "copyLabel",
+			type: "string",
+			default: '"Copiar"',
+			description: "Texto del botón de copiado en modo link (cambia a '¡Copiado!').",
+		},
+		{ name: "generateLabel", type: "string", default: '"Generar"', description: "Texto del botón de generación en modo PIN." },
+		{ name: "pinLength", type: "number", default: "4", description: "Cantidad de dígitos generados automáticamente para el PIN." },
+		{ name: "onGeneratePin", type: "func", default: "undefined", description: "Función personalizada para generar el valor del PIN." },
+		{
+			name: "onCopy",
+			type: "func",
+			default: "undefined",
+			description: "Callback disparado al copiar el valor al portapapeles: (text, event) => {}.",
+		},
 		{ name: "value", type: "string", default: '""', description: "Valor del input." },
 		{ name: "onChange", type: "func", default: "() => {}", description: "Handler disparado al cambiar el valor." },
 		{ name: "placeholder", type: "string", default: '""', description: "Texto provisional (por defecto toma el label si es texto)." },
@@ -478,13 +523,52 @@ export const CODE_SNIPPETS = {
 
 	input: `import { Input } from '@ikompras/ik-components';
 
+// 1. Etiqueta Integrada / Inline Label (estilo Daykal)
 <Input
-  label="Nombre Completo"
+  label="Tiempo Sesión:"
+  inlineLabel="Min"
+  type="number"
+  value={sessionTime}
+  onChange={(e, data) => setSessionTime(data.value)}
+/>
+
+// 2. Tipo Link automático con botón Copiar y feedback
+<Input
+  type="link"
+  label="Enlace de Invitación"
+  value="https://ikompras.com/join/workspace-alpha"
+  infoLabel="Comparte este enlace para invitar nuevos miembros"
+  copyLabel="Copiar"
+  onChange={(e, data) => setLink(data.value)}
+/>
+
+// 3. Tipo PIN automático con ojito y botón Generar
+<Input
+  type="pin"
+  label="Código PIN de Seguridad"
   required
-  infoLabel="Nombre oficial registrado en el documento de identidad"
-  placeholder="Ej: Jeremy Reyes"
-  value={name}
-  onChange={(e, data) => setName(data.value)}
+  pinLength={6}
+  infoLabel="PIN de 6 dígitos para autorización de transacciones"
+  value={pin}
+  onChange={(e, data) => setPin(data.value)}
+/>
+
+// 3. Contraseña con ojito para alternar visibilidad
+<Input
+  isPassword
+  label="Contraseña"
+  required
+  value={password}
+  onChange={(e, data) => setPassword(data.value)}
+/>
+
+// 4. Búsqueda redondeada estándar
+<Input
+  rounded
+  icon="search"
+  placeholder="Buscar por SKU o nombre..."
+  value={search}
+  onChange={(e, data) => setSearch(data.value)}
 />`,
 
 	sideBar: `import { SideBar } from '@ikompras/ik-components';

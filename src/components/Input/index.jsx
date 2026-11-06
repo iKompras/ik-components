@@ -8,6 +8,14 @@ import styles from "./styles.module.css";
 const Input = forwardRef((props, ref) => {
 	const {
 		isPassword = false,
+		isLink = false,
+		isPin = false,
+		inlineLabel,
+		copyLabel = "Copiar",
+		generateLabel = "Generar",
+		pinLength = 4,
+		onGeneratePin,
+		onCopy,
 		name,
 		value,
 		className,
@@ -15,6 +23,8 @@ const Input = forwardRef((props, ref) => {
 		label,
 		infoLabel,
 		hint,
+		info,
+		tooltip,
 		hintWide = false,
 		popupPosition = "top center",
 		labelClassName = "",
@@ -32,13 +42,22 @@ const Input = forwardRef((props, ref) => {
 		hideClear = false,
 		hideDropdown = false,
 		customBorderRadius,
+		error,
 	} = props;
+
+	const isLinkType = type === "link" || Boolean(isLink);
+	const isPinType = type === "pin" || Boolean(isPin);
+	const isPasswordType = isPassword || type === "password" || isPinType;
+	const hasRightAction = Boolean(isPassword || isPinType || isLinkType);
+
 	const radiusDefault = customBorderRadius || (rounded ? "1rem" : "0.25rem");
 	const radiusRounded = customBorderRadius || "1rem";
 	const input = useRef(null);
+	const inlineLabelRef = useRef(null);
 	const [isFocused, setIsFocused] = useState(false);
-	const [inputType, setInputType] = useState(isPassword ? "password" : "text");
+	const [inputType, setInputType] = useState(isPasswordType ? "password" : type === "link" ? "text" : type);
 	const [passwordIcon, setPasswordIcon] = useState("eye slash");
+	const [copied, setCopied] = useState(false);
 
 	useEffect(() => {
 		// Aplicar background gris cuando esté deshabilitado
@@ -57,7 +76,7 @@ const Input = forwardRef((props, ref) => {
 				(ref || input).current.style.removeProperty("border-top-right-radius");
 				(ref || input).current.style.removeProperty("border-bottom-right-radius");
 				(ref || input).current.style.removeProperty("border-right");
-				if (!isPassword) {
+				if (!hasRightAction) {
 					(ref || input).current.style.setProperty("border-radius", radiusRounded, "important");
 					(ref || input).current.style.setProperty(
 						"border-right",
@@ -67,9 +86,12 @@ const Input = forwardRef((props, ref) => {
 				} else {
 					(ref || input).current.style.setProperty("border-top-left-radius", radiusRounded, "important");
 					(ref || input).current.style.setProperty("border-bottom-left-radius", radiusRounded, "important");
+					(ref || input).current.style.setProperty("border-right", "0", "important");
+					(ref || input).current.style.setProperty("border-top-right-radius", "0", "important");
+					(ref || input).current.style.setProperty("border-bottom-right-radius", "0", "important");
 				}
-			} else if (hideClear && !isPassword) {
-				// Sin botón clear a la derecha: el input debe cerrar su propio borde (p. ej. type=time/date).
+			} else if (hideClear && !hasRightAction) {
+				// Sin botón clear a la derecha: el input debe cerrar su propio borde.
 				(ref || input).current.style.setProperty("border-radius", radiusRounded, "important");
 				(ref || input).current.style.setProperty(
 					"border-right",
@@ -77,7 +99,7 @@ const Input = forwardRef((props, ref) => {
 					"important"
 				);
 			} else {
-				// Valor con botón clear: borde derecho del input se une al botón de acción.
+				// Valor con botón clear o acciones a la derecha
 				(ref || input).current.style.removeProperty("border-radius");
 				(ref || input).current.style.setProperty("border-top-left-radius", radiusRounded, "important");
 				(ref || input).current.style.setProperty("border-bottom-left-radius", radiusRounded, "important");
@@ -87,7 +109,7 @@ const Input = forwardRef((props, ref) => {
 			}
 		} else if (isEmpty(value) || disabled) {
 			(ref || input).current.style.setProperty("border-radius", radiusDefault, "important");
-			if (!isPassword) {
+			if (!hasRightAction) {
 				(ref || input).current.style.setProperty(
 					"border-right",
 					`1px solid ${isFocused ? "var(--inputFocus)" : "var(--inputShader)"}`,
@@ -98,8 +120,8 @@ const Input = forwardRef((props, ref) => {
 				(ref || input).current.style.setProperty("border-top-right-radius", "0", "important");
 				(ref || input).current.style.setProperty("border-bottom-right-radius", "0", "important");
 			}
-		} else if (hideClear && !isPassword) {
-			// Mismo caso que arriba (rounded=false): hideClear implica sin botón cancel a la derecha.
+		} else if (hideClear && !hasRightAction) {
+			// rounded=false: hideClear y sin acciones
 			(ref || input).current.style.setProperty("border-radius", radiusDefault, "important");
 			(ref || input).current.style.setProperty(
 				"border-right",
@@ -109,7 +131,7 @@ const Input = forwardRef((props, ref) => {
 			(ref || input).current.style.setProperty("border-top-right-radius", radiusDefault, "important");
 			(ref || input).current.style.setProperty("border-bottom-right-radius", radiusDefault, "important");
 		} else {
-			// Valor con botón clear visible: borde derecho en 0 para el grupo input + cancel.
+			// Valor con botón clear visible o acciones
 			(ref || input).current.style.setProperty("border-right", "0", "important");
 			(ref || input).current.style.setProperty("border-top-right-radius", "0", "important");
 			(ref || input).current.style.setProperty("border-bottom-right-radius", "0", "important");
@@ -123,16 +145,39 @@ const Input = forwardRef((props, ref) => {
 			} else if (dropdownPosition === "right") {
 				(ref || input).current.style.setProperty("border-top-right-radius", "0", "important");
 				(ref || input).current.style.setProperty("border-bottom-right-radius", "0", "important");
-				// Cambio corregido aquí:
 				(ref || input).current.style.setProperty("border-right-color", "transparent", "important");
 			}
 		}
-	}, [value, isFocused, dropdown, isPassword, disabled, rounded, hideClear, customBorderRadius, radiusDefault, radiusRounded, ref, input]);
+
+		if (inlineLabel) {
+			(ref || input).current.style.setProperty("border-top-left-radius", "0", "important");
+			(ref || input).current.style.setProperty("border-bottom-left-radius", "0", "important");
+			(ref || input).current.style.setProperty("border-left-color", "transparent", "important");
+		}
+	}, [
+		value,
+		isFocused,
+		dropdown,
+		dropdownPosition,
+		inlineLabel,
+		hasRightAction,
+		disabled,
+		rounded,
+		hideClear,
+		customBorderRadius,
+		radiusDefault,
+		radiusRounded,
+		ref,
+		input,
+		error,
+	]);
 
 	const trimValue = (e) => {
 		if (!isEmpty(value)) {
-			const data = { name, value: value.trim() };
-			onChange({ ...e, target: data }, data);
+			const data = { name, value: typeof value === "string" ? value.trim() : value };
+			if (onChange) {
+				onChange({ ...e, target: data }, data);
+			}
 		}
 	};
 
@@ -155,6 +200,58 @@ const Input = forwardRef((props, ref) => {
 		setPasswordIcon(iconVal);
 	};
 
+	const handleCopy = (e) => {
+		e.preventDefault();
+		if (isEmpty(value)) {
+			return;
+		}
+		const textToCopy = String(value);
+		if (navigator.clipboard && navigator.clipboard.writeText) {
+			navigator.clipboard.writeText(textToCopy);
+		} else {
+			const textarea = document.createElement("textarea");
+			textarea.value = textToCopy;
+			document.body.appendChild(textarea);
+			textarea.select();
+			document.execCommand("copy");
+			document.body.removeChild(textarea);
+		}
+		setCopied(true);
+		if (onCopy) {
+			onCopy(textToCopy, e);
+		}
+		setTimeout(() => {
+			setCopied(false);
+		}, 2000);
+	};
+
+	const handleGeneratePin = (e) => {
+		e.preventDefault();
+		if (disabled) {
+			return;
+		}
+		let newPin;
+		if (typeof onGeneratePin === "function") {
+			newPin = onGeneratePin();
+		} else {
+			const len = pinLength || 4;
+			const min = 10 ** (len - 1);
+			const max = 10 ** len - 1;
+			newPin = String(Math.floor(min + Math.random() * (max - min + 1)));
+		}
+
+		const data = { name, value: String(newPin) };
+		if (props.fieldIndex !== undefined) {
+			data.fieldIndex = props.fieldIndex;
+		}
+		if (props.id !== undefined) {
+			data.id = props.id;
+		}
+		if (onChange) {
+			onChange({ ...e, target: data }, data);
+		}
+	};
+
 	const clearInput = (e) => {
 		const data = { name, value: "" };
 		if (props.fieldIndex !== undefined) {
@@ -163,7 +260,9 @@ const Input = forwardRef((props, ref) => {
 		if (props.id !== undefined) {
 			data.id = props.id;
 		}
-		onChange({ ...e, target: data }, data);
+		if (onChange) {
+			onChange({ ...e, target: data }, data);
+		}
 		if (onClear) {
 			onClear();
 		}
@@ -178,30 +277,30 @@ const Input = forwardRef((props, ref) => {
 		setIsFocused(false);
 	};
 
-	const getActionStyle = () => {
-		if (isPassword) {
-			return isFocused ? styles.clearIconFocused : styles.clearIcon;
+	const getButtonStyle = (isLast) => {
+		if (isLast) {
+			if (rounded) {
+				return isFocused ? styles.actionRoundedLastFocused : styles.actionRoundedLast;
+			}
+			return isFocused ? styles.actionLastFocused : styles.actionLast;
 		}
-		if (rounded) {
-			return isFocused ? styles.clearRoundedIconLastFocused : styles.clearRoundedIconLast;
-		}
-		return isFocused ? styles.clearIconLastFocused : styles.clearIconLast;
+		return isFocused ? styles.actionMiddleFocused : styles.actionMiddle;
 	};
 
 	const renderLabel = () => {
 		if (!label) return undefined;
 		if (React.isValidElement(label)) return label;
-		const info = infoLabel || hint;
+		const infoText = infoLabel || hint || info || tooltip;
 		return (
 			<span className={`${styles.labelRoot} ${labelClassName}`.trim()}>
 				<span>{label}</span>
 				{required ? <span className={styles.labelRequired}> *</span> : null}
-				{info ? (
+				{infoText ? (
 					<Popup
 						wide={hintWide ? "very" : true}
 						hoverable={hintWide}
 						position={popupPosition}
-						content={info}
+						content={infoText}
 						trigger={<Icon name="info circle" className={styles.infoIcon} />}
 					/>
 				) : null}
@@ -218,10 +317,18 @@ const Input = forwardRef((props, ref) => {
 		"value",
 		"onChange",
 		"onClear",
+		"onCopy",
+		"onGeneratePin",
 		"disabled",
 		"className",
 		"rounded",
 		"isPassword",
+		"isLink",
+		"isPin",
+		"inlineLabel",
+		"copyLabel",
+		"generateLabel",
+		"pinLength",
 		"required",
 		"type",
 		"dropdown",
@@ -231,11 +338,37 @@ const Input = forwardRef((props, ref) => {
 		"customBorderRadius",
 		"infoLabel",
 		"hint",
+		"info",
+		"tooltip",
 		"hintWide",
 		"popupPosition",
 		"labelClassName",
+		"fieldIndex",
+		"id",
+		"error",
 	]);
-	const hasIcon = isPassword || !isEmpty(icon);
+
+	const resolvedIcon = icon || (isPassword ? "lock" : isPinType ? "key" : isLinkType ? "linkify" : undefined);
+	const hasIcon = !inlineLabel && (isPasswordType || !isEmpty(resolvedIcon));
+
+	const renderInlineLabel = () => {
+		if (!inlineLabel) return null;
+		const hasError = !!(error && (typeof error === "object" ? error.content : error));
+		const boxClasses = [
+			styles.inlineLabelBox,
+			isFocused ? styles.inlineLabelBoxFocused : "",
+			rounded ? styles.inlineLabelBoxRounded : "",
+			hasError ? styles.inlineLabelBoxError : "",
+		]
+			.filter(Boolean)
+			.join(" ");
+
+		return (
+			<Button ref={inlineLabelRef} className={boxClasses} type="button" tabIndex={-1}>
+				{inlineLabel}
+			</Button>
+		);
+	};
 
 	return (
 		<Form.Input
@@ -247,54 +380,115 @@ const Input = forwardRef((props, ref) => {
 			label={renderLabel()}
 			placeholder={placeholder === "" ? "" : isEmpty(placeholder) ? (typeof label === "string" ? label : "") : placeholder}
 			value={value}
-			type={isPassword ? inputType : type}
+			type={isPasswordType ? inputType : type === "link" ? "text" : type}
 			{...(hasIcon ? { iconPosition: "left" } : {})}
 			autoComplete="off"
 			fluid={fluid}
 			onFocus={onFocus}
 			onBlur={onBlur}
 			onKeyPress={handleEnter}
-			action>
+			actionPosition={inlineLabel ? "left" : "right"}
+			action
+			error={error}>
+			{inlineLabel && renderInlineLabel()}
 			{dropdownPosition === "left" && !isEmpty(dropdown) && !hideDropdown && <Select labeled {...dropdown} />}
-			{hasIcon && <Icon name={isPassword ? "lock" : icon} />}
+			{hasIcon && <Icon name={resolvedIcon} />}
 			<input ref={ref || input} required={required} />
+
+			{/* BOTÓN CLEAR ('x') */}
 			{dropdownPosition === "right" ? (
 				<>
 					{!isEmpty(value) && !disabled && !hideClear && (
-						<Button className={getActionStyle()} icon="cancel" onClick={clearInput} tabIndex={-1} />
+						<Button className={getButtonStyle(!hasRightAction)} icon="cancel" onClick={clearInput} tabIndex={-1} title="Limpiar" />
 					)}
 					{!hideDropdown && <Select labeled {...dropdown} />}
 				</>
 			) : (
 				!hideClear &&
 				!isEmpty(value) &&
-				!disabled && <Button className={getActionStyle()} icon="cancel" onClick={clearInput} tabIndex={-1} />
+				!disabled && <Button className={getButtonStyle(!hasRightAction)} icon="cancel" onClick={clearInput} tabIndex={-1} title="Limpiar" />
 			)}
-			{isPassword && (
-				<Button
-					className={rounded ? styles.clearRoundedIconLast : styles.clearIconLast}
-					icon={passwordIcon}
-					onClick={handleToggle}
-					tabIndex={-1}
+
+			{/* BOTÓN OJITO PARA PASSWORD O PIN */}
+			{(isPassword || isPinType) && (
+				<Popup
+					size="mini"
+					inverted
+					position="top center"
+					content={inputType === "password" ? "Mostrar" : "Ocultar"}
+					trigger={
+						<Button
+							className={`${getButtonStyle(!isPinType)} ${styles.actionIconOnly}`}
+							icon={passwordIcon}
+							onClick={handleToggle}
+							tabIndex={-1}
+							aria-label={inputType === "password" ? "Mostrar" : "Ocultar"}
+						/>
+					}
+				/>
+			)}
+
+			{/* BOTÓN GENERAR PARA PIN */}
+			{isPinType && (
+				<Popup
+					size="mini"
+					inverted
+					position="top center"
+					content={generateLabel || "Generar"}
+					trigger={
+						<Button
+							className={`${getButtonStyle(true)} ${styles.actionIconOnly}`}
+							onClick={handleGeneratePin}
+							tabIndex={-1}
+							aria-label={generateLabel || "Generar"}>
+							<Icon name="exchange" />
+						</Button>
+					}
+				/>
+			)}
+
+			{/* BOTÓN COPIAR PARA LINK */}
+			{isLinkType && (
+				<Popup
+					size="mini"
+					inverted
+					position="top center"
+					open={copied ? true : undefined}
+					content={copied ? "¡Copiado!" : copyLabel || "Copiar"}
+					trigger={
+						<Button
+							className={`${getButtonStyle(true)} ${styles.actionIconOnly} ${copied ? styles.copiedButton : ""}`}
+							onClick={handleCopy}
+							tabIndex={-1}
+							aria-label={copied ? "¡Copiado!" : copyLabel || "Copiar"}>
+							<Icon name={copied ? "check" : "copy"} />
+						</Button>
+					}
 				/>
 			)}
 		</Form.Input>
 	);
 });
 
+Input.displayName = "Input";
+
 Input.propTypes = {
 	onChange: PropTypes.func,
 	onKeyPress: PropTypes.func,
 	onClear: PropTypes.func,
+	onCopy: PropTypes.func,
+	onGeneratePin: PropTypes.func,
 	name: PropTypes.string,
 	placeholder: PropTypes.string,
 	label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 	infoLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 	hint: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	info: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	tooltip: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 	hintWide: PropTypes.bool,
 	popupPosition: PropTypes.string,
 	labelClassName: PropTypes.string,
-	value: PropTypes.string,
+	value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	className: PropTypes.string,
 	disabled: PropTypes.bool,
 	icon: PropTypes.string,
@@ -304,6 +498,12 @@ Input.propTypes = {
 	dropdownPosition: PropTypes.oneOf(["left", "right"]),
 	fluid: PropTypes.bool,
 	isPassword: PropTypes.bool,
+	isLink: PropTypes.bool,
+	isPin: PropTypes.bool,
+	inlineLabel: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	copyLabel: PropTypes.string,
+	generateLabel: PropTypes.string,
+	pinLength: PropTypes.number,
 	required: PropTypes.bool,
 	type: PropTypes.string,
 	fieldIndex: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
@@ -311,6 +511,7 @@ Input.propTypes = {
 	hideClear: PropTypes.bool,
 	hideDropdown: PropTypes.bool,
 	customBorderRadius: PropTypes.string,
+	error: PropTypes.oneOfType([PropTypes.bool, PropTypes.object, PropTypes.string]),
 };
 
 export default Input;
