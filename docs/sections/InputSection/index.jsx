@@ -14,6 +14,7 @@ const InputSection = () => {
 	const [sessionTime, setSessionTime] = useState("0");
 	const [passwordValue, setPasswordValue] = useState("Secreto123");
 	const [roundedValue, setRoundedValue] = useState("");
+	const [isWatchMode, setIsWatchMode] = useState(true);
 
 	return (
 		<div className={styles.container}>
@@ -110,6 +111,48 @@ const InputSection = () => {
 								value={roundedValue}
 								onChange={(e, data) => {
 									return setRoundedValue(data.value);
+								}}
+							/>
+						</div>
+
+						{/* 7. Modo Watch / Bloqueado (Oculta automáticamente la 'X' y el botón 'Generar') */}
+						<div>
+							<div
+								style={{
+									display: "flex",
+									justifyContent: "space-between",
+									alignItems: "center",
+									marginBottom: "0.5rem",
+								}}>
+								<span style={{ fontSize: "0.85rem", fontWeight: 600, color: "#64748b" }}>
+									Demostración de Modo Watch (Bloqueo automático de edición):
+								</span>
+								<button
+									type="button"
+									onClick={() => {
+										return setIsWatchMode(!isWatchMode);
+									}}
+									style={{
+										padding: "0.25rem 0.75rem",
+										fontSize: "0.8rem",
+										borderRadius: "0.375rem",
+										border: "1px solid #cbd5e1",
+										background: isWatchMode ? "#3b82f6" : "#f1f5f9",
+										color: isWatchMode ? "#ffffff" : "#334155",
+										cursor: "pointer",
+										fontWeight: 600,
+									}}>
+									{isWatchMode ? "Modo Watch ACTIVO (Bloqueado)" : "Cambiar a Modo Watch"}
+								</button>
+							</div>
+							<Input
+								type="pin"
+								label="PIN de Usuario (Modo Watch / Bloqueado)"
+								watch={isWatchMode}
+								infoLabel="Al activar el modo watch o disabled, se ocultan automáticamente la 'X' y el botón de generar PIN, dejando solo el ojito para consulta."
+								value={pinValue}
+								onChange={(e, data) => {
+									return setPinValue(data.value);
 								}}
 							/>
 						</div>
