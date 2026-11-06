@@ -46,11 +46,212 @@
 	background-color: var(--white) !important;
 }
 
+/* ==========================================================================
+   Modern Action Buttons (Middle and Last, Standard and Rounded)
+   ========================================================================== */
+
+.actionMiddle {
+	border-top: 1px solid var(--inputShader) !important;
+	border-bottom: 1px solid var(--inputShader) !important;
+	border-left: 1px solid rgba(226, 232, 240, 0.8) !important;
+	border-right: none !important;
+	border-radius: 0 !important;
+	background-color: var(--white, #ffffff) !important;
+	color: #475569 !important;
+	padding: 0 0.75rem !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	gap: 0.35rem !important;
+	font-weight: 600 !important;
+	font-size: 0.825rem !important;
+	cursor: pointer !important;
+	transition: all 0.15s ease !important;
+}
+
+.actionMiddleFocused {
+	border-top: 1px solid var(--inputFocus) !important;
+	border-bottom: 1px solid var(--inputFocus) !important;
+	border-left: 1px solid rgba(226, 232, 240, 0.8) !important;
+	border-right: none !important;
+	border-radius: 0 !important;
+	background-color: var(--white, #ffffff) !important;
+	color: #1e293b !important;
+	padding: 0 0.75rem !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	gap: 0.35rem !important;
+	font-weight: 600 !important;
+	font-size: 0.825rem !important;
+	cursor: pointer !important;
+	transition: all 0.15s ease !important;
+}
+
+.actionLast {
+	border-top: 1px solid var(--inputShader) !important;
+	border-bottom: 1px solid var(--inputShader) !important;
+	border-right: 1px solid var(--inputShader) !important;
+	border-left: 1px solid rgba(226, 232, 240, 0.8) !important;
+	border-top-right-radius: 0.25rem !important;
+	border-bottom-right-radius: 0.25rem !important;
+	background-color: var(--white, #ffffff) !important;
+	color: #475569 !important;
+	padding: 0 0.85rem !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	gap: 0.35rem !important;
+	font-weight: 600 !important;
+	font-size: 0.825rem !important;
+	cursor: pointer !important;
+	transition: all 0.15s ease !important;
+}
+
+.actionLastFocused {
+	border-top: 1px solid var(--inputFocus) !important;
+	border-bottom: 1px solid var(--inputFocus) !important;
+	border-right: 1px solid var(--inputFocus) !important;
+	border-left: 1px solid rgba(226, 232, 240, 0.8) !important;
+	border-top-right-radius: 0.25rem !important;
+	border-bottom-right-radius: 0.25rem !important;
+	background-color: var(--white, #ffffff) !important;
+	color: #1e293b !important;
+	padding: 0 0.85rem !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	gap: 0.35rem !important;
+	font-weight: 600 !important;
+	font-size: 0.825rem !important;
+	cursor: pointer !important;
+	transition: all 0.15s ease !important;
+}
+
+.actionRoundedLast {
+	border-top: 1px solid var(--inputShader) !important;
+	border-bottom: 1px solid var(--inputShader) !important;
+	border-right: 1px solid var(--inputShader) !important;
+	border-left: 1px solid rgba(226, 232, 240, 0.8) !important;
+	border-top-right-radius: 1rem !important;
+	border-bottom-right-radius: 1rem !important;
+	background-color: var(--white, #ffffff) !important;
+	color: #475569 !important;
+	padding: 0 0.95rem !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	gap: 0.35rem !important;
+	font-weight: 600 !important;
+	font-size: 0.825rem !important;
+	cursor: pointer !important;
+	transition: all 0.15s ease !important;
+}
+
+.actionRoundedLastFocused {
+	border-top: 1px solid var(--inputFocus) !important;
+	border-bottom: 1px solid var(--inputFocus) !important;
+	border-right: 1px solid var(--inputFocus) !important;
+	border-left: 1px solid rgba(226, 232, 240, 0.8) !important;
+	border-top-right-radius: 1rem !important;
+	border-bottom-right-radius: 1rem !important;
+	background-color: var(--white, #ffffff) !important;
+	color: #1e293b !important;
+	padding: 0 0.95rem !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	gap: 0.35rem !important;
+	font-weight: 600 !important;
+	font-size: 0.825rem !important;
+	cursor: pointer !important;
+	transition: all 0.15s ease !important;
+}
+
+.actionMiddle:hover,
+.actionLast:hover,
+.actionRoundedLast:hover {
+	background-color: #f8fafc !important;
+	color: #0f172a !important;
+}
+
+.actionMiddle :global(.icon),
+.actionLast :global(.icon),
+.actionRoundedLast :global(.icon) {
+	margin: 0 !important;
+	font-size: 0.9em !important;
+}
+
+/* Icon-only action button */
+.actionIconOnly {
+	min-width: 2.375rem !important;
+	padding: 0 0.65rem !important;
+}
+
+.actionIconOnly :global(.icon) {
+	margin: 0 !important;
+}
+
+/* Copied button feedback */
+.copiedButton {
+	background-color: rgba(34, 197, 94, 0.1) !important;
+	color: #16a34a !important;
+}
+
+.copiedButton:hover {
+	background-color: rgba(34, 197, 94, 0.15) !important;
+	color: #15803d !important;
+}
+
+.copiedButton :global(.icon) {
+	color: #16a34a !important;
+}
+
+/* ==========================================================================
+   Inline Label (Prefix attached badge, e.g. "Min", "USD", etc.)
+   ========================================================================== */
+
+.inlineLabelBox {
+	background-color: #f3f3f3 !important;
+	border: 1px solid var(--inputShader, #cbd5e1) !important;
+	border-right: 0 !important;
+	border-top-left-radius: 0.25rem !important;
+	border-bottom-left-radius: 0.25rem !important;
+	border-top-right-radius: 0 !important;
+	border-bottom-right-radius: 0 !important;
+	font-size: 0.9rem;
+	font-weight: 600;
+	color: #555 !important;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	padding: 0 0.85rem !important;
+	pointer-events: none !important;
+	user-select: none;
+	white-space: nowrap;
+	line-height: 1;
+	transition: border-color 0.15s ease;
+}
+
+.inlineLabelBoxFocused {
+	border-color: var(--inputFocus, #85b7d9) !important;
+}
+
+.inlineLabelBoxRounded {
+	border-top-left-radius: 1rem !important;
+	border-bottom-left-radius: 1rem !important;
+}
+
+.inlineLabelBoxError {
+	border-color: #e0b4b4 !important;
+	background-color: #fff6f6 !important;
+	color: #9f3a38 !important;
+}
+
 .input div[role="listbox"] {
 	min-width: 0px !important;
 	border-top-right-radius: 0 !important;
 	border-bottom-right-radius: 0 !important;
-	/*   background-color: var(--gray150) !important; */
 	background-color: hsl(0, 0%, 95%) !important;
 	color: hsl(215, 75%, 30%) !important;
 	border: 0.1rem solid hsl(215, 75%, 30%) !important;
@@ -59,21 +260,23 @@
 
 .labelRoot {
 	display: inline-flex;
-	align-items: center;
+	/* align-items: center; */
 	gap: 0.35rem;
 }
 
 .labelRequired {
 	color: var(--red500, #db2828);
+	font-weight: 700;
 }
 
 .infoIcon {
 	margin: 0 !important;
-	color: #9a9a9a !important;
+	color: #94a3b8 !important;
 	cursor: pointer;
 	font-size: 0.95em !important;
+	transition: color 0.15s ease;
 }
 
 .infoIcon:hover {
-	color: #767676 !important;
+	color: #475569 !important;
 }

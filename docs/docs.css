@@ -41,9 +41,9 @@ body {
 }
 
 /* Semantic UI Icon Overrides */
-i.icon {
+/* i.icon {
 	height: auto !important;
-}
+} */
 
 .docs-layout {
 	display: flex;
