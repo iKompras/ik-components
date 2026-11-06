@@ -1,6 +1,7 @@
 // Components
 export { default as Card } from "./components/Card";
 export { default as Toggle } from "./components/Toggle";
+export { default as Dropdown } from "./components/Dropdown";
 export { default as IkTable } from "./components/IkTable";
 export { default as FileManager } from "./components/FileManager";
 export { default as Text } from "./components/Text";

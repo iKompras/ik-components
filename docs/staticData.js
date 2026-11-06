@@ -9,6 +9,7 @@ export const COMPONENTS_DATA = [
 	{ id: "text", name: "Text", category: "Componentes", tag: "Tipografía" },
 	{ id: "text-area", name: "TextArea", category: "Componentes", tag: "Formularios" },
 	{ id: "input", name: "Input", category: "Componentes", tag: "Formularios" },
+	{ id: "dropdown", name: "Dropdown", category: "Componentes", tag: "Formularios & Selección" },
 	{ id: "toggle", name: "Toggle", category: "Componentes", tag: "Formularios & Switch" },
 	{ id: "sidebar", name: "SideBar", category: "Componentes", tag: "Navegación" },
 	{ id: "sidebar-menu", name: "SideBarMenu", category: "Componentes", tag: "Navegación" },
@@ -121,6 +122,65 @@ export const COMPONENT_PROPS = {
 		{ name: "rounded", type: "bool", default: "false", description: "Aplica esquinas redondeadas (border-radius: 1rem)." },
 		{ name: "icon", type: "string", default: "undefined", description: "Nombre del icono de Semantic UI mostrado a la izquierda." },
 		{ name: "onClear", type: "func", default: "null", description: "Callback disparado al presionar el botón de limpiar valor." },
+	],
+	dropdown: [
+		{ name: "label", type: "string | node", default: "undefined", description: "Texto o elemento mostrado en la etiqueta superior." },
+		{ name: "required", type: "bool", default: "false", description: "Muestra asterisco rojo (*) indicando obligatoriedad." },
+		{
+			name: "hint / infoLabel",
+			type: "string | node",
+			default: "undefined",
+			description: "Muestra ícono de ayuda con tooltip informativo flotante.",
+		},
+		{ name: "error", type: "bool", default: "false", description: "Aplica estado visual de error con borde rojo y resalte." },
+		{
+			name: "errorMessage",
+			type: "string | node",
+			default: "undefined",
+			description: "Mensaje de validación mostrado bajo el campo con ícono y estilo de alerta.",
+		},
+		{
+			name: "multiple",
+			type: "bool",
+			default: "false",
+			description: "Permite selección múltiple de elementos representados como chips interactivos.",
+		},
+		{
+			name: "checkbox / useCheckbox",
+			type: "bool",
+			default: "false",
+			description:
+				"Variante checklist: muestra checkboxes cuadrados en cada opción y mantiene visibles las opciones seleccionadas en el menú desplegable.",
+		},
+		{ name: "search", type: "bool", default: "true", description: "Permite filtrar opciones escribiendo texto en tiempo real." },
+		{ name: "clearable", type: "bool", default: "true", description: "Permite limpiar la selección actual mediante botón 'x'." },
+		{ name: "selection", type: "bool", default: "true", description: "Aplica formato estándar de selección desplegable." },
+		{ name: "fluid", type: "bool", default: "true", description: "Expande el ancho del dropdown al 100% de su contenedor." },
+		{ name: "disabled", type: "bool", default: "false", description: "Deshabilita la interacción con opacidad y fondo gris suave." },
+		{ name: "loading", type: "bool", default: "false", description: "Muestra spinner de carga dentro del dropdown." },
+		{ name: "rounded", type: "bool", default: "false", description: "Aplica bordes redondeados modernos (0.875rem / 1rem)." },
+		{
+			name: "size",
+			type: '"small" | "medium" | "large"',
+			default: '"medium"',
+			description: "Tamaño y altura del componente (medium = 38px base).",
+		},
+		{
+			name: "options",
+			type: "array",
+			default: "[]",
+			description: "Listado de opciones con formato Semantic UI [{ key, value, text, icon, ... }].",
+		},
+		{ name: "value", type: "string | number | array", default: "undefined", description: "Valor seleccionado en modo controlado." },
+		{ name: "defaultValue", type: "string | number | array", default: "undefined", description: "Valor inicial en modo no controlado." },
+		{ name: "onChange", type: "func", default: "undefined", description: "Callback al cambiar valor: (event, data) => {}." },
+		{ name: "placeholder", type: "string", default: '""', description: "Texto de marcador de posición temporal." },
+		{
+			name: "noResultsMessage",
+			type: "string | node",
+			default: '"No hay resultados"',
+			description: "Mensaje cuando la búsqueda no coincide con opciones.",
+		},
 	],
 	sideBar: [
 		{ name: "menu", type: "array", default: "[]", description: "Arreglo de elementos y submenús del SideBar." },
@@ -602,5 +662,63 @@ const [files, setFiles] = useState([
   images={images}
   setImages={setImages}
   multiple={true}
+/>`,
+
+	dropdown: `import { Dropdown } from '@ikompras/ik-components';
+
+// 1. Selección Simple con Búsqueda y Limpieza
+<Dropdown
+  label="País de Residencia"
+  required
+  hint="Selecciona tu país fiscal de facturación."
+  placeholder="Seleccionar país..."
+  options={[
+    { key: 'co', value: 'co', text: 'Colombia' },
+    { key: 'mx', value: 'mx', text: 'México' },
+    { key: 'es', value: 'es', text: 'España' },
+    { key: 'ar', value: 'ar', text: 'Argentina' }
+  ]}
+  value={country}
+  onChange={(e, data) => setCountry(data.value)}
+  search
+  clearable
+/>
+
+// 2. Selección Múltiple con Checkboxes (Las opciones permanecen visibles)
+<Dropdown
+  label="Módulos Habilitados"
+  multiple
+  checkbox={true}
+  search
+  clearable
+  placeholder="Seleccionar módulos..."
+  options={[
+    { key: 'crm', value: 'crm', text: 'CRM & Contactos' },
+    { key: 'billing', value: 'billing', text: 'Facturación Electrónica' },
+    { key: 'inventory', value: 'inventory', text: 'Control de Inventario' },
+    { key: 'analytics', value: 'analytics', text: 'Reportes y Métricas' }
+  ]}
+  value={selectedModules}
+  onChange={(e, data) => setSelectedModules(data.value)}
+/>
+
+// 3. Selección Múltiple Estándar sin Checkbox
+<Dropdown
+  label="Etiquetas asignadas"
+  multiple
+  placeholder="Seleccionar etiquetas..."
+  options={tags}
+  value={selectedTags}
+  onChange={(e, data) => setSelectedTags(data.value)}
+/>
+
+// 3. Con Validación y Estado de Error
+<Dropdown
+  label="Rol de Acceso"
+  required
+  error={true}
+  errorMessage="Debe asignar un rol válido para continuar."
+  placeholder="Seleccionar rol..."
+  options={roles}
 />`,
 };
