@@ -33,6 +33,17 @@ const ROLE_OPTIONS = [
 	{ key: "viewer", value: "viewer", text: "Observador de Solo Lectura" },
 ];
 
+const COMPANY_OPTIONS = [
+	{ key: 67, value: 67, text: "allMeV", label: { color: "teal", content: "67" } },
+	{ key: 31, value: 31, text: "Company Group", label: { color: "teal", content: "31" } },
+	{ key: 30, value: 30, text: "Company inactiva", label: { color: "teal", content: "30" } },
+	{ key: 27, value: 27, text: "Logo Company", label: { color: "teal", content: "27" } },
+	{ key: 25, value: 25, text: "Luis Company", label: { color: "teal", content: "25" } },
+	{ key: 37, value: 37, text: "MásChat", label: { color: "teal", content: "37" } },
+	{ key: 1, value: 1, text: "Max Monitor", label: { color: "teal", content: "1" } },
+	{ key: 0, value: 0, text: "System", label: { color: "teal", content: "0" } },
+];
+
 const PAYMENT_OPTIONS = [
 	{ key: "card", value: "card", text: "Tarjeta de Crédito / Débito", icon: "credit card" },
 	{ key: "paypal", value: "paypal", text: "PayPal Express", icon: "paypal" },
@@ -59,6 +70,7 @@ const DropdownSection = () => {
 	const [checkboxModules, setCheckboxModules] = useState(["crm", "billing"]);
 	const [standardMultipleVal, setStandardMultipleVal] = useState(["inventory"]);
 	const [paymentVal, setPaymentVal] = useState("card");
+	const [companyVal, setCompanyVal] = useState(67);
 
 	const handleMultipleToggle = () => {
 		setMultiple((prev) => {
@@ -416,6 +428,33 @@ const DropdownSection = () => {
 								placeholder="Sin acceso temporal"
 								options={PAYMENT_OPTIONS}
 								defaultValue="transfer"
+							/>
+						</div>
+					</div>
+
+					{/* Caso 5: Opciones con ID Badge / Tag (Estilo Max Monitor) */}
+					<div className={styles.demoCard}>
+						<div className={styles.demoHeader}>
+							<h4 className={styles.demoTitle}>
+								<Icon name="tag" /> 5. Opciones con Badges de ID (Estilo Max Monitor)
+							</h4>
+							<p className={styles.demoDesc}>
+								Soporta badges con ID estilizados tipo Semantic UI (
+								<code>label: &#123; color: &apos;teal&apos;, content: &apos;67&apos; &#125;</code> o propiedad <code>id: 67</code> o prop{" "}
+								<code>showId</code>). Permite buscar tanto por nombre como por número de ID.
+							</p>
+						</div>
+						<div className={styles.demoBody}>
+							<Dropdown
+								label="Max Monitor Compañía:"
+								placeholder="Buscar por nombre o ID..."
+								options={COMPANY_OPTIONS}
+								value={companyVal}
+								onChange={(e, data) => {
+									return setCompanyVal(data.value);
+								}}
+								search
+								clearable
 							/>
 						</div>
 					</div>
