@@ -1,0 +1,589 @@
+/* ==========================================================================
+   ik-components - Native Custom Dropdown Component Styles
+   ========================================================================== */
+
+.container {
+	display: inline-flex;
+	flex-direction: column;
+	gap: 0.35rem;
+	width: auto;
+	box-sizing: border-box;
+	vertical-align: top;
+	position: relative;
+	font-family: inherit;
+}
+
+.fluid {
+	width: 100%;
+	display: flex;
+}
+
+/* ==========================================================================
+   Label & Info Tooltip
+   ========================================================================== */
+
+.labelRoot {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: #334155;
+	line-height: 1.25;
+	user-select: none;
+	cursor: pointer;
+}
+
+.labelText {
+	color: #334155;
+}
+
+.labelRequired {
+	color: var(--red500, #ef4444);
+	font-weight: 700;
+}
+
+.infoIcon {
+	margin: 0 !important;
+	color: #94a3b8 !important;
+	cursor: pointer;
+	font-size: 0.9em !important;
+	transition: color 0.15s ease;
+}
+
+.infoIcon:hover {
+	color: #475569 !important;
+}
+
+/* ==========================================================================
+   Trigger Box (Main Input Box)
+   ========================================================================== */
+
+.controlBox {
+	position: relative;
+	width: 100%;
+	min-height: 38px;
+	height: 38px;
+	padding: 0 2.25rem 0 0.875rem;
+	border: 1px solid #cbd5e1;
+	border-radius: 0.375rem;
+	background-color: #ffffff;
+	color: #0f172a;
+	font-size: 0.875rem;
+	line-height: 1.25rem;
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
+	cursor: pointer;
+	user-select: none;
+	transition: border-color 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease;
+}
+
+.controlBoxMultiple {
+	height: auto;
+	min-height: 38px;
+	padding: 0.25rem 2.25rem 0.25rem 0.625rem;
+	flex-wrap: wrap;
+	gap: 0.25rem;
+	cursor: text;
+}
+
+.controlBox:hover {
+	border-color: #94a3b8;
+}
+
+.controlBoxOpen,
+.controlBoxFocused {
+	border-color: var(--primary, #3b82f6);
+	box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+	outline: none;
+}
+
+/* Rounded */
+.rounded .controlBox {
+	border-radius: 0.875rem;
+}
+
+/* Sizes */
+.size_small .controlBox {
+	min-height: 32px;
+	height: 32px;
+	padding: 0 2rem 0 0.75rem;
+	font-size: 0.8rem;
+}
+
+.size_small .controlBoxMultiple {
+	height: auto;
+	min-height: 32px;
+	padding: 0.2rem 2rem 0.2rem 0.5rem;
+}
+
+.size_small .searchInputSingle {
+	left: 0.75rem;
+	right: 2rem;
+	width: calc(100% - 2.75rem);
+	font-size: 0.8rem;
+	line-height: 32px;
+}
+
+.size_small .placeholderSingle,
+.size_small .selectedSingle {
+	left: 0.75rem;
+	right: 2rem;
+	font-size: 0.8rem;
+}
+
+.size_medium .controlBox {
+	min-height: 38px;
+	height: 38px;
+	padding: 0 2.25rem 0 0.875rem;
+	font-size: 0.875rem;
+}
+
+.size_medium .controlBoxMultiple {
+	height: auto;
+	min-height: 38px;
+	padding: 0.25rem 2.25rem 0.25rem 0.625rem;
+}
+
+.size_large .controlBox {
+	min-height: 44px;
+	height: 44px;
+	padding: 0 2.5rem 0 1rem;
+	font-size: 1rem;
+}
+
+.size_large .controlBoxMultiple {
+	height: auto;
+	min-height: 44px;
+	padding: 0.35rem 2.5rem 0.35rem 0.75rem;
+}
+
+.size_large .searchInputSingle {
+	left: 1rem;
+	right: 2.5rem;
+	width: calc(100% - 3.5rem);
+	font-size: 1rem;
+	line-height: 44px;
+}
+
+.size_large .placeholderSingle,
+.size_large .selectedSingle {
+	left: 1rem;
+	right: 2.5rem;
+	font-size: 1rem;
+}
+
+/* Disabled */
+.disabled .controlBox {
+	background-color: hsl(0, 0%, 90%);
+	color: hsl(0, 0%, 40%);
+	border-color: #d1d5db;
+	cursor: not-allowed;
+	opacity: 0.75;
+	pointer-events: none;
+}
+
+/* Error state */
+.error .controlBox {
+	border-color: #ef4444;
+	background-color: #ffffff;
+}
+
+.error .controlBoxOpen,
+.error .controlBoxFocused {
+	box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+}
+
+.errorMessage {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	color: #ef4444;
+	font-size: 0.75rem;
+	font-weight: 500;
+	margin-top: 0.15rem;
+}
+
+.errorMessage :global(.icon) {
+	margin: 0 !important;
+	font-size: 0.875rem !important;
+}
+
+/* ==========================================================================
+   Single Selection: Placeholder, Value & Search Input
+   ========================================================================== */
+
+.contentAreaSingle {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	height: 100%;
+	position: relative;
+	overflow: hidden;
+}
+
+.placeholderSingle {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	left: 0;
+	right: 0;
+	color: #94a3b8;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	pointer-events: none;
+	user-select: none;
+	font-size: 0.875rem;
+}
+
+.selectedSingle {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	color: #0f172a;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
+	font-size: 0.875rem;
+}
+
+.searchInputSingle {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	border: none;
+	outline: none;
+	background: transparent;
+	color: #0f172a;
+	font-size: 0.875rem;
+	font-family: inherit;
+	padding: 0;
+	margin: 0;
+	box-shadow: none;
+	z-index: 2;
+}
+
+.fadedText {
+	opacity: 0.35;
+}
+
+.hiddenText {
+	display: none;
+	opacity: 0;
+}
+
+/* ==========================================================================
+   Multiple Selection: Chips / Tags & Search
+   ========================================================================== */
+
+.tagsWrapper {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.35rem;
+	width: 100%;
+}
+
+.tag {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	background-color: #f1f5f9;
+	color: #1e293b;
+	border: 1px solid #e2e8f0;
+	border-radius: 0.35rem;
+	font-size: 0.785rem;
+	font-weight: 500;
+	padding: 0.2rem 0.55rem;
+	box-shadow: none;
+	transition: background-color 0.15s ease, border-color 0.15s ease;
+	user-select: none;
+}
+
+.rounded .tag {
+	border-radius: 9999px;
+	padding-left: 0.65rem;
+	padding-right: 0.55rem;
+}
+
+.tag:hover {
+	background-color: #e2e8f0;
+	border-color: #cbd5e1;
+}
+
+.tagText {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	max-width: 180px;
+}
+
+.tagDeleteIcon {
+	cursor: pointer;
+	color: #64748b;
+	font-size: 0.75rem;
+	margin: 0 !important;
+	transition: color 0.15s ease, transform 0.1s ease;
+}
+
+.tagDeleteIcon:hover {
+	color: #ef4444;
+	transform: scale(1.15);
+}
+
+.placeholderMultiple {
+	color: #94a3b8;
+	white-space: nowrap;
+	user-select: none;
+	pointer-events: none;
+	font-size: 0.875rem;
+}
+
+.searchInputMultiple {
+	border: none;
+	outline: none;
+	background: transparent;
+	color: #0f172a;
+	font-size: 0.875rem;
+	font-family: inherit;
+	padding: 0 0.25rem;
+	margin: 0.1rem 0;
+	height: 1.75rem;
+	min-width: 4.5rem;
+	flex: 1 1 auto;
+	box-shadow: none;
+}
+
+/* ==========================================================================
+   Action Icons (Arrow Chevron & Clear 'x')
+   ========================================================================== */
+
+.actionIconsGroup {
+	position: absolute;
+	right: 0.75rem;
+	top: 50%;
+	transform: translateY(-50%);
+	display: inline-flex;
+	align-items: center;
+	gap: 0.5rem;
+	z-index: 3;
+}
+
+.clearButton {
+	background: transparent;
+	border: none;
+	padding: 0;
+	margin: 0;
+	color: #94a3b8;
+	font-size: 0.8rem;
+	cursor: pointer;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transition: color 0.15s ease;
+}
+
+.clearButton:hover {
+	color: #ef4444;
+}
+
+.chevronIcon {
+	color: #64748b;
+	font-size: 0.85rem;
+	margin: 0 !important;
+	transition: transform 0.2s ease, color 0.15s ease;
+	pointer-events: none;
+}
+
+.chevronIconOpen {
+	transform: rotate(180deg);
+	color: var(--primary, #3b82f6);
+}
+
+.spinnerIcon {
+	color: #3b82f6;
+	font-size: 0.85rem;
+	animation: spin 0.8s linear infinite;
+	margin: 0 !important;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+/* ==========================================================================
+   Floating Dropdown Menu
+   ========================================================================== */
+
+.dropdownMenu {
+	position: absolute;
+	top: calc(100% + 4px);
+	left: 0;
+	right: 0;
+	background-color: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 0.5rem;
+	box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+	overflow-y: auto;
+	max-height: 16rem;
+	z-index: 1000;
+	padding: 0.25rem 0;
+	margin: 0;
+	list-style: none;
+}
+
+.rounded .dropdownMenu {
+	border-radius: 0.875rem;
+}
+
+/* Scrollbar */
+.dropdownMenu::-webkit-scrollbar {
+	width: 6px;
+}
+
+.dropdownMenu::-webkit-scrollbar-track {
+	background: #f8fafc;
+	border-radius: 9999px;
+}
+
+.dropdownMenu::-webkit-scrollbar-thumb {
+	background: #cbd5e1;
+	border-radius: 9999px;
+}
+
+.dropdownMenu::-webkit-scrollbar-thumb:hover {
+	background: #94a3b8;
+}
+
+/* Menu Item */
+.menuItem {
+	display: flex;
+	align-items: center;
+	gap: 0.65rem;
+	padding: 0.55rem 0.875rem;
+	min-height: 2.375rem;
+	font-size: 0.875rem;
+	color: #1e293b;
+	cursor: pointer;
+	box-sizing: border-box;
+	border-top: 1px solid rgba(226, 232, 240, 0.5);
+	transition: background-color 0.12s ease, color 0.12s ease;
+	user-select: none;
+}
+
+.menuItem:first-child {
+	border-top: none;
+}
+
+.menuItemHover,
+.menuItem:hover {
+	background-color: #f1f5f9;
+	color: #0f172a;
+}
+
+.menuItemActive {
+	background-color: #eff6ff;
+	color: var(--primary, #3b82f6);
+	font-weight: 600;
+}
+
+.menuItemDisabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+	pointer-events: none;
+	background-color: #f8fafc;
+}
+
+/* Square Checkbox (For withCheckbox mode) */
+.checkboxBox {
+	width: 1.1rem;
+	height: 1.1rem;
+	min-width: 1.1rem;
+	border: 1.5px solid #94a3b8;
+	border-radius: 0.25rem;
+	background-color: #ffffff;
+	box-sizing: border-box;
+	flex-shrink: 0;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.menuItem:hover .checkboxBox {
+	border-color: var(--primary, #3b82f6);
+}
+
+.checkboxBoxChecked {
+	background-color: var(--primary, #3b82f6);
+	border-color: var(--primary, #3b82f6);
+	background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");
+	background-size: 100% 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+/* Icons & Flags in Menu Items (Crisp Alignment) */
+.optionIcon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 1.25rem;
+	min-width: 1.25rem;
+	height: 1.25rem;
+	margin: 0 !important;
+	padding: 0 !important;
+	font-size: 1rem !important;
+	line-height: 1 !important;
+	text-align: center;
+	color: #64748b;
+	flex-shrink: 0;
+}
+
+.menuItem:hover .optionIcon {
+	color: #1e293b;
+}
+
+.menuItemActive .optionIcon {
+	color: var(--primary, #3b82f6);
+}
+
+.optionFlag {
+	margin: 0 !important;
+	flex-shrink: 0;
+}
+
+.optionText {
+	display: inline-block;
+	line-height: 1.25rem;
+	flex: 1 1 auto;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.optionDescription {
+	margin-left: auto;
+	font-size: 0.775rem;
+	color: #94a3b8;
+	font-weight: 400;
+}
+
+.noResults {
+	padding: 1rem 0.875rem;
+	color: #64748b;
+	font-size: 0.85rem;
+	text-align: center;
+}

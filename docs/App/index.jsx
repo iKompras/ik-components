@@ -15,6 +15,7 @@ import IkTableSection from "../sections/IkTableSection";
 import CardSection from "../sections/CardSection";
 import ToggleSection from "../sections/ToggleSection";
 import FileManagerSection from "../sections/FileManagerSection";
+import DropdownSection from "../sections/DropdownSection";
 
 import styles from "./styles.module.css";
 
@@ -26,6 +27,7 @@ const SECTIONS_MAP = {
 	"ik-table": <IkTableSection />,
 	card: <CardSection />,
 	"file-manager": <FileManagerSection />,
+	dropdown: <DropdownSection />,
 	toggle: <ToggleSection />,
 	text: <TextSection />,
 	"text-area": <TextAreaSection />,
