@@ -1,0 +1,547 @@
+/* ==========================================================================
+   ColorPicker Root & Label Container
+   ========================================================================== */
+
+.container {
+	display: inline-flex;
+	flex-direction: column;
+	position: relative;
+	font-family: inherit;
+	box-sizing: border-box;
+	vertical-align: middle;
+}
+
+.fluid {
+	display: flex;
+	width: 100%;
+}
+
+.labelRoot {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: #334155;
+	margin-bottom: 0.35rem;
+	user-select: none;
+}
+
+.labelText {
+	line-height: 1.25;
+}
+
+.labelRequired {
+	color: #ef4444;
+	font-weight: 700;
+}
+
+.infoIcon {
+	color: #94a3b8;
+	font-size: 0.85rem !important;
+	cursor: pointer;
+	transition: color 0.15s ease;
+	margin: 0 !important;
+}
+
+.infoIcon:hover {
+	color: #64748b;
+}
+
+/* ==========================================================================
+   Trigger Mode 1: Swatch (Compact button)
+   ========================================================================== */
+
+.swatchTrigger {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 4px;
+	background: #ffffff;
+	border: 1px solid #cbd5e1;
+	border-radius: 6px;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
+	user-select: none;
+	width: fit-content;
+}
+
+.swatchTrigger:hover:not(.disabled) {
+	border-color: #94a3b8;
+	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.08);
+}
+
+.swatchTrigger:focus-visible {
+	outline: none;
+	border-color: var(--primary, #3b82f6);
+	box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.swatchColorPreview {
+	width: 38px;
+	height: 22px;
+	border-radius: 4px;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+	position: relative;
+	overflow: hidden;
+}
+
+/* Checkered background for alpha / transparency */
+.checkeredBg {
+	background-image: linear-gradient(45deg, #e2e8f0 25%, transparent 25%), linear-gradient(-45deg, #e2e8f0 25%, transparent 25%),
+		linear-gradient(45deg, transparent 75%, #e2e8f0 75%), linear-gradient(-45deg, transparent 75%, #e2e8f0 75%);
+	background-size: 8px 8px;
+	background-position: 0 0, 0 4px, 4px -4px, -4px 0px;
+}
+
+/* ==========================================================================
+   Trigger Mode 2: Input (Full form field style)
+   ========================================================================== */
+
+.inputTrigger {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 0.5rem;
+	width: 100%;
+	min-height: 38px;
+	height: 38px;
+	padding: 0 0.75rem;
+	background: #ffffff;
+	border: 1px solid #cbd5e1;
+	border-radius: 6px;
+	box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+	cursor: pointer;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+	user-select: none;
+	box-sizing: border-box;
+}
+
+.inputTrigger:hover:not(.disabled) {
+	border-color: #94a3b8;
+}
+
+.inputTriggerOpen,
+.inputTrigger:focus-visible {
+	outline: none;
+	border-color: var(--primary, #3b82f6);
+	box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
+}
+
+.inputTriggerContent {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.65rem;
+}
+
+.inputColorPill {
+	width: 22px;
+	height: 22px;
+	border-radius: 5px;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.08);
+	flex-shrink: 0;
+}
+
+.inputHexText {
+	font-size: 0.875rem;
+	font-weight: 600;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+	color: #1e293b;
+	letter-spacing: 0.5px;
+}
+
+.inputTriggerIcons {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	color: #94a3b8;
+}
+
+.chevronIcon {
+	font-size: 0.8rem !important;
+	transition: transform 0.2s ease, color 0.15s ease;
+	margin: 0 !important;
+}
+
+.chevronIconOpen {
+	transform: rotate(180deg);
+	color: #3b82f6;
+}
+
+/* ==========================================================================
+   Sizes & Variants
+   ========================================================================== */
+
+.size_small .inputTrigger {
+	min-height: 32px;
+	height: 32px;
+	padding: 0 0.55rem;
+	font-size: 0.8rem;
+}
+
+.size_small .inputColorPill {
+	width: 18px;
+	height: 18px;
+}
+
+.size_small .swatchColorPreview {
+	width: 30px;
+	height: 18px;
+}
+
+.size_large .inputTrigger {
+	min-height: 44px;
+	height: 44px;
+	padding: 0 0.95rem;
+	font-size: 1rem;
+}
+
+.size_large .inputColorPill {
+	width: 26px;
+	height: 26px;
+}
+
+.size_large .swatchColorPreview {
+	width: 44px;
+	height: 26px;
+}
+
+.rounded .swatchTrigger,
+.rounded .inputTrigger,
+.rounded .inputColorPill {
+	border-radius: 9999px;
+}
+
+.rounded .swatchColorPreview {
+	border-radius: 9999px;
+}
+
+/* Disabled */
+.disabled .swatchTrigger,
+.disabled .inputTrigger {
+	background-color: hsl(0, 0%, 90%);
+	border-color: #d1d5db;
+	cursor: not-allowed;
+	opacity: 0.7;
+	pointer-events: none;
+}
+
+/* Error */
+.error .inputTrigger,
+.error .swatchTrigger {
+	border-color: #ef4444;
+}
+
+.errorMessage {
+	display: flex;
+	align-items: center;
+	gap: 0.35rem;
+	color: #ef4444;
+	font-size: 0.75rem;
+	font-weight: 500;
+	margin-top: 0.25rem;
+}
+
+/* ==========================================================================
+   Popover Panel & Inline Panel
+   ========================================================================== */
+
+.popoverWrapper {
+	position: absolute;
+	z-index: 1050;
+	top: calc(100% + 6px);
+	left: 0;
+	animation: fadeInScale 0.15s ease-out;
+}
+
+.popoverTop {
+	top: auto;
+	bottom: calc(100% + 6px);
+}
+
+.popoverAlignRight {
+	left: auto;
+	right: 0;
+}
+
+.inlineWrapper {
+	display: inline-block;
+	margin-top: 0.35rem;
+}
+
+.pickerCard {
+	width: 240px;
+	max-width: calc(100vw - 24px);
+	background: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 12px;
+	box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+	padding: 10px;
+	box-sizing: border-box;
+	user-select: none;
+}
+
+@keyframes fadeInScale {
+	from {
+		opacity: 0;
+		transform: scale(0.96) translateY(-4px);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1) translateY(0);
+	}
+}
+
+/* ==========================================================================
+   2D Saturation & Brightness Board
+   ========================================================================== */
+
+.saturationBoard {
+	width: 100%;
+	height: 140px;
+	position: relative;
+	border-radius: 8px;
+	cursor: crosshair;
+	overflow: hidden;
+	touch-action: none;
+}
+
+.saturationWhite {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to right, #ffffff, rgba(255, 255, 255, 0));
+}
+
+.saturationBlack {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(to top, #000000, rgba(0, 0, 0, 0));
+}
+
+.saturationPointer {
+	position: absolute;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	border: 2px solid #ffffff;
+	box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.4), inset 0 0 2px rgba(0, 0, 0, 0.3);
+	transform: translate(-50%, -50%);
+	pointer-events: none;
+	box-sizing: border-box;
+}
+
+/* ==========================================================================
+   1D Hue Rainbow Slider
+   ========================================================================== */
+
+.hueSliderWrapper {
+	margin-top: 10px;
+	width: 100%;
+	position: relative;
+	height: 14px;
+	border-radius: 7px;
+	cursor: pointer;
+	touch-action: none;
+	background: linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+}
+
+.hueThumb {
+	position: absolute;
+	top: 50%;
+	width: 14px;
+	height: 14px;
+	border-radius: 50%;
+	background: #ffffff;
+	border: 2px solid #ffffff;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+	transform: translate(-50%, -50%);
+	pointer-events: none;
+	box-sizing: border-box;
+}
+
+/* ==========================================================================
+   Bottom Controls Bar (Swatch + Hex input + EyeDropper + Copy)
+   ========================================================================== */
+
+.controlsRow {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 10px;
+}
+
+.currentColorCircle {
+	width: 28px;
+	height: 28px;
+	border-radius: 50%;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.08);
+	flex-shrink: 0;
+}
+
+.hexInputWrapper {
+	position: relative;
+	display: flex;
+	align-items: center;
+	flex: 1;
+	height: 28px;
+	background: #f8fafc;
+	border: 1px solid #cbd5e1;
+	border-radius: 6px;
+	padding: 0 6px;
+	transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.hexInputWrapper:focus-within {
+	border-color: #3b82f6;
+	background: #ffffff;
+	box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.15);
+}
+
+.hexPrefix {
+	font-size: 0.8rem;
+	font-weight: 700;
+	color: #94a3b8;
+	margin-right: 2px;
+	user-select: none;
+}
+
+.hexInput {
+	width: 100%;
+	border: none;
+	outline: none;
+	background: transparent;
+	font-size: 0.8rem;
+	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+	font-weight: 600;
+	color: #0f172a;
+	text-transform: uppercase;
+	padding: 0;
+	margin: 0;
+}
+
+.iconBtn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	height: 28px;
+	border-radius: 6px;
+	background: #f1f5f9;
+	border: 1px solid #e2e8f0;
+	color: #475569;
+	cursor: pointer;
+	font-size: 0.8rem;
+	padding: 0;
+	transition: all 0.15s ease;
+	flex-shrink: 0;
+}
+
+.iconBtn:hover {
+	background: #e2e8f0;
+	color: #0f172a;
+}
+
+.iconBtnSuccess {
+	background: #dcfce7 !important;
+	border-color: #86efac !important;
+	color: #15803d !important;
+}
+
+/* ==========================================================================
+   Presets Grid
+   ========================================================================== */
+
+.presetsSection {
+	margin-top: 10px;
+	padding-top: 8px;
+	border-top: 1px solid #f1f5f9;
+}
+
+.presetsTitle {
+	font-size: 0.72rem;
+	font-weight: 600;
+	color: #64748b;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	margin-bottom: 6px;
+	display: block;
+}
+
+.presetsGrid {
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	gap: 6px;
+}
+
+.presetSwatch {
+	width: 100%;
+	aspect-ratio: 1 / 1;
+	border-radius: 5px;
+	border: none;
+	padding: 0;
+	cursor: pointer;
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+	transition: transform 0.1s ease, box-shadow 0.15s ease;
+	position: relative;
+}
+
+.presetSwatch:hover {
+	transform: scale(1.12);
+	box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2), 0 2px 4px rgba(0, 0, 0, 0.15);
+	z-index: 1;
+}
+
+.presetSwatchActive {
+	box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #3b82f6 !important;
+	z-index: 2;
+}
+
+/* ==========================================================================
+   Responsive Mobile Adjustments
+   ========================================================================== */
+
+@media (max-width: 480px) {
+	.pickerCard {
+		width: 250px;
+		max-width: calc(100vw - 24px);
+		padding: 12px;
+	}
+
+	.saturationBoard {
+		height: 130px;
+	}
+
+	.hueSliderWrapper {
+		height: 16px;
+		border-radius: 8px;
+	}
+
+	.hueThumb {
+		width: 18px;
+		height: 18px;
+	}
+
+	.controlsRow {
+		gap: 6px;
+	}
+
+	.hexInputWrapper {
+		height: 30px;
+	}
+
+	.iconBtn {
+		width: 30px;
+		height: 30px;
+	}
+
+	.currentColorCircle {
+		width: 30px;
+		height: 30px;
+	}
+
+	.presetSwatch {
+		min-height: 24px;
+	}
+}

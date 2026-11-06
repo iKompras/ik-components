@@ -11,6 +11,7 @@ export const COMPONENTS_DATA = [
 	{ id: "input", name: "Input", category: "Componentes", tag: "Formularios" },
 	{ id: "dropdown", name: "Dropdown", category: "Componentes", tag: "Formularios & Selección" },
 	{ id: "toggle", name: "Toggle", category: "Componentes", tag: "Formularios & Switch" },
+	{ id: "color-picker", name: "ColorPicker", category: "Componentes", tag: "Formularios & Color" },
 	{ id: "sidebar", name: "SideBar", category: "Componentes", tag: "Navegación" },
 	{ id: "sidebar-menu", name: "SideBarMenu", category: "Componentes", tag: "Navegación" },
 ];
@@ -485,6 +486,93 @@ export const COMPONENT_PROPS = {
 			description: "Props retrocompatibles heredadas de versiones anteriores de FileManager.",
 		},
 	],
+	colorPicker: [
+		{
+			name: "value / currentColor",
+			type: "string",
+			default: '"#00B5AD"',
+			description: "Código Hexadecimal del color seleccionado (admite value o currentColor).",
+		},
+		{
+			name: "onChange / setCurrentColor",
+			type: "func",
+			default: "undefined",
+			description: "Callback ejecutado al cambiar el color, recibe el string Hexadecimal ('#RRGGBB').",
+		},
+		{
+			name: "format",
+			type: '"swatch" | "input"',
+			default: '"swatch"',
+			description:
+				"Modo de visualización del disparador: 'swatch' (botón compacto con muestra de color) o 'input' (campo de formulario completo).",
+		},
+		{
+			name: "popover",
+			type: "bool",
+			default: "true",
+			description: "Si es true, abre el selector en un popover flotante; si es false, lo muestra embebido/inline.",
+		},
+		{
+			name: "presets",
+			type: "array",
+			default: "DEFAULT_PRESETS",
+			description: "Array de colores Hexadecimales para la barra de presets o colores sugeridos.",
+		},
+		{
+			name: "showPresets",
+			type: "bool",
+			default: "true",
+			description: "Muestra u oculta la sección de presets rápidos en el panel.",
+		},
+		{
+			name: "showEyeDropper",
+			type: "bool",
+			default: "true",
+			description: "Muestra el botón de cuentagotas con la EyeDropper API nativa del navegador.",
+		},
+		{
+			name: "showHexInput",
+			type: "bool",
+			default: "true",
+			description: "Muestra el input de texto editable para escribir o pegar códigos Hex directamente.",
+		},
+		{
+			name: "label",
+			type: "string / node",
+			default: "null",
+			description: "Etiqueta superior del campo.",
+		},
+		{
+			name: "info / infoLabel / hint",
+			type: "string / node",
+			default: "null",
+			description: "Tooltip informativo que aparece junto a la etiqueta con el icono (i).",
+		},
+		{
+			name: "size",
+			type: '"small" | "medium" | "large"',
+			default: '"medium"',
+			description: "Tamaño visual del control disparador.",
+		},
+		{
+			name: "rounded",
+			type: "bool",
+			default: "false",
+			description: "Aplica bordes redondeados tipo píldora al disparador.",
+		},
+		{
+			name: "disabled",
+			type: "bool",
+			default: "false",
+			description: "Deshabilita la interacción con el selector.",
+		},
+		{
+			name: "error / errorMessage",
+			type: "bool / string",
+			default: "false / null",
+			description: "Muestra el borde de error y mensaje de validación inferior.",
+		},
+	],
 };
 
 export const CODE_SNIPPETS = {
@@ -836,5 +924,33 @@ const [files, setFiles] = useState([
   errorMessage="Debe asignar un rol válido para continuar."
   placeholder="Seleccionar rol..."
   options={roles}
+/>`,
+
+	colorPicker: `import { ColorPicker } from '@ikompras/ik-components';
+
+// 1. Formato Swatch Estándar con Label (Etiqueta + Botón, sin input debajo)
+<ColorPicker
+  label="Color del Módulo:"
+  info="Haz clic para seleccionar o personalizar el color"
+  value={color}
+  onChange={setColor}
+  format="swatch"
+/>
+
+// 2. Con Presets de Marca Corporativos
+<ColorPicker
+  label="Color de la Compañía:"
+  required
+  format="swatch"
+  value={brandColor}
+  onChange={setBrandColor}
+  presets={['#00b5ad', '#3b82f6', '#10b981', '#f59e0b', '#ef4444']}
+/>
+
+// 3. Modo Inline (Embebido sin popover flotante)
+<ColorPicker
+  popover={false}
+  value={color}
+  onChange={setColor}
 />`,
 };

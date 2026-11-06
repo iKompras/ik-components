@@ -14,6 +14,7 @@ import SideBarSection from "../sections/SideBarSection";
 import IkTableSection from "../sections/IkTableSection";
 import CardSection from "../sections/CardSection";
 import ToggleSection from "../sections/ToggleSection";
+import ColorPickerSection from "../sections/ColorPickerSection";
 import FileManagerSection from "../sections/FileManagerSection";
 import DropdownSection from "../sections/DropdownSection";
 
@@ -29,6 +30,7 @@ const SECTIONS_MAP = {
 	"file-manager": <FileManagerSection />,
 	dropdown: <DropdownSection />,
 	toggle: <ToggleSection />,
+	"color-picker": <ColorPickerSection />,
 	text: <TextSection />,
 	"text-area": <TextAreaSection />,
 	input: <InputSection />,
