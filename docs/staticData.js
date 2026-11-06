@@ -260,6 +260,18 @@ export const COMPONENT_PROPS = {
 			description: "Alias para trueColor.",
 		},
 		{ name: "title", type: "string | node", default: "undefined", description: "Texto de cabecera mostrado sobre el interruptor." },
+		{
+			name: "tposition / titlePosition",
+			type: '"top" | "left" | "right" | "bottom"',
+			default: '"left"',
+			description: "Posición del título respecto al interruptor ('top' lo ubica arriba del switch).",
+		},
+		{
+			name: "titleAlign",
+			type: '"left" | "center" | "right"',
+			default: '"left"',
+			description: "Alineación horizontal del título cuando tposition es 'top' o 'bottom'.",
+		},
 		{ name: "disabled", type: "bool", default: "false", description: "Deshabilita la interacción con opacidad reducida." },
 	],
 	fileManager: [
@@ -544,6 +556,16 @@ import { Button, Icon } from 'semantic-ui-react';
   falseColor="secondary"
   size="large"
   label="Notificaciones Push"
+/>
+
+// 4. Con Título Arriba (tposition="top")
+<Toggle
+  title="Facturación Automática"
+  tposition="top"
+  checked={autoBilling}
+  onChange={(val) => setAutoBilling(val)}
+  label={autoBilling ? "Habilitada" : "Deshabilitada"}
+  trueColor="#16a34a"
 />`,
 
 	fileManager: `import { FileManager } from '@ikompras/ik-components';

@@ -36,6 +36,11 @@ const Toggle = forwardRef((props, ref) => {
 		onChange,
 		label,
 		title,
+		description,
+		titlePosition,
+		tposition,
+		position = "left",
+		titleAlign = "left",
 		disabled = false,
 		readOnly = false,
 		name,
@@ -75,23 +80,50 @@ const Toggle = forwardRef((props, ref) => {
 	const sizeClass = styles[size] || styles.medium;
 	const disabledClass = disabled || readOnly ? styles.disabled : "";
 
-	return (
-		<div className={`${styles.container} ${sizeClass} ${disabledClass} ${className}`.trim()} style={dynamicStyles}>
+	const resolvedPosition = (tposition || titlePosition || position || "left").toLowerCase();
+	const isTopOrLeft = resolvedPosition === "top" || resolvedPosition === "left";
+	const positionClass = styles[`pos_${resolvedPosition}`] || styles.pos_left;
+	const alignClass = styles[`align_${titleAlign}`] || "";
+
+	const hasTitleOrDesc = Boolean(title || description);
+
+	const renderTitleGroup = hasTitleOrDesc ? (
+		<div className={`${styles.titleGroup} ${alignClass}`.trim()}>
 			{title && <span className={styles.titleLabel}>{title}</span>}
-			<Checkbox
-				{...rest}
-				ref={ref}
-				id={id}
-				name={name}
-				value={value}
-				toggle
-				label={label}
-				checked={Boolean(checked)}
-				defaultChecked={defaultChecked}
-				disabled={disabled || readOnly}
-				onChange={handleChange}
-				className={styles.semanticToggle}
-			/>
+			{description && <span className={styles.descriptionLabel}>{description}</span>}
+		</div>
+	) : null;
+
+	const renderCheckbox = (
+		<Checkbox
+			{...rest}
+			ref={ref}
+			id={id}
+			name={name}
+			value={value}
+			toggle
+			label={label}
+			checked={Boolean(checked)}
+			defaultChecked={defaultChecked}
+			disabled={disabled || readOnly}
+			onChange={handleChange}
+			className={styles.semanticToggle}
+		/>
+	);
+
+	return (
+		<div className={`${styles.container} ${positionClass} ${sizeClass} ${disabledClass} ${className}`.trim()} style={dynamicStyles}>
+			{isTopOrLeft ? (
+				<>
+					{renderTitleGroup}
+					{renderCheckbox}
+				</>
+			) : (
+				<>
+					{renderCheckbox}
+					{renderTitleGroup}
+				</>
+			)}
 		</div>
 	);
 });
@@ -104,6 +136,11 @@ Toggle.propTypes = {
 	onChange: PropTypes.func,
 	label: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
 	title: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	description: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
+	titlePosition: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+	tposition: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+	position: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+	titleAlign: PropTypes.oneOf(["left", "center", "right"]),
 	disabled: PropTypes.bool,
 	readOnly: PropTypes.bool,
 	name: PropTypes.string,
