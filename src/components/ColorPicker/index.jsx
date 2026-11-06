@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading, jsx-a11y/no-static-element-interactions */
 import React, { useState, useEffect, useRef, useCallback } from "react";
+import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 import { Icon, Popup } from "semantic-ui-react";
 import { DEFAULT_PRESETS, normalizeHex, isValidHex, hexToHsv, hsvToHex, isEyeDropperSupported } from "./utils";
@@ -34,6 +35,7 @@ const ColorPicker = ({
 	showEyeDropper,
 	showHexInput,
 	popoverPlacement,
+	usePortal = true,
 	className,
 	style,
 	id,
@@ -80,6 +82,7 @@ const ColorPicker = ({
 	const [copied, setCopied] = useState(false);
 
 	const containerRef = useRef(null);
+	const triggerRef = useRef(null);
 	const popoverRef = useRef(null);
 	const satBoardRef = useRef(null);
 	const hueSliderRef = useRef(null);
@@ -87,34 +90,106 @@ const ColorPicker = ({
 	// Responsive auto-placement & boundary detection
 	const [alignRight, setAlignRight] = useState(false);
 	const [flipTop, setFlipTop] = useState(false);
+	const [popoverCoords, setPopoverCoords] = useState({ top: 0, left: 0 });
 
 	const updatePlacement = useCallback(() => {
-		if (!containerRef.current || typeof window === "undefined") {
+		const triggerEl = triggerRef.current || containerRef.current;
+		if (!triggerEl || typeof window === "undefined") {
 			return;
 		}
-		const rect = containerRef.current.getBoundingClientRect();
-		const cardHeight = popoverRef.current?.offsetHeight || 290;
-		const cardWidth = popoverRef.current?.offsetWidth || 240;
+		const rect = triggerEl.getBoundingClientRect();
+		const cardEl = popoverRef.current;
+		const cardWidth = cardEl?.offsetWidth || 240;
+		const cardHeight = cardEl?.offsetHeight || 330;
 
-		const spaceBelow = window.innerHeight - rect.bottom - 12;
-		const spaceAbove = rect.top - 12;
+		const viewportWidth = window.innerWidth;
+		const viewportHeight = window.innerHeight;
+		const PADDING = 10;
+		const GAP = 6;
 
-		let shouldFlipTop = false;
-		if (popoverPlacement === "top") {
-			// Forced top: only flip down if completely no space above and fits below
-			shouldFlipTop = !(spaceAbove < cardHeight && spaceBelow > spaceAbove);
-		} else {
-			// Default ("bottom" or "auto"):
-			// Respects bottom as default, but automatically flips to top if there is not enough room below and more space above
-			shouldFlipTop = spaceBelow < cardHeight && spaceAbove > spaceBelow;
+		const spaceBelow = viewportHeight - rect.bottom - GAP - PADDING;
+		const spaceAbove = rect.top - GAP - PADDING;
+		const spaceRight = viewportWidth - rect.right - GAP - PADDING;
+		const spaceLeft = rect.left - GAP - PADDING;
+
+		let direction = popoverPlacement || "bottom";
+
+		if (direction === "auto" || direction === "bottom") {
+			if (spaceBelow >= cardHeight) {
+				direction = "bottom";
+			} else if (spaceRight >= cardWidth && (spaceBelow >= 0 || spaceAbove >= 0)) {
+				direction = "right";
+			} else if (spaceAbove >= cardHeight) {
+				direction = "top";
+			} else if (spaceLeft >= cardWidth) {
+				direction = "left";
+			} else {
+				direction = spaceBelow >= spaceAbove ? "bottom" : "top";
+			}
+		} else if (direction === "top") {
+			if (spaceAbove >= cardHeight) {
+				direction = "top";
+			} else if (spaceBelow >= cardHeight) {
+				direction = "bottom";
+			} else if (spaceRight >= cardWidth) {
+				direction = "right";
+			} else {
+				direction = spaceAbove >= spaceBelow ? "top" : "bottom";
+			}
+		} else if (direction === "right") {
+			if (spaceRight >= cardWidth) {
+				direction = "right";
+			} else if (spaceLeft >= cardWidth) {
+				direction = "left";
+			} else if (spaceBelow >= cardHeight) {
+				direction = "bottom";
+			} else {
+				direction = "top";
+			}
+		} else if (direction === "left") {
+			if (spaceLeft >= cardWidth) {
+				direction = "left";
+			} else if (spaceRight >= cardWidth) {
+				direction = "right";
+			} else if (spaceBelow >= cardHeight) {
+				direction = "bottom";
+			} else {
+				direction = "top";
+			}
 		}
-		setFlipTop(shouldFlipTop);
 
-		const spaceRight = window.innerWidth - rect.left - 12;
-		const spaceLeft = rect.right - 12;
-		// If it overflows right, align right if it fits better to the left
-		const shouldAlignRight = spaceRight < cardWidth && (spaceLeft >= cardWidth || spaceLeft > spaceRight);
-		setAlignRight(shouldAlignRight);
+		let targetTop = 0;
+		let targetLeft = 0;
+
+		if (direction === "bottom") {
+			targetTop = rect.bottom + GAP;
+			targetLeft = rect.left;
+			if (targetLeft + cardWidth > viewportWidth - PADDING) {
+				targetLeft = rect.right - cardWidth;
+			}
+		} else if (direction === "top") {
+			targetTop = rect.top - cardHeight - GAP;
+			targetLeft = rect.left;
+			if (targetLeft + cardWidth > viewportWidth - PADDING) {
+				targetLeft = rect.right - cardWidth;
+			}
+		} else if (direction === "right") {
+			targetLeft = rect.right + GAP;
+			targetTop = rect.top;
+		} else if (direction === "left") {
+			targetLeft = rect.left - cardWidth - GAP;
+			targetTop = rect.top;
+		}
+
+		const clampedTop = Math.max(PADDING, Math.min(targetTop, viewportHeight - cardHeight - PADDING));
+		const clampedLeft = Math.max(PADDING, Math.min(targetLeft, viewportWidth - cardWidth - PADDING));
+
+		setPopoverCoords({
+			top: Math.round(clampedTop),
+			left: Math.round(clampedLeft),
+		});
+		setFlipTop(direction === "top");
+		setAlignRight(targetLeft < rect.left);
 	}, [popoverPlacement]);
 
 	useEffect(() => {
@@ -158,7 +233,11 @@ const ColorPicker = ({
 		if (!isOpen || !popover) return;
 
 		const handlePointerDownOutside = (e) => {
-			if (containerRef.current && !containerRef.current.contains(e.target)) {
+			if (
+				containerRef.current &&
+				!containerRef.current.contains(e.target) &&
+				(!popoverRef.current || !popoverRef.current.contains(e.target))
+			) {
 				setIsOpen(false);
 			}
 		};
@@ -495,6 +574,7 @@ const ColorPicker = ({
 			{/* MODE 1: SWATCH TRIGGER (Compact button) */}
 			{format === "swatch" && (
 				<button
+					ref={triggerRef}
 					type="button"
 					className={styles.swatchTrigger}
 					onClick={toggleOpen}
@@ -508,6 +588,7 @@ const ColorPicker = ({
 			{/* MODE 2: INPUT TRIGGER (Form field style with hex & pill) */}
 			{format === "input" && (
 				<div
+					ref={triggerRef}
 					role="button"
 					tabIndex={disabled ? -1 : 0}
 					className={`${styles.inputTrigger} ${isOpen ? styles.inputTriggerOpen : ""}`}
@@ -530,15 +611,42 @@ const ColorPicker = ({
 			)}
 
 			{/* POPOVER PANEL */}
-			{popover && isOpen && !disabled && (
-				<div
-					ref={popoverRef}
-					className={[styles.popoverWrapper, flipTop ? styles.popoverTop : "", alignRight ? styles.popoverAlignRight : ""]
-						.filter(Boolean)
-						.join(" ")}>
-					{renderPickerCard()}
-				</div>
-			)}
+			{popover &&
+				isOpen &&
+				!disabled &&
+				(() => {
+					const isPortalMode = usePortal && typeof document !== "undefined";
+
+					const popoverElement = (
+						<div
+							ref={popoverRef}
+							role="dialog"
+							aria-label="Selector de Color"
+							className={[
+								isPortalMode ? styles.popoverPortalWrapper : styles.popoverWrapper,
+								!isPortalMode && flipTop ? styles.popoverTop : "",
+								!isPortalMode && alignRight ? styles.popoverAlignRight : "",
+							]
+								.filter(Boolean)
+								.join(" ")}
+							style={
+								isPortalMode
+									? {
+											top: `${popoverCoords.top}px`,
+											left: `${popoverCoords.left}px`,
+									  }
+									: undefined
+							}>
+							{renderPickerCard()}
+						</div>
+					);
+
+					if (isPortalMode) {
+						return createPortal(popoverElement, document.body);
+					}
+
+					return popoverElement;
+				})()}
 
 			{/* INLINE PANEL (When popover={false}) */}
 			{!popover && !disabled && <div className={styles.inlineWrapper}>{renderPickerCard()}</div>}
@@ -582,7 +690,8 @@ ColorPicker.propTypes = {
 	showPresets: PropTypes.bool,
 	showEyeDropper: PropTypes.bool,
 	showHexInput: PropTypes.bool,
-	popoverPlacement: PropTypes.oneOf(["bottom", "top", "auto"]),
+	popoverPlacement: PropTypes.oneOf(["bottom", "top", "right", "left", "auto"]),
+	usePortal: PropTypes.bool,
 	className: PropTypes.string,
 	style: PropTypes.object,
 	id: PropTypes.string,
@@ -615,6 +724,7 @@ ColorPicker.defaultProps = {
 	showEyeDropper: true,
 	showHexInput: true,
 	popoverPlacement: "bottom",
+	usePortal: true,
 	className: "",
 	style: {},
 	id: undefined,
