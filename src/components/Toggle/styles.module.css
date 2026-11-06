@@ -103,7 +103,7 @@
 
 .container :global(.ui.toggle.checkbox label:before),
 .container :global(.ui.toggle.checkbox .box:before) {
-	background-color: var(--ik-toggle-false-color, #cbd5e1) !important;
+	background-color: var(--ik-toggle-false-color, var(--toggleFalse, #cbd5e1)) !important;
 	transition: background-color 0.25s ease !important;
 	border: none !important;
 	box-shadow: none !important;
@@ -113,13 +113,13 @@
 .container :global(.ui.toggle.checkbox:hover .box:before),
 .container :global(.ui.toggle.checkbox label:hover:before),
 .container :global(.ui.toggle.checkbox .box:hover:before) {
-	background-color: var(--ik-toggle-false-color, #cbd5e1) !important;
+	background-color: var(--ik-toggle-false-color, var(--toggleFalse, #cbd5e1)) !important;
 	filter: brightness(0.94);
 }
 
 .container :global(.ui.toggle.checkbox input:focus ~ label:before),
 .container :global(.ui.toggle.checkbox input:focus ~ .box:before) {
-	background-color: var(--ik-toggle-false-color, #cbd5e1) !important;
+	background-color: var(--ik-toggle-false-color, var(--toggleFalse, #cbd5e1)) !important;
 }
 
 /* ==========================================================================
@@ -128,20 +128,20 @@
 
 .container :global(.ui.toggle.checkbox input:checked ~ label:before),
 .container :global(.ui.toggle.checkbox input:checked ~ .box:before) {
-	background-color: var(--ik-toggle-true-color, #3b82f6) !important;
+	background-color: var(--ik-toggle-true-color, var(--toggle, #3b82f6)) !important;
 }
 
 .container :global(.ui.toggle.checkbox input:checked:hover ~ label:before),
 .container :global(.ui.toggle.checkbox input:checked:hover ~ .box:before),
 .container :global(.ui.toggle.checkbox:hover input:checked ~ label:before),
 .container :global(.ui.toggle.checkbox:hover input:checked ~ .box:before) {
-	background-color: var(--ik-toggle-true-color, #3b82f6) !important;
+	background-color: var(--ik-toggle-true-color, var(--toggle, #3b82f6)) !important;
 	filter: brightness(0.94);
 }
 
 .container :global(.ui.toggle.checkbox input:focus:checked ~ label:before),
 .container :global(.ui.toggle.checkbox input:focus:checked ~ .box:before) {
-	background-color: var(--ik-toggle-true-color, #3b82f6) !important;
+	background-color: var(--ik-toggle-true-color, var(--toggle, #3b82f6)) !important;
 }
 
 /* ==========================================================================

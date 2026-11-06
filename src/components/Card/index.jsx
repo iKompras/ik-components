@@ -9,6 +9,7 @@ import Badge from "./Badge";
 import Divider from "./Divider";
 import CardIcon from "./Icon";
 import { CardContext } from "./CardContext";
+import { resolveColor } from "../../utils/functionality";
 import styles from "./styles.module.css";
 
 const themeClassMap = {
@@ -47,42 +48,113 @@ const accentClassMap = {
 	right: styles.accentRight,
 };
 
+const sideAliasMap = {
+	top: "top",
+	arriba: "top",
+	superior: "top",
+	t: "top",
+
+	left: "left",
+	izquierda: "left",
+	izq: "left",
+	l: "left",
+
+	bottom: "bottom",
+	abajo: "bottom",
+	inferior: "bottom",
+	b: "bottom",
+
+	right: "right",
+	derecha: "right",
+	der: "right",
+	r: "right",
+};
+
+const shorthandPresets = {
+	all: ["top", "right", "bottom", "left"],
+	todos: ["top", "right", "bottom", "left"],
+	todo: ["top", "right", "bottom", "left"],
+	full: ["top", "right", "bottom", "left"],
+	completo: ["top", "right", "bottom", "left"],
+
+	// 3 sides combinations:
+	// Top + Left + Bottom (Open right / C shape)
+	"open-right": ["top", "left", "bottom"],
+	openright: ["top", "left", "bottom"],
+	c: ["top", "left", "bottom"],
+	"c-shape": ["top", "left", "bottom"],
+	"left-top-bottom": ["left", "top", "bottom"],
+	"top-left-bottom": ["top", "left", "bottom"],
+	"left-bottom-top": ["left", "bottom", "top"],
+
+	// Top + Right + Bottom (Open left)
+	"open-left": ["top", "right", "bottom"],
+	openleft: ["top", "right", "bottom"],
+	"right-top-bottom": ["right", "top", "bottom"],
+	"top-right-bottom": ["top", "right", "bottom"],
+
+	// Top + Left + Right (Open bottom / Inverted U)
+	"open-bottom": ["top", "left", "right"],
+	openbottom: ["top", "left", "right"],
+	"top-left-right": ["top", "left", "right"],
+	"left-top-right": ["left", "top", "right"],
+
+	// Bottom + Left + Right (Open top / U shape)
+	"open-top": ["bottom", "left", "right"],
+	opentop: ["bottom", "left", "right"],
+	u: ["bottom", "left", "right"],
+	"u-shape": ["bottom", "left", "right"],
+	"bottom-left-right": ["bottom", "left", "right"],
+	"left-bottom-right": ["left", "bottom", "right"],
+};
+
 const parseAccentClasses = (accentProp) => {
 	if (!accentProp || accentProp === "none") {
 		return [];
 	}
+
+	const resolveSide = (raw) => {
+		const key = String(raw).trim().toLowerCase();
+		return sideAliasMap[key] || (accentClassMap[key] ? key : null);
+	};
+
+	let sides = [];
+
 	if (Array.isArray(accentProp)) {
-		return accentProp
-			.map((pos) => {
-				return accentClassMap[String(pos).trim().toLowerCase()];
-			})
-			.filter(Boolean);
-	}
-	if (typeof accentProp === "string") {
-		const normalized = accentProp.trim().toLowerCase();
-		if (normalized === "all") {
-			return [styles.accentTop, styles.accentRight, styles.accentBottom, styles.accentLeft];
-		}
-		const parts = normalized.split(/[\s,+/|-]+/).map((s) => {
-			return s.trim();
-		});
-		return parts
-			.map((pos) => {
-				return accentClassMap[pos];
-			})
-			.filter(Boolean);
-	}
-	if (typeof accentProp === "object") {
-		return Object.keys(accentProp)
+		sides = accentProp.map(resolveSide).filter(Boolean);
+	} else if (typeof accentProp === "object" && accentProp !== null) {
+		sides = Object.keys(accentProp)
 			.filter((key) => {
 				return Boolean(accentProp[key]);
 			})
-			.map((pos) => {
-				return accentClassMap[pos.toLowerCase()];
-			})
+			.map(resolveSide)
 			.filter(Boolean);
+	} else if (typeof accentProp === "string") {
+		const normalized = accentProp.trim().toLowerCase();
+
+		// Check shorthand presets first
+		if (shorthandPresets[normalized]) {
+			sides = shorthandPresets[normalized];
+		} else {
+			// Split by spaces, commas, pluses, pipes, hyphens, ampersands
+			const parts = normalized
+				.split(/[\s,+/|&]+/)
+				.map((s) => {
+					return s.trim();
+				})
+				.filter(Boolean);
+
+			sides = parts.map(resolveSide).filter(Boolean);
+		}
 	}
-	return [];
+
+	// Unique list of sides mapped to module classes
+	const uniqueSides = [...new Set(sides)];
+	return uniqueSides
+		.map((side) => {
+			return accentClassMap[side];
+		})
+		.filter(Boolean);
 };
 
 const variantClassMap = {
@@ -103,6 +175,7 @@ const Card = forwardRef((props, ref) => {
 		textColor,
 		borderColor,
 		accentColor,
+		accentWidth,
 		glowColor,
 		accent = "none",
 		direction = "vertical",
@@ -159,29 +232,33 @@ const Card = forwardRef((props, ref) => {
 	};
 
 	if (bgColor) {
-		dynamicStyles["--ik-card-bg"] = bgColor;
+		dynamicStyles["--ik-card-bg"] = resolveColor(bgColor);
 	}
 	if (textColor) {
-		dynamicStyles["--ik-card-text"] = textColor;
+		dynamicStyles["--ik-card-text"] = resolveColor(textColor);
 	}
 	if (borderColor) {
-		dynamicStyles["--ik-card-border"] = borderColor;
+		dynamicStyles["--ik-card-border"] = resolveColor(borderColor);
 	}
 	if (accentColor) {
-		dynamicStyles["--ik-card-accent"] = accentColor;
+		dynamicStyles["--ik-card-accent"] = resolveColor(accentColor);
+	}
+	if (accentWidth) {
+		dynamicStyles["--ik-card-accent-width"] = typeof accentWidth === "number" ? `${accentWidth}px` : accentWidth;
 	}
 	if (glowColor) {
-		dynamicStyles["--ik-card-glow"] = glowColor;
+		dynamicStyles["--ik-card-glow"] = resolveColor(glowColor);
 	}
 
 	// Custom color fallback
 	if (isCustomColor) {
-		dynamicStyles["--ik-card-accent"] = color;
+		const resolvedColor = resolveColor(color);
+		dynamicStyles["--ik-card-accent"] = resolvedColor;
 		if (!glowColor) {
-			dynamicStyles["--ik-card-glow"] = color;
+			dynamicStyles["--ik-card-glow"] = resolvedColor;
 		}
 		if (variant === "soft") {
-			dynamicStyles["--ik-card-border-soft"] = color;
+			dynamicStyles["--ik-card-border-soft"] = resolvedColor;
 		}
 	}
 
@@ -305,6 +382,7 @@ Card.propTypes = {
 	textColor: PropTypes.string,
 	borderColor: PropTypes.string,
 	accentColor: PropTypes.string,
+	accentWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	glowColor: PropTypes.string,
 	accent: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),
 	direction: PropTypes.oneOf(["vertical", "horizontal"]),

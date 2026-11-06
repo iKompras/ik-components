@@ -208,22 +208,22 @@
    ========================================================================== */
 
 .accentTop {
-	border-top-width: 4px;
+	border-top-width: var(--ik-card-accent-width, 4px);
 	border-top-color: var(--ik-card-accent, #3b82f6);
 }
 
 .accentLeft {
-	border-left-width: 4px;
+	border-left-width: var(--ik-card-accent-width, 4px);
 	border-left-color: var(--ik-card-accent, #3b82f6);
 }
 
 .accentBottom {
-	border-bottom-width: 4px;
+	border-bottom-width: var(--ik-card-accent-width, 4px);
 	border-bottom-color: var(--ik-card-accent, #3b82f6);
 }
 
 .accentRight {
-	border-right-width: 4px;
+	border-right-width: var(--ik-card-accent-width, 4px);
 	border-right-color: var(--ik-card-accent, #3b82f6);
 }
 

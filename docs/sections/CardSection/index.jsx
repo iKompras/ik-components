@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Icon } from "semantic-ui-react";
-import { Card } from "../../../src/index.js";
+import { Card, ColorPicker } from "../../../src/index.js";
 import SectionHeader from "../../components/SectionHeader";
 import CodeBlock from "../../components/CodeBlock";
 import PropsTable from "../../components/PropsTable";
@@ -191,14 +191,18 @@ const CardSection = () => {
 								}}
 								className={styles.select}>
 								<option value="none">Ninguno</option>
-								<option value="top">Superior (Top)</option>
-								<option value="left">Izquierda (Left)</option>
-								<option value="bottom">Inferior (Bottom)</option>
-								<option value="right">Derecha (Right)</option>
-								<option value="left bottom">Combinado: Izquierda + Inferior (Left y Bottom)</option>
-								<option value="top left">Combinado: Superior + Izquierda (Top y Left)</option>
-								<option value="top bottom">Combinado: Superior + Inferior (Top y Bottom)</option>
-								<option value="left right">Combinado: Izquierda + Derecha (Left y Right)</option>
+								<option value="top">1 Lado: Superior (Top)</option>
+								<option value="left">1 Lado: Izquierda (Left)</option>
+								<option value="bottom">1 Lado: Inferior (Bottom)</option>
+								<option value="right">1 Lado: Derecha (Right)</option>
+								<option value="left bottom">2 Lados: Izquierda + Inferior</option>
+								<option value="top left">2 Lados: Superior + Izquierda</option>
+								<option value="top bottom">2 Lados: Superior + Inferior</option>
+								<option value="left right">2 Lados: Izquierda + Derecha</option>
+								<option value="left top bottom">3 Lados: Izquierda + Superior + Inferior (Left, Top, Bottom)</option>
+								<option value="top right bottom">3 Lados: Superior + Derecha + Inferior (Top, Right, Bottom)</option>
+								<option value="top left right">3 Lados: Superior + Izquierda + Derecha (Top, Left, Right)</option>
+								<option value="left bottom right">3 Lados: Izquierda + Inferior + Derecha (Left, Bottom, Right)</option>
 								<option value="all">Completo: Todos los bordes (All)</option>
 							</select>
 						</div>
@@ -254,13 +258,13 @@ const CardSection = () => {
 									gap: "0.5rem",
 									alignItems: "center",
 								}}>
-								<input
-									type="color"
-									value={customAccent}
-									onChange={(e) => {
-										return setCustomAccent(e.target.value);
+								<ColorPicker
+									format="swatch"
+									currentColor={customAccent}
+									onChange={(c) => {
+										setCustomAccent(c);
+										setUseCustomAccent(true);
 									}}
-									className={styles.colorInput}
 								/>
 								<label className={styles.switchRow}>
 									<input
