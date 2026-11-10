@@ -298,7 +298,7 @@ const Input = forwardRef((props, ref) => {
 		const infoText = infoLabel || hint || info || tooltip;
 		return (
 			<span className={`${styles.labelRoot} ${labelClassName}`.trim()}>
-				<span>{label}</span>
+				<span className={styles.labelText}>{label}</span>
 				{required ? <span className={styles.labelRequired}> *</span> : null}
 				{infoText ? (
 					<Popup

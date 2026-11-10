@@ -2,6 +2,13 @@
 	width: 100% !important;
 }
 
+.input :global(label) {
+	font-size: 0.875rem !important;
+	font-weight: 600 !important;
+	color: #334155 !important;
+	line-height: 1.25 !important;
+}
+
 .clearIcon {
 	border-top: 1px solid var(--inputShader) !important;
 	border-bottom: 1px solid var(--inputShader) !important;
@@ -260,12 +267,22 @@
 
 .labelRoot {
 	display: inline-flex;
-	/* align-items: center; */
+	align-items: center;
 	gap: 0.35rem;
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: #334155;
+	line-height: 1.25;
+	user-select: none;
+	cursor: pointer;
+}
+
+.labelText {
+	color: #334155;
 }
 
 .labelRequired {
-	color: var(--red500, #db2828);
+	color: var(--red500, #ef4444);
 	font-weight: 700;
 }
 
@@ -273,7 +290,7 @@
 	margin: 0 !important;
 	color: #94a3b8 !important;
 	cursor: pointer;
-	font-size: 0.95em !important;
+	font-size: 0.9em !important;
 	transition: color 0.15s ease;
 }
 
