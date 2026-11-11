@@ -177,6 +177,7 @@ const Card = forwardRef((props, ref) => {
 		accentColor,
 		accentWidth,
 		glowColor,
+		titleColor,
 		accent = "none",
 		direction = "vertical",
 		responsive = true,
@@ -242,6 +243,9 @@ const Card = forwardRef((props, ref) => {
 	}
 	if (accentColor) {
 		dynamicStyles["--ik-card-accent"] = resolveColor(accentColor);
+	}
+	if (titleColor) {
+		dynamicStyles["--ik-card-title"] = resolveColor(titleColor);
 	}
 	if (accentWidth) {
 		dynamicStyles["--ik-card-accent-width"] = typeof accentWidth === "number" ? `${accentWidth}px` : accentWidth;
@@ -382,6 +386,7 @@ Card.propTypes = {
 	textColor: PropTypes.string,
 	borderColor: PropTypes.string,
 	accentColor: PropTypes.string,
+	titleColor: PropTypes.string,
 	accentWidth: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	glowColor: PropTypes.string,
 	accent: PropTypes.oneOfType([PropTypes.string, PropTypes.array, PropTypes.object]),

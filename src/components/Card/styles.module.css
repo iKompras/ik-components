@@ -83,8 +83,13 @@
 	--ik-card-bg-soft: #f0f7ff;
 	--ik-card-border-soft: #bfdbfe;
 	--ik-card-text-soft: #1e3a8a;
-	--ik-icon-bg: #dbeafe;
-	--ik-icon-color: #2563eb;
+	--ik-icon-bg: #f1f5f9;
+	--ik-icon-color: var(--groupHeader, #2563eb);
+}
+
+.themeGroupHeader {
+	--ik-icon-bg: #f1f5f9;
+	--ik-icon-color: var(--groupHeader, #184788);
 }
 
 .themeSecondary {
@@ -388,7 +393,7 @@
 	font-size: 1.15rem;
 	font-weight: 700;
 	line-height: 1.35;
-	color: inherit;
+	color: var(--ik-card-title, var(--groupHeader, inherit));
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: nowrap;
@@ -562,8 +567,8 @@
 	width: 2.75rem;
 	height: 2.75rem;
 	border-radius: 0.75rem;
-	background-color: var(--ik-icon-bg, #dbeafe);
-	color: var(--ik-icon-color, #2563eb);
+	background-color: var(--ik-icon-bg, #f1f5f9);
+	color: var(--ik-icon-color, var(--groupHeader, #184788));
 	flex-shrink: 0;
 	font-size: 1.2rem;
 	transition: transform 0.2s ease;

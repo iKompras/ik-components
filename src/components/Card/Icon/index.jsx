@@ -10,6 +10,7 @@ const themeIconMap = {
 	warning: styles.themeWarning,
 	danger: styles.themeDanger,
 	info: styles.themeInfo,
+	groupHeader: styles.themeGroupHeader,
 };
 
 const sizeMap = {
