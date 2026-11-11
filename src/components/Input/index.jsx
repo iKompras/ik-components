@@ -83,7 +83,7 @@ const Input = forwardRef((props, ref) => {
 		}
 
 		const hasError = !!(error && (typeof error === "object" ? error.content : error));
-		const borderColor = hasError ? "#e0b4b4" : isFocused ? "var(--inputFocus)" : "var(--inputShader)";
+		const borderColor = hasError ? "var(--red500, #ef4444)" : isFocused ? "var(--inputFocus)" : "var(--inputShader)";
 
 		if (rounded) {
 			if (isEmpty(value) || isBlocked) {
@@ -381,6 +381,19 @@ const Input = forwardRef((props, ref) => {
 		);
 	};
 
+	const errorText = typeof error === "object" && error !== null ? error.content : typeof error === "string" ? error : null;
+	const resolvedError = errorText
+		? {
+				...(typeof error === "object" ? error : {}),
+				content: (
+					<span className={styles.errorContent}>
+						<Icon name="exclamation circle" className={styles.errorIcon} />
+						<span>{errorText}</span>
+					</span>
+				),
+		  }
+		: error;
+
 	return (
 		<Form.Input
 			{...validProps}
@@ -400,7 +413,7 @@ const Input = forwardRef((props, ref) => {
 			onKeyPress={handleEnter}
 			actionPosition={inlineLabel ? "left" : "right"}
 			action
-			error={error}>
+			error={resolvedError}>
 			{inlineLabel && renderInlineLabel()}
 			{dropdownPosition === "left" && !isEmpty(dropdown) && !hideDropdown && <Select labeled {...dropdown} disabled={isBlocked} />}
 			{hasIcon && <Icon name={resolvedIcon} />}

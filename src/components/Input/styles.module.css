@@ -298,3 +298,77 @@
 .infoIcon:hover {
 	color: #475569 !important;
 }
+
+/* ==========================================================================
+   Modern Inline Error Message & Input State
+   ========================================================================== */
+
+.input:global(.error) input,
+.input:global(.error) :global(.ui.input) input {
+	border-color: var(--red500, #ef4444) !important;
+	background-color: #ffffff !important;
+}
+
+.input:global(.error) input:focus,
+.input:global(.error) :global(.ui.input) input:focus {
+	border-color: var(--red500, #ef4444) !important;
+	box-shadow: 0 0 0 1px var(--red500, #ef4444) !important;
+}
+
+.input :global(.ui.prompt.label),
+.input :global(.ui.pointing.label) {
+	display: flex !important;
+	align-items: center !important;
+	gap: 0.35rem !important;
+	background: transparent !important;
+	border: none !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	color: var(--red500, #ef4444) !important;
+	font-size: 0.875rem !important;
+	font-weight: 500 !important;
+	line-height: 1.3 !important;
+	padding: 0.4rem 0 0 0 !important;
+	margin: 0 !important;
+	text-align: left !important;
+	animation: errorFadeIn 0.2s ease-in-out !important;
+}
+
+.errorContent {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	line-height: 1.25;
+}
+
+.errorIcon {
+	margin: 0 !important;
+	padding: 0 !important;
+	height: auto !important;
+	width: auto !important;
+	line-height: 1 !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	font-size: 1rem !important;
+	color: var(--red500, #ef4444) !important;
+	flex-shrink: 0;
+}
+
+.input :global(.ui.prompt.label:before),
+.input :global(.ui.pointing.label:before),
+.input :global(.ui.pointing.above.label:before) {
+	display: none !important;
+	content: none !important;
+}
+
+@keyframes errorFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-2px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
