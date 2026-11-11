@@ -91,29 +91,30 @@
 
 .positiveButton {
 	margin: 0 !important;
-	padding: 0.4rem 1.75rem !important;
-	font-size: 1.1rem !important;
-	font-weight: 600 !important;
-	color: var(--fontsButtons, #1b2e56) !important;
+	padding: 0.3rem 0.4rem !important;
+	min-width: 10rem !important;
+	color: var(--fontsButtons, var(--buttons, var(--button, var(--primary, #1e293b)))) !important;
+	border: 1px solid var(--buttons, var(--button, var(--primary, #1e293b))) !important;
+	border-radius: 1.5rem !important;
 	background-color: transparent !important;
-	border: 1px solid var(--fontsButtons, #1b2e56) !important;
-	border-radius: 1rem !important;
+	transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
 }
 
 .positiveButton:hover {
-	background-color: var(--buttonHover, #1b2e56) !important;
-	color: white !important;
+	color: #ffffff !important;
+	background-color: var(--buttons, var(--button, var(--primary, #3b82f6))) !important;
+	border-color: var(--buttons, var(--button, var(--primary, #3b82f6))) !important;
 }
 
 .negativeButton {
 	margin: 0 !important;
-	padding: 0.4rem 1.75rem !important;
-	font-size: 1.1rem !important;
-	font-weight: 600 !important;
+	padding: 0.3rem 0.4rem !important;
+	min-width: 10rem !important;
 	color: var(--red500, #ef4444) !important;
 	background-color: transparent !important;
 	border: 1px solid var(--red500, #ef4444) !important;
-	border-radius: 1rem !important;
+	border-radius: 1.5rem !important;
+	transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease !important;
 }
 
 .negativeButton:hover {
@@ -154,22 +155,12 @@
 	.positiveButton,
 	.negativeButton {
 		flex: none !important;
-		min-width: 7.5rem !important;
-		padding: 0.6rem 0.5rem !important;
+		min-width: 8rem !important;
+		padding: 0.4rem 0.5rem !important;
 		font-size: 0.95rem !important;
-		border-radius: 0.75rem !important;
+		border-radius: 1.5rem !important;
 		display: flex !important;
 		justify-content: center !important;
 		align-items: center !important;
-	}
-
-	.positiveButton {
-		background-color: #1b2e56 !important;
-		color: white !important;
-		border: 1px solid #1b2e56 !important;
-	}
-
-	.negativeButton {
-		background-color: transparent !important;
 	}
 }

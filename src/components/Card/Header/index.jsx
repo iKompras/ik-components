@@ -7,6 +7,7 @@ import styles from "../styles.module.css";
 
 const Header = ({
 	title,
+	titleColor,
 	subtitle,
 	avatar,
 	action,
@@ -22,6 +23,11 @@ const Header = ({
 	const isCollapsible = context.collapsible;
 	const { isCollapsed } = context;
 	const isHeaderClickable = isCollapsible && context.collapseTrigger === "header";
+
+	const headerStyle = {
+		...style,
+		...(titleColor ? { "--ik-card-title": titleColor } : {}),
+	};
 
 	const handleHeaderClick = (event) => {
 		if (onClick) {
@@ -80,7 +86,7 @@ const Header = ({
 		return (
 			<header
 				className={headerClass}
-				style={style}
+				style={headerStyle}
 				onClick={handleHeaderClick}
 				role={isHeaderClickable ? "button" : undefined}
 				tabIndex={isHeaderClickable ? 0 : undefined}
@@ -99,7 +105,7 @@ const Header = ({
 	return (
 		<header
 			className={headerClass}
-			style={style}
+			style={headerStyle}
 			onClick={handleHeaderClick}
 			role={isHeaderClickable ? "button" : undefined}
 			tabIndex={isHeaderClickable ? 0 : undefined}
@@ -128,6 +134,7 @@ const Header = ({
 
 Header.propTypes = {
 	title: PropTypes.node,
+	titleColor: PropTypes.string,
 	subtitle: PropTypes.node,
 	avatar: PropTypes.node,
 	action: PropTypes.node,
