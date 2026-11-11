@@ -1,20 +1,80 @@
+/* Container styles */
 .modal {
+	border-radius: 16px !important;
+	border-top: 5px solid var(--headerModal, var(--header, #1b2e56)) !important;
 	overflow: hidden !important;
-	border-radius: 0.3rem !important;
+	box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1) !important;
+	background-color: white !important;
 }
 
-.header {
-	padding-top: 10px !important;
-	padding-bottom: 10px !important;
-	color: var(--text, #fff) !important;
-	background: var(--custom-header-color, var(--primary, #1e293b)) !important;
+.contentContainer {
+	background-color: white !important;
+	border: none !important;
+	padding: 2.5rem 2.5rem 1rem 2.5rem !important;
 }
 
+.containerFlex {
+	display: flex;
+	align-items: flex-start;
+	gap: 1.25rem;
+}
+
+.iconContainer {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 3.5rem;
+	height: 3.5rem;
+	background-color: #f6f6f6 !important;
+	border-radius: 12px;
+	flex-shrink: 0;
+}
+
+.warningIcon {
+	color: var(--red500, #ef4444) !important;
+	font-size: 2rem !important;
+	margin: 0 !important;
+	display: flex !important;
+	align-items: center !important;
+	justify-content: center !important;
+	height: 100% !important;
+	width: 100% !important;
+}
+
+.textContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	flex: 1;
+}
+
+.headerText {
+	font-size: 1.35rem !important;
+	font-weight: 700 !important;
+	color: #1b2e56 !important;
+	line-height: 1.2;
+}
+
+.contentText {
+	font-size: 1.1rem !important;
+	color: #64748b !important;
+	line-height: 1.5;
+	margin: 0 !important;
+}
+
+.focus {
+	font-weight: 700 !important;
+	color: #1b2e56 !important;
+}
+
+/* Actions and Buttons */
 .actions {
+	background-color: white !important;
+	border: none !important;
 	display: flex !important;
 	justify-content: space-between !important;
 	align-items: center !important;
-	padding: 1rem !important;
+	padding: 0 1rem 1rem 1rem !important;
 }
 
 .leftActions {
@@ -30,56 +90,40 @@
 }
 
 .positiveButton {
-	margin: 0 0 0 0.5rem !important;
-	padding: 0.5rem 0.75rem !important;
-	min-width: 5rem !important;
-	color: var(--fontsButtons, #1e293b) !important;
-	border: var(--fontsButtons, #1e293b) 1px solid !important;
-	border-radius: 1rem !important;
+	margin: 0 !important;
+	padding: 0.4rem 1.75rem !important;
+	font-size: 1.1rem !important;
+	font-weight: 600 !important;
+	color: var(--fontsButtons, #1b2e56) !important;
 	background-color: transparent !important;
+	border: 1px solid var(--fontsButtons, #1b2e56) !important;
+	border-radius: 1rem !important;
 }
 
 .positiveButton:hover {
-	background-color: var(--buttons, #3b82f6) !important;
+	background-color: var(--buttonHover, #1b2e56) !important;
+	color: white !important;
 }
 
 .negativeButton {
-	margin: 0 0.5rem 0 0 !important;
-	padding: 0.5rem 0.75rem !important;
-	min-width: 5rem !important;
-	color: var(--red500, #db2828) !important;
-	border: var(--red500, #db2828) 1px solid !important;
-	border-radius: 1rem !important;
+	margin: 0 !important;
+	padding: 0.4rem 1.75rem !important;
+	font-size: 1.1rem !important;
+	font-weight: 600 !important;
+	color: var(--red500, #ef4444) !important;
 	background-color: transparent !important;
+	border: 1px solid var(--red500, #ef4444) !important;
+	border-radius: 1rem !important;
 }
 
 .negativeButton:hover {
-	background-color: var(--red500, #db2828) !important;
-	color: var(--white, #fff) !important;
+	background-color: var(--red500, #ef4444) !important;
+	color: white !important;
 }
 
-.content {
-	font-size: 1.1rem !important;
-}
-
-.focus {
-	font-weight: 700 !important;
-	margin-left: 0.25rem !important;
-}
-
-.contactHeader {
-	background: var(--backColor, #f3f4f6) !important;
-	color: var(--textColor, #111) !important;
-}
-
-.contactPositiveButton {
-	color: var(--buttonColor, #1e293b) !important;
-	border: 1px solid var(--buttonColor, #1e293b) !important;
-	background: transparent;
-}
-
-.contactPositiveButton:hover {
-	background: var(--buttonHover, #3b82f6) !important;
+/* Backward compatibility / contact styles overrides if needed */
+.contact {
+	border-top-color: var(--buttonColor, #1b2e56) !important;
 }
 
 .centerModal {
@@ -90,18 +134,42 @@
 	margin: 0 !important;
 }
 
-@media only screen and (max-width: 767px) {
-	.content {
-		padding-top: 1rem !important;
+.studentHighlight {
+	color: #1b2e56 !important;
+	font-weight: bold !important;
+}
+
+@media (max-width: 768px) {
+	.actions {
+		padding: 0.5rem 1rem 1.5rem 1rem !important;
 	}
-	.negativeButton {
-		padding: 0.5rem 0.2rem !important;
-	}
-	.positiveButton {
-		padding: 0.5rem 0.2rem !important;
-	}
+
 	.rightActions {
-		gap: 0 !important;
-		align-items: end !important;
+		width: 100% !important;
+		justify-content: center !important;
+		gap: 0.75rem !important;
+		margin-bottom: 1rem !important;
+	}
+
+	.positiveButton,
+	.negativeButton {
+		flex: none !important;
+		min-width: 7.5rem !important;
+		padding: 0.6rem 0.5rem !important;
+		font-size: 0.95rem !important;
+		border-radius: 0.75rem !important;
+		display: flex !important;
+		justify-content: center !important;
+		align-items: center !important;
+	}
+
+	.positiveButton {
+		background-color: #1b2e56 !important;
+		color: white !important;
+		border: 1px solid #1b2e56 !important;
+	}
+
+	.negativeButton {
+		background-color: transparent !important;
 	}
 }
