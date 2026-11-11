@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Icon } from "semantic-ui-react";
-import { IkModal, ColorPicker } from "../../../src/index.js";
+import { IkModal, ColorPicker, Input } from "../../../src/index.js";
 import SectionHeader from "../../components/SectionHeader";
 import CodeBlock from "../../components/CodeBlock";
 import PropsTable from "../../components/PropsTable";
@@ -13,6 +13,8 @@ const IkModalSection = () => {
 	const [activeTab, setActiveTab] = useState("general");
 	const [closeInside, setCloseInside] = useState(false);
 	const [modalColor, setModalColor] = useState("#00b5ad");
+	const [tabError, setTabError] = useState(true);
+	const [sampleName, setSampleName] = useState("");
 	const [successMsg, setSuccessMsg] = useState("");
 
 	const handleToggleMode = () => {
@@ -58,6 +60,15 @@ const IkModalSection = () => {
 							<Icon name={closeInside ? "check square" : "square outline"} color={closeInside ? "red" : undefined} />
 							X: <strong>{closeInside ? "Dentro" : "Fuera"}</strong>
 						</button>
+						<button
+							type="button"
+							className={styles.secondaryBtn}
+							onClick={() => {
+								return setTabError(!tabError);
+							}}>
+							<Icon name={tabError ? "exclamation circle" : "square outline"} color={tabError ? "red" : undefined} />
+							Error en Tab: <strong>{tabError ? "Sí" : "No"}</strong>
+						</button>
 						<ColorPicker label="Color Personalizado:" format="swatch" value={modalColor} onChange={setModalColor} />
 					</div>
 
@@ -77,7 +88,7 @@ const IkModalSection = () => {
 							closeInside={closeInside}
 							color={modalColor}
 							tabs={[
-								{ key: "1", state: "general", label: "Datos Generales", icon: "user", order: 1 },
+								{ key: "1", state: "general", label: "Datos Generales", icon: "user", order: 1, errors: tabError && !sampleName },
 								{ key: "2", state: "permisos", label: "Permisos y Roles", icon: "key", order: 2 },
 								{ key: "3", state: "historial", label: "Historial de Actividad", icon: "history", order: 3 },
 							]}
@@ -101,9 +112,46 @@ const IkModalSection = () => {
 									<code>{closeInside ? "closeInside={true} (Esquina Roja)" : "closeInside={false} (Exterior)"}</code>
 								</p>
 								<p className={styles.tabDescription}>
-									Este es el cuerpo del modal en modo <strong>{mode}</strong>. Cambia entre pestañas arriba o haz clic en el botón de modo
-									en la cabecera.
+									Este es el cuerpo del modal en modo <strong>{mode}</strong>. Cambia entre pestañas arriba o activa/desactiva el estado de
+									error para ver cómo luce el tab <strong>Datos Generales</strong>.
 								</p>
+								{activeTab === "general" && (
+									<div style={{ marginTop: "1rem", maxWidth: "420px" }}>
+										<Input
+											required
+											label="Nombre (ejemplo requerido)"
+											placeholder="Escribe un nombre..."
+											value={sampleName}
+											errorLabel={tabError && !sampleName ? "Nombre es un campo requerido" : null}
+											onChange={(e, data) => {
+												return setSampleName(data.value);
+											}}
+										/>
+									</div>
+								)}
+								<div style={{ marginTop: "1.25rem" }}>
+									<button
+										type="button"
+										onClick={() => {
+											return setTabError(!tabError);
+										}}
+										style={{
+											display: "inline-flex",
+											alignItems: "center",
+											gap: "0.45rem",
+											padding: "0.5rem 0.9rem",
+											borderRadius: "6px",
+											border: "1px solid #cbd5e1",
+											background: tabError ? "rgba(239, 68, 68, 0.08)" : "#f8fafc",
+											color: tabError ? "#dc2626" : "#334155",
+											fontWeight: 600,
+											fontSize: "0.85rem",
+											cursor: "pointer",
+										}}>
+										<Icon name={tabError ? "exclamation circle" : "check circle outline"} />
+										{tabError ? "Quitar error del Tab" : "Simular error en Tab"}
+									</button>
+								</div>
 							</div>
 						</IkModal>
 					)}

@@ -99,7 +99,10 @@ const Tabs = ({ handleStateHeader, stateHeader, buttons }) => {
 						if (isDropdown) setShowDropdown(false);
 					}}>
 					<Icon name={btn.icon} />
-					{btn.label} {btn.count !== undefined && `(${btn.count})`}
+					<span>
+						{btn.label} {btn.count !== undefined && `(${btn.count})`}
+					</span>
+					{btn.errors && <span className={styles.errorDot} />}
 				</Button>
 				{!isEmpty(btn.error) && <div className={styles.volatileError}>Campos Requeridos</div>}
 			</div>

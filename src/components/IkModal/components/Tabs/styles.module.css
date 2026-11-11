@@ -6,88 +6,33 @@
 	flex-wrap: nowrap !important;
 	overflow: visible !important;
 	min-width: 0 !important;
-	border-bottom: 2px solid #f0f0f0 !important;
+	border-bottom: 2px solid #f1f5f9 !important;
+	gap: 0.25rem !important;
+	padding: 0 0.5rem !important;
 }
 
 .navButton {
 	background-color: transparent !important;
-	color: #000000 !important;
+	color: #64748b !important;
 	margin: 0 !important;
-	font-size: 1rem !important;
-	border-radius: 0 !important;
+	font-size: 0.95rem !important;
+	font-weight: 500 !important;
+	border: none !important;
+	border-radius: 6px 6px 0 0 !important;
 	box-shadow: none !important;
-	display: flex !important;
-	gap: 5px !important;
-	padding: 10px 16px !important;
-	transition: all 0.2s ease-in-out !important;
+	display: inline-flex !important;
+	align-items: center !important;
+	gap: 0.45rem !important;
+	padding: 0.7rem 1.15rem !important;
+	cursor: pointer !important;
+	transition: all 0.15s ease-in-out !important;
+	position: relative !important;
 }
 
-.errorsButon {
-	border: 2px solid red !important;
-	background-color: rgba(255, 0, 0, 0.05) !important;
-	color: red !important;
-	padding: 8px 16px !important;
-	border-radius: 4px !important;
-	font-weight: bold !important;
-	animation: pulseError 2s infinite !important;
-}
-
-@keyframes pulseError {
-	0% {
-		box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.4);
-	}
-
-	70% {
-		box-shadow: 0 0 0 6px rgba(255, 0, 0, 0);
-	}
-
-	100% {
-		box-shadow: 0 0 0 0 rgba(255, 0, 0, 0);
-	}
-}
-
-.volatileError {
-	position: absolute !important;
-	top: 120% !important;
-	left: 50% !important;
-	transform: translateX(-50%) !important;
-	z-index: 100 !important;
-	white-space: nowrap !important;
-	color: #db2828 !important;
-	border: 1px solid #db2828 !important;
-	background-color: #fff !important;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15) !important;
-	padding: 0.5em 1em !important;
-	font-size: 0.85rem !important;
-	font-weight: bold !important;
-	border-radius: 4px !important;
-	animation: slideDown 0.3s ease-out !important;
-}
-
-.volatileError::before {
-	content: "" !important;
-	position: absolute !important;
-	top: -5px !important;
-	left: 50% !important;
-	transform: translateX(-50%) rotate(45deg) !important;
-	width: 10px !important;
-	height: 10px !important;
-	background-color: #fff !important;
-	border-left: 1px solid #db2828 !important;
-	border-top: 1px solid #db2828 !important;
-	z-index: -1 !important;
-}
-
-@keyframes slideDown {
-	from {
-		opacity: 0;
-		transform: translateX(-50%) translateY(-10px);
-	}
-
-	to {
-		opacity: 1;
-		transform: translateX(-50%) translateY(0);
-	}
+.navButton i {
+	margin: 0 !important;
+	height: auto !important;
+	line-height: 1 !important;
 }
 
 .buttonContainer {
@@ -98,37 +43,109 @@
 }
 
 .navButton:not(.errorsButon):not(.redButton):hover {
-	color: #000000 !important;
-	background-color: rgba(0, 0, 0, 0.03) !important;
-}
-
-.errorsButon:hover {
-	color: red !important;
-	background-color: rgba(255, 0, 0, 0.1) !important;
-}
-
-.redButton {
-	color: #db2828 !important;
-}
-
-.redButton:hover {
-	color: #db2828 !important;
-	background-color: transparent !important;
+	color: #0f172a !important;
+	background-color: #f8fafc !important;
 }
 
 .navButton.active {
 	position: relative !important;
-	font-weight: bold !important;
+	font-weight: 600 !important;
+	color: var(--header, var(--primary, #0f172a)) !important;
 }
 
 .navButton.active::after {
 	content: "" !important;
 	position: absolute !important;
 	width: 100% !important;
-	height: 3px !important;
-	background-color: var(--header, var(--primary, #000000)) !important;
-	bottom: 0 !important;
+	height: 2.5px !important;
+	background-color: var(--header, var(--primary, #0f172a)) !important;
+	bottom: -2px !important;
 	left: 0 !important;
+	border-radius: 2px 2px 0 0 !important;
+}
+
+/* Modern clean error tab indicator */
+.errorsButon {
+	border: none !important;
+	background-color: rgba(239, 68, 68, 0.06) !important;
+	color: #ef4444 !important;
+	font-weight: 600 !important;
+	box-shadow: none !important;
+	border-radius: 6px 6px 0 0 !important;
+}
+
+.errorsButon i {
+	color: #ef4444 !important;
+}
+
+.errorsButon:hover {
+	color: #dc2626 !important;
+	background-color: rgba(239, 68, 68, 0.12) !important;
+}
+
+.errorsButon.active::after {
+	background-color: #ef4444 !important;
+}
+
+.errorDot {
+	display: inline-block;
+	width: 6px;
+	height: 6px;
+	border-radius: 9999px;
+	background-color: #ef4444;
+	margin-left: 2px;
+	flex-shrink: 0;
+}
+
+.redButton {
+	color: #ef4444 !important;
+}
+
+.redButton:hover {
+	color: #dc2626 !important;
+	background-color: rgba(239, 68, 68, 0.08) !important;
+}
+
+.volatileError {
+	position: absolute !important;
+	top: calc(100% + 4px) !important;
+	left: 50% !important;
+	transform: translateX(-50%) !important;
+	z-index: 100 !important;
+	white-space: nowrap !important;
+	color: #ffffff !important;
+	background-color: #1e293b !important;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+	padding: 0.35rem 0.65rem !important;
+	font-size: 0.75rem !important;
+	font-weight: 500 !important;
+	border-radius: 6px !important;
+	animation: slideDown 0.2s ease-out !important;
+}
+
+.volatileError::before {
+	content: "" !important;
+	position: absolute !important;
+	top: -4px !important;
+	left: 50% !important;
+	transform: translateX(-50%) rotate(45deg) !important;
+	width: 8px !important;
+	height: 8px !important;
+	background-color: #1e293b !important;
+	border: none !important;
+	z-index: -1 !important;
+}
+
+@keyframes slideDown {
+	from {
+		opacity: 0;
+		transform: translateX(-50%) translateY(-6px);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateX(-50%) translateY(0);
+	}
 }
 
 .moreWrapper {
@@ -140,10 +157,16 @@
 .moreButton {
 	background: none !important;
 	border: none !important;
-	color: black !important;
+	color: #64748b !important;
 	font-size: 16px !important;
 	cursor: pointer !important;
 	padding: 0 8px !important;
+	border-radius: 4px !important;
+}
+
+.moreButton:hover {
+	color: #0f172a !important;
+	background-color: #f1f5f9 !important;
 }
 
 .moreDropdown {
@@ -151,16 +174,17 @@
 	top: 100%;
 	right: 0;
 	background: white;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-	border-radius: 5px;
-	padding: 5px 0;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	padding: 4px;
 	z-index: 99;
 }
 
 @media (max-width: 600px) {
 	.navButton {
 		margin: 0 2px !important;
-		padding: 8px 6px !important;
-		font-size: 16px !important;
+		padding: 8px 10px !important;
+		font-size: 0.875rem !important;
 	}
 }

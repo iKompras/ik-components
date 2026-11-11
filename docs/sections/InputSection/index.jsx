@@ -15,6 +15,8 @@ const InputSection = () => {
 	const [passwordValue, setPasswordValue] = useState("Secreto123");
 	const [roundedValue, setRoundedValue] = useState("");
 	const [isWatchMode, setIsWatchMode] = useState(true);
+	const [showErrorDemo, setShowErrorDemo] = useState(true);
+	const [errorDemoValue, setErrorDemoValue] = useState("");
 
 	return (
 		<div className={styles.container}>
@@ -154,6 +156,53 @@ const InputSection = () => {
 								onChange={(e, data) => {
 									return setPinValue(data.value);
 								}}
+							/>
+						</div>
+
+						{/* 8. Demostración de Estado de Error / Mensaje Requerido */}
+						<div>
+							<div
+								style={{
+									display: "flex",
+									justifyContent: "space-between",
+									alignItems: "center",
+									marginBottom: "0.5rem",
+								}}>
+								<span style={{ fontSize: "0.85rem", fontWeight: 600, color: "#64748b" }}>Demostración de Mensaje de Error Moderno:</span>
+								<button
+									type="button"
+									onClick={() => {
+										return setShowErrorDemo(!showErrorDemo);
+									}}
+									style={{
+										padding: "0.25rem 0.75rem",
+										fontSize: "0.8rem",
+										borderRadius: "0.375rem",
+										border: "1px solid #cbd5e1",
+										background: showErrorDemo ? "#ef4444" : "#f1f5f9",
+										color: showErrorDemo ? "#ffffff" : "#334155",
+										cursor: "pointer",
+										fontWeight: 600,
+									}}>
+									{showErrorDemo ? "Error ACTIVO" : "Simular Error"}
+								</button>
+							</div>
+							<Input
+								label="Nombre de la Compañía"
+								required
+								icon="building"
+								placeholder="Nombre de la compañía"
+								value={errorDemoValue}
+								onChange={(e, data) => {
+									setErrorDemoValue(data.value);
+									setShowErrorDemo(!data.value.trim());
+								}}
+								error={
+									showErrorDemo && {
+										content: "Nombre es un campo requerido",
+										pointing: "above",
+									}
+								}
 							/>
 						</div>
 					</div>
