@@ -11,6 +11,24 @@ import { resolveColor } from "../../utils/functionality";
 import styles from "./styles.module.css";
 import Tabs from "./components/Tabs";
 
+const HEIGHT_SIZE_MAP = {
+	mini: "miniHeight",
+	miniheight: "miniHeight",
+	tiny: "tinyHeight",
+	tinyheight: "tinyHeight",
+	small: "smallHeight",
+	smallheight: "smallHeight",
+	medium: "smallHeight",
+	mediumheight: "smallHeight",
+	large: "largeHeight",
+	largeheight: "largeHeight",
+	mega: "megaHeight",
+	megaheight: "megaHeight",
+	full: "megaHeight",
+	fullheight: "megaHeight",
+	fullscreen: "megaHeight",
+};
+
 const IkModal = ({
 	children = "",
 	iconName = "",
@@ -22,6 +40,7 @@ const IkModal = ({
 	onSuccess = () => {},
 	style = {},
 	size = "",
+	heightSize = "",
 	fullHeight = false,
 	modifyLabel = "Modificar",
 	saveLabel = "Guardar",
@@ -110,7 +129,11 @@ const IkModal = ({
 		...(computedCloseBg ? { "--closeInside": computedCloseBg } : {}),
 	};
 
-	const baseModalStyle = fullHeight
+	const normalizedHeightSize = typeof heightSize === "string" ? heightSize.trim().toLowerCase() : "";
+	const resolvedHeightClass = HEIGHT_SIZE_MAP[normalizedHeightSize] || "";
+	const isFullHeight = fullHeight || resolvedHeightClass === "megaHeight";
+
+	const baseModalStyle = isFullHeight
 		? {
 				maxHeight: "calc(100vh - 2.5rem)",
 				...style,
@@ -134,7 +157,9 @@ const IkModal = ({
 
 	return (
 		<Modal
-			className={`${!isEmpty(size) ? styles[size] : ""} ${className} ${styles.modal} ${isCloseInside ? styles.modalCloseInside : ""}`}
+			className={`${!isEmpty(size) ? styles[size] : ""} ${resolvedHeightClass ? styles[resolvedHeightClass] : ""} ${className} ${
+				styles.modal
+			} ${isCloseInside ? styles.modalCloseInside : ""}`}
 			style={modalStyle}
 			open
 			closeIcon={closeIcon}
@@ -196,10 +221,10 @@ const IkModal = ({
 				className={ignoreContent ? styles.modalContentNoFlex : styles.modalContent}
 				style={{
 					...(computedContentBg ? { backgroundColor: computedContentBg } : {}),
-					...(fullHeight
-						? { minHeight: "calc(95vh - 8rem)", ...contentStyle }
-						: customHeight
+					...(customHeight
 						? { height: customHeight, minHeight: customHeight, ...contentStyle }
+						: fullHeight && !resolvedHeightClass
+						? { minHeight: "calc(95vh - 8rem)", ...contentStyle }
 						: { ...contentStyle }),
 				}}
 				scrolling>
@@ -244,6 +269,7 @@ IkModal.propTypes = {
 	modifyLabel: PropTypes.string,
 	cancelLabel: PropTypes.string,
 	size: PropTypes.string,
+	heightSize: PropTypes.string,
 	onClose: PropTypes.func,
 	onSuccess: PropTypes.func,
 	style: PropTypes.object,
