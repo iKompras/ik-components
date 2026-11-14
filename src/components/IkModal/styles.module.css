@@ -19,6 +19,75 @@
 	width: 25% !important;
 }
 
+/* Modal Height Sizes */
+.miniHeight,
+.tinyHeight,
+.smallHeight,
+.largeHeight,
+.megaHeight {
+	display: flex !important;
+	flex-direction: column !important;
+	max-height: calc(100vh - 2.5rem) !important;
+}
+
+.miniHeight {
+	height: 28vh !important;
+	min-height: 220px !important;
+}
+
+.tinyHeight {
+	height: 40vh !important;
+	min-height: 280px !important;
+}
+
+.smallHeight {
+	height: 55vh !important;
+	min-height: 360px !important;
+}
+
+.largeHeight {
+	height: 75vh !important;
+	min-height: 440px !important;
+}
+
+.megaHeight {
+	height: calc(100vh - 2.5rem) !important;
+}
+
+.miniHeight > .modalHeader,
+.tinyHeight > .modalHeader,
+.smallHeight > .modalHeader,
+.largeHeight > .modalHeader,
+.megaHeight > .modalHeader,
+.miniHeight > .tabsContainer,
+.tinyHeight > .tabsContainer,
+.smallHeight > .tabsContainer,
+.largeHeight > .tabsContainer,
+.megaHeight > .tabsContainer,
+.miniHeight > .modalFooter,
+.tinyHeight > .modalFooter,
+.smallHeight > .modalFooter,
+.largeHeight > .modalFooter,
+.megaHeight > .modalFooter {
+	flex-shrink: 0 !important;
+}
+
+.miniHeight > .modalContent,
+.miniHeight > .modalContentNoFlex,
+.tinyHeight > .modalContent,
+.tinyHeight > .modalContentNoFlex,
+.smallHeight > .modalContent,
+.smallHeight > .modalContentNoFlex,
+.largeHeight > .modalContent,
+.largeHeight > .modalContentNoFlex,
+.megaHeight > .modalContent,
+.megaHeight > .modalContentNoFlex {
+	flex: 1 1 auto !important;
+	max-height: none !important;
+	min-height: 0 !important;
+	overflow-y: auto !important;
+}
+
 .modalHeader {
 	display: flex !important;
 	justify-content: space-between !important;
@@ -160,6 +229,18 @@
 		width: 100% !important;
 		margin: 0 !important;
 		max-width: 100% !important;
+	}
+
+	.miniHeight,
+	.tinyHeight,
+	.smallHeight,
+	.largeHeight,
+	.megaHeight {
+		max-height: calc(100vh - 1rem) !important;
+	}
+
+	.megaHeight {
+		height: calc(100vh - 1rem) !important;
 	}
 
 	.modalFooter {

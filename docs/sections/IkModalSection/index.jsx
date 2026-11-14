@@ -10,6 +10,8 @@ import styles from "./styles.module.css";
 const IkModalSection = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [mode, setMode] = useState("Add");
+	const [size, setSize] = useState("small");
+	const [heightSize, setHeightSize] = useState("");
 	const [activeTab, setActiveTab] = useState("general");
 	const [closeInside, setCloseInside] = useState(false);
 	const [modalColor, setModalColor] = useState("#00b5ad");
@@ -17,10 +19,23 @@ const IkModalSection = () => {
 	const [sampleName, setSampleName] = useState("");
 	const [successMsg, setSuccessMsg] = useState("");
 
+	const widthSizes = ["mini", "tiny", "small", "large", "fullScreen"];
+	const heightSizes = ["", "mini", "tiny", "small", "large", "mega"];
+
 	const handleToggleMode = () => {
 		const modes = ["Add", "Edit", "Watch"];
 		const nextIndex = (modes.indexOf(mode) + 1) % modes.length;
 		setMode(modes[nextIndex]);
+	};
+
+	const handleToggleSize = () => {
+		const nextIndex = (widthSizes.indexOf(size) + 1) % widthSizes.length;
+		setSize(widthSizes[nextIndex]);
+	};
+
+	const handleToggleHeightSize = () => {
+		const nextIndex = (heightSizes.indexOf(heightSize) + 1) % heightSizes.length;
+		setHeightSize(heightSizes[nextIndex]);
 	};
 
 	return (
@@ -50,6 +65,12 @@ const IkModalSection = () => {
 						</button>
 						<button type="button" className={styles.secondaryBtn} onClick={handleToggleMode}>
 							Cambiar Modo: <strong>{mode}</strong>
+						</button>
+						<button type="button" className={styles.secondaryBtn} onClick={handleToggleSize}>
+							Ancho (size): <strong>{size}</strong>
+						</button>
+						<button type="button" className={styles.secondaryBtn} onClick={handleToggleHeightSize}>
+							Alto (heightSize): <strong>{heightSize || "auto"}</strong>
 						</button>
 						<button
 							type="button"
@@ -84,7 +105,8 @@ const IkModalSection = () => {
 							id="1024"
 							mode={mode}
 							setMode={setMode}
-							size="small"
+							size={size}
+							heightSize={heightSize}
 							closeInside={closeInside}
 							color={modalColor}
 							tabs={[

@@ -58,7 +58,16 @@ export const COMPONENT_PROPS = {
 			default: '"Add"',
 			description: "Modo operativo para alternar iconos y botones de acción.",
 		},
-		{ name: "size", type: "string", default: '""', description: 'Tamaño: "mini", "tiny", "small", "large", "fullScreen".' },
+		{ name: "size", type: "string", default: '""', description: 'Ancho del modal: "mini", "tiny", "small", "large", "fullScreen".' },
+		{
+			name: "heightSize",
+			type: "string",
+			default: '""',
+			description:
+				'Alto predefinido del modal: "mini", "tiny", "small", "large", "mega" (también acepta "miniHeight", "smallHeight", "megaHeight", "fullHeight").',
+		},
+		{ name: "customHeight", type: "string", default: '""', description: 'Altura CSS personalizada para el contenido (ej. "400px").' },
+		{ name: "fullHeight", type: "bool", default: "false", description: "Expande el modal al alto máximo de la ventana." },
 		{ name: "tabs", type: "array", default: "[]", description: "Listado de botones de navegación superior con iconos y badges." },
 		{
 			name: "closeInside",
@@ -608,7 +617,8 @@ export const CODE_SNIPPETS = {
   title="Crear Contacto"
   mode={mode} // "Add" | "Edit" | "Watch"
   setMode={setMode}
-  size="small"
+  size="small"       // Ancho: "mini" | "tiny" | "small" | "large" | "fullScreen"
+  heightSize="small" // Alto: "mini" | "tiny" | "small" | "large" | "mega"
   tabs={[
     { key: "1", state: "general", label: "General", icon: "user", order: 1 },
     { key: "2", state: "security", label: "Seguridad", icon: "lock", order: 2 }
