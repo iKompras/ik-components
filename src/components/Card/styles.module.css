@@ -214,22 +214,22 @@
 
 .accentTop {
 	border-top-width: var(--ik-card-accent-width, 4px);
-	border-top-color: var(--ik-card-accent, #3b82f6);
+	border-top-color: var(--ik-card-accent, var(--cardAccent, #3b82f6));
 }
 
 .accentLeft {
 	border-left-width: var(--ik-card-accent-width, 4px);
-	border-left-color: var(--ik-card-accent, #3b82f6);
+	border-left-color: var(--ik-card-accent, var(--cardAccent, #3b82f6));
 }
 
 .accentBottom {
 	border-bottom-width: var(--ik-card-accent-width, 4px);
-	border-bottom-color: var(--ik-card-accent, #3b82f6);
+	border-bottom-color: var(--ik-card-accent, var(--cardAccent, #3b82f6));
 }
 
 .accentRight {
 	border-right-width: var(--ik-card-accent-width, 4px);
-	border-right-color: var(--ik-card-accent, #3b82f6);
+	border-right-color: var(--ik-card-accent, var(--cardAccent, #3b82f6));
 }
 
 /* ==========================================================================
@@ -256,7 +256,7 @@
 }
 
 .clickable:focus-visible {
-	outline: 2px solid var(--ik-card-accent, #3b82f6);
+	outline: 2px solid var(--ik-card-accent, var(--cardAccent, #3b82f6));
 	outline-offset: 2px;
 }
 
