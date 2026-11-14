@@ -88,6 +88,12 @@
 	overflow-y: auto !important;
 }
 
+.modal,
+:global(.ui.active.modal).modal {
+	display: flex !important;
+	flex-direction: column !important;
+}
+
 .modalHeader {
 	display: flex !important;
 	justify-content: space-between !important;
@@ -96,16 +102,20 @@
 	background-color: var(--header, var(--primary, #1e293b)) !important;
 	height: 3rem !important;
 	font-size: 1.3rem !important;
+	flex-shrink: 0 !important;
 }
 
 .tabsContainer {
 	width: 100%;
 	background-color: #ffffff;
+	flex-shrink: 0 !important;
 }
 
 .modalContent {
 	display: flex !important;
 	justify-content: space-between;
+	flex: 1 1 auto !important;
+	min-height: 0 !important;
 	width: 100% !important;
 	background-color: var(--panelModal, var(--panel, #f9fafb)) !important;
 	overflow-y: auto;
@@ -113,6 +123,8 @@
 }
 
 .modalContentNoFlex {
+	flex: 1 1 auto !important;
+	min-height: 0 !important;
 	width: 100% !important;
 	background-color: var(--panelModal, var(--panel, #f9fafb)) !important;
 	overflow-y: auto;
@@ -137,6 +149,8 @@
 	align-items: center !important;
 	justify-content: flex-end !important;
 	height: 3.5rem !important;
+	margin-top: auto !important;
+	flex-shrink: 0 !important;
 }
 
 .iconHeader {
