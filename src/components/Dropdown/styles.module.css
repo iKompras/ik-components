@@ -62,8 +62,8 @@
 .controlBox {
 	position: relative;
 	width: 100%;
-	min-height: 38px;
-	height: 38px;
+	min-height: 32px;
+	height: 32px;
 	padding: 0 2.25rem 0 0.875rem;
 	border: 1px solid #cbd5e1;
 	border-radius: 0.375rem;
@@ -81,8 +81,8 @@
 
 .controlBoxMultiple {
 	height: auto;
-	min-height: 38px;
-	padding: 0.25rem 2.25rem 0.25rem 0.625rem;
+	min-height: 32px;
+	padding: 0.2rem 2.25rem 0.2rem 0.625rem;
 	flex-wrap: wrap;
 	gap: 0.25rem;
 	cursor: text;
@@ -106,21 +106,21 @@
 
 /* Sizes */
 .size_small .controlBox {
-	min-height: 32px;
-	height: 32px;
+	min-height: 28px;
+	height: 28px;
 	padding: 0 2rem 0 0.75rem;
 	font-size: 0.8rem;
 }
 
 .size_small .controlBoxMultiple {
 	height: auto;
-	min-height: 32px;
-	padding: 0.2rem 2rem 0.2rem 0.5rem;
+	min-height: 28px;
+	padding: 0.15rem 2rem 0.15rem 0.5rem;
 }
 
 .size_small .searchInputSingle {
 	font-size: 0.8rem;
-	line-height: 32px;
+	line-height: 28px;
 }
 
 .size_small .placeholderSingle,
@@ -129,34 +129,34 @@
 }
 
 .size_medium .controlBox {
-	min-height: 38px;
-	height: 38px;
+	min-height: 32px;
+	height: 32px;
 	padding: 0 2.25rem 0 0.875rem;
 	font-size: 0.875rem;
 }
 
 .size_medium .controlBoxMultiple {
 	height: auto;
-	min-height: 38px;
-	padding: 0.25rem 2.25rem 0.25rem 0.625rem;
+	min-height: 32px;
+	padding: 0.2rem 2.25rem 0.2rem 0.625rem;
 }
 
 .size_large .controlBox {
-	min-height: 44px;
-	height: 44px;
+	min-height: 38px;
+	height: 38px;
 	padding: 0 2.5rem 0 1rem;
 	font-size: 1rem;
 }
 
 .size_large .controlBoxMultiple {
 	height: auto;
-	min-height: 44px;
-	padding: 0.35rem 2.5rem 0.35rem 0.75rem;
+	min-height: 38px;
+	padding: 0.25rem 2.5rem 0.25rem 0.75rem;
 }
 
 .size_large .searchInputSingle {
 	font-size: 1rem;
-	line-height: 44px;
+	line-height: 38px;
 }
 
 .size_large .placeholderSingle,
@@ -292,7 +292,7 @@
 	border-radius: 0.35rem;
 	font-size: 0.785rem;
 	font-weight: 500;
-	padding: 0.2rem 0.55rem;
+	padding: 0.125rem 0.5rem;
 	box-shadow: none;
 	transition: background-color 0.15s ease, border-color 0.15s ease;
 	user-select: none;
@@ -345,8 +345,8 @@
 	font-size: 0.875rem;
 	font-family: inherit;
 	padding: 0 0.25rem;
-	margin: 0.1rem 0;
-	height: 1.75rem;
+	margin: 0.05rem 0;
+	height: 1.4rem;
 	min-width: 4.5rem;
 	flex: 1 1 auto;
 	box-shadow: none;
