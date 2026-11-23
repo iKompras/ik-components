@@ -1,5 +1,5 @@
-import React from "react";
-import { Icon } from "semantic-ui-react";
+import React, { useState } from "react";
+import { Icon, Button } from "semantic-ui-react";
 import { IkTable } from "../../../src/index.js";
 import SectionHeader from "../../components/SectionHeader";
 import CodeBlock from "../../components/CodeBlock";
@@ -8,6 +8,8 @@ import { COMPONENT_PROPS, CODE_SNIPPETS, IK_TABLE_COLUMNS, IK_TABLE_SAMPLE_DATA 
 import styles from "./styles.module.css";
 
 const IkTableSection = () => {
+	const [isLoading, setIsLoading] = useState(false);
+
 	const handleAddClick = () => {
 		// eslint-disable-next-line no-alert
 		window.alert("¡Botón 'Nuevo Usuario' presionado!");
@@ -26,9 +28,23 @@ const IkTableSection = () => {
 			/>
 
 			<div className={styles.section}>
-				<h3 className={styles.title}>
-					<Icon name="sliders horizontal" /> Playground Interactivo
-				</h3>
+				<div
+					style={{
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "space-between",
+						marginBottom: "1rem",
+						gap: "1rem",
+						flexWrap: "wrap",
+					}}>
+					<h3 className={styles.title} style={{ margin: 0 }}>
+						<Icon name="sliders horizontal" /> Playground Interactivo
+					</h3>
+					<Button size="small" toggle active={isLoading} onClick={() => setIsLoading((prev) => !prev)}>
+						<Icon name={isLoading ? "eye" : "spinner"} />
+						{isLoading ? "Mostrar datos" : "Simular carga (Skeleton)"}
+					</Button>
+				</div>
 				<div className={styles.playgroundCard}>
 					<IkTable
 						columns={IK_TABLE_COLUMNS}
@@ -41,6 +57,8 @@ const IkTableSection = () => {
 						searcher={{ placeholder: "Buscar usuarios...", show: true }}
 						visibleTopPlace
 						visiblePagination
+						loading={isLoading}
+						skeletonRows={5}
 						handlerTable={handleTableAction}
 					/>
 				</div>

@@ -63,6 +63,8 @@ const IkTable = ({
 	hidePrintButtons = false, // Oculta los botones de imprimir PDF y Excel
 	scrollBody = false, // Envuelve la tabla en un contenedor con scroll para que solo el body haga scroll
 	downloadFileFetcher,
+	loading = false,
+	skeletonRows = 5,
 }) => {
 	// hooks
 	const [searchParams, setSearchParams] = useState({ rows: 10, page: 1 });
@@ -159,16 +161,21 @@ const IkTable = ({
 						hasMore={hasMore}
 						mergeConfig={mergeConfig}
 						downloadFileFetcher={downloadFileFetcher}
+						loading={loading}
+						skeletonRows={skeletonRows}
 					/>
 				</div>
 			)}
-			<div className={`${scrollBody ? styles.tableScroll : ""} ${styles.tableScrollWrapper}`}>
+			<div
+				className={`${scrollBody ? styles.tableScroll : ""} ${styles.tableScrollWrapper} ${
+					visiblePagination ? styles.tableScrollWrapperWithFooter : ""
+				}`}>
 				<Table
 					sortable
 					celled
 					striped
 					compact="very"
-					className={`${mobileCardView ? styles.tableDesktopOnly : ""} ${widthAuto ? styles.tableWidthAuto : ""}`}>
+					className={`${styles.modernTable} ${mobileCardView ? styles.tableDesktopOnly : ""} ${widthAuto ? styles.tableWidthAuto : ""}`}>
 					<HeaderTable
 						columns={columns}
 						searchParams={searchParams}
@@ -207,6 +214,8 @@ const IkTable = ({
 						cardLine3={cardLine3}
 						cardLine4={cardLine4}
 						downloadFileFetcher={downloadFileFetcher}
+						loading={loading}
+						skeletonRows={skeletonRows}
 					/>
 				</Table>
 			</div>
@@ -267,6 +276,8 @@ IkTable.propTypes = {
 	hidePrintButtons: PropTypes.bool,
 	scrollBody: PropTypes.bool,
 	downloadFileFetcher: PropTypes.func,
+	loading: PropTypes.bool,
+	skeletonRows: PropTypes.number,
 };
 
 export default IkTable;

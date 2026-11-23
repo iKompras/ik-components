@@ -35,6 +35,8 @@ const CardTable = ({
 	searchParams = null,
 	totalRows = 0,
 	mergeConfig = null,
+	loading = false,
+	skeletonRows = 5,
 }) => {
 	const containerRef = useRef(null);
 	const sentinelRef = useRef(null);
@@ -838,6 +840,24 @@ const CardTable = ({
 		};
 	}, [enableInfiniteScroll, activeLoadHandler, hasMoreData, isLoading, flatData.length, isInitialLoading]);
 
+	// Mostrar skeleton si loading está activo
+	if (loading) {
+		const count = Math.max(1, Math.min(skeletonRows, 6));
+		return (
+			<div className={styles.cardsContainer} ref={containerRef}>
+				{Array.from({ length: count }).map((_, idx) => {
+					return (
+						<div key={`skeleton-card-${idx}`} className={styles.skeletonCard}>
+							<div className={styles.skeletonCardLine} style={{ width: "45%", height: "1rem" }} />
+							<div className={styles.skeletonCardLine} style={{ width: "80%" }} />
+							<div className={styles.skeletonCardLine} style={{ width: "60%" }} />
+						</div>
+					);
+				})}
+			</div>
+		);
+	}
+
 	// Mostrar loading completo durante la carga inicial
 	if (isInitialLoading && isEmpty(flatData)) {
 		return (
@@ -936,6 +956,8 @@ CardTable.propTypes = {
 	searchParams: PropTypes.object, // Parámetros de búsqueda
 	totalRows: PropTypes.number, // Total de registros disponibles
 	mergeConfig: PropTypes.object, // Configuración para merge automático { groupKey, itemsKey, idKey }
+	loading: PropTypes.bool,
+	skeletonRows: PropTypes.number,
 };
 
 export default CardTable;

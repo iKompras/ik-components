@@ -300,6 +300,8 @@ export const COMPONENT_PROPS = {
 		{ name: "onAddButtonClick", type: "func", default: "null", description: "Disparador al presionar el botón de añadir." },
 		{ name: "searcher", type: "object", default: "{}", description: "Configuración de la barra de búsqueda (placeholder, show)." },
 		{ name: "handlerTable", type: "func", default: "null", description: "Callback de eventos de tabla (paginación, orden, clicks)." },
+		{ name: "loading", type: "bool", default: "false", description: "Muestra filas skeleton animadas mientras se cargan los datos." },
+		{ name: "skeletonRows", type: "number", default: "5", description: "Cantidad de filas skeleton a mostrar cuando loading es true." },
 	],
 	card: [
 		{
