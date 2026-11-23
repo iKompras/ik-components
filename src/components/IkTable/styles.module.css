@@ -49,6 +49,36 @@
 .tableScrollWrapper {
 	overflow-x: auto;
 	width: 100%;
+	border: 1px solid #e2e8f0;
+	border-radius: 10px;
+	background-color: #ffffff;
+	box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+.tableScrollWrapperWithFooter {
+	border-bottom-left-radius: 0;
+	border-bottom-right-radius: 0;
+}
+
+.modernTable {
+	margin: 0 !important;
+	border: none !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+}
+
+.modernTable :global(thead th) {
+	border-color: #e2e8f0 !important;
+}
+
+.modernTable :global(tbody td) {
+	border-color: #eef2f6 !important;
+	color: #1e293b;
+	font-size: 0.875rem;
+}
+
+.modernTable:global(.ui.striped.table) > :global(tbody) > :global(tr:nth-child(2n)) {
+	background-color: #f8fafc;
 }
 
 .tableWidthAuto {
@@ -58,7 +88,11 @@
 
 .stickyFooterTable {
 	margin-top: 0 !important;
+	border: 1px solid #e2e8f0 !important;
 	border-top: none !important;
+	border-radius: 0 0 10px 10px !important;
+	background-color: #f8fafc !important;
+	box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05) !important;
 	position: sticky !important;
 	bottom: -1px !important;
 	z-index: 10 !important;

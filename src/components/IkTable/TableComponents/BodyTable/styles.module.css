@@ -2,18 +2,24 @@
 .emptyChat {
 	display: flex;
 	justify-content: center;
+	padding: 2rem 1rem;
 }
 
 .emptyDataIcon {
 	display: flex !important;
 	justify-content: center !important;
 	align-items: center !important;
-	font-size: 3rem !important;
-	color: #d8d7d7 !important;
+	font-size: 2.5rem !important;
+	color: #cbd5e1 !important;
+	margin-bottom: 0.5rem;
+}
+
+.groupHover {
+	transition: background-color 0.15s ease;
 }
 
 .groupHover:hover {
-	background-color: var(--blue100) !important;
+	background-color: #f1f5f9 !important;
 	cursor: pointer;
 }
 
@@ -25,24 +31,29 @@
 
 .cell {
 	white-space: nowrap !important;
+	padding: 0.55rem 0.75rem !important;
 }
 
 /* actions Styles */
 .cellButton {
 	white-space: nowrap !important;
-	padding: 0.1rem !important;
+	padding: 0.25rem 0.5rem !important;
 	margin: 0px !important;
 	font-size: 1rem !important;
 }
 
 .ButtonIcon {
-	background-color: hsl(0, 0%, 95%) !important;
-	padding: 0.5rem 0.5rem !important;
-	margin: 0.1rem 0.1rem !important;
+	background-color: #f1f5f9 !important;
+	color: #334155 !important;
+	border-radius: 6px !important;
+	padding: 0.45rem 0.55rem !important;
+	margin: 0.1rem 0.15rem !important;
+	transition: background-color 0.15s ease, transform 0.12s ease;
 }
 
 .ButtonIcon:hover {
-	opacity: 0.8 !important;
+	background-color: #e2e8f0 !important;
+	opacity: 1 !important;
 }
 
 .ButtonLink {
@@ -115,4 +126,49 @@
 	word-break: break-word !important;
 	white-space: normal !important;
 	overflow-wrap: break-word !important;
+}
+
+/* Skeleton loading styles */
+@keyframes ikSkeletonShimmer {
+	0% {
+		background-position: 200% 0;
+	}
+	100% {
+		background-position: -200% 0;
+	}
+}
+
+.skeletonRow {
+	pointer-events: none;
+}
+
+.skeletonCell {
+	padding: 0.65rem 0.75rem !important;
+}
+
+.skeletonBar,
+.skeletonBox,
+.skeletonAction {
+	background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+	background-size: 200% 100%;
+	animation: ikSkeletonShimmer 1.4s ease-in-out infinite;
+	border-radius: 6px;
+}
+
+.skeletonBar {
+	height: 0.875rem;
+	min-width: 2.5rem;
+}
+
+.skeletonBox {
+	width: 1.1rem;
+	height: 1.1rem;
+	margin: 0 auto;
+	border-radius: 4px;
+}
+
+.skeletonAction {
+	width: 2.25rem;
+	height: 1.5rem;
+	margin: 0 auto;
 }

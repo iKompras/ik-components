@@ -53,6 +53,8 @@ const BodyTable = ({
 	hasMore = null,
 	mergeConfig = null,
 	downloadFileFetcher,
+	loading = false,
+	skeletonRows = 5,
 }) => {
 	// useStates
 	const [clikedData, setClikedData] = useState({});
@@ -684,7 +686,55 @@ const BodyTable = ({
 		return renderedCells;
 	};
 
+	const SKELETON_WIDTHS = ["58%", "82%", "46%", "72%", "64%", "88%"];
+
+	const getVisibleLeafColumns = () => {
+		const visibleCols = [];
+		(columns || []).forEach((col) => {
+			if (col?.hidden) return;
+			if (!isEmpty(col?.multipleColumns)) {
+				col.multipleColumns.forEach((subCol) => {
+					if (!subCol?.hidden) visibleCols.push(subCol);
+				});
+			} else {
+				visibleCols.push(col);
+			}
+		});
+		return visibleCols.length > 0 ? visibleCols : [{}, {}, {}];
+	};
+
+	const renderSkeleton = () => {
+		const leafColumns = getVisibleLeafColumns();
+		const count = Math.max(1, skeletonRows);
+
+		return Array.from({ length: count }).map((_, rowIndex) => {
+			return (
+				<Table.Row key={`skeleton-row-${rowIndex}`} className={styles.skeletonRow}>
+					{leafColumns.map((col, colIndex) => {
+						let content;
+						if (col.multiple) {
+							content = <div className={styles.skeletonBox} />;
+						} else if (!isEmpty(col.action)) {
+							content = <div className={styles.skeletonAction} />;
+						} else {
+							const width = SKELETON_WIDTHS[(rowIndex + colIndex) % SKELETON_WIDTHS.length];
+							content = <div className={styles.skeletonBar} style={{ width }} />;
+						}
+						return (
+							<Table.Cell key={`skeleton-cell-${rowIndex}-${colIndex}`} className={styles.skeletonCell}>
+								{content}
+							</Table.Cell>
+						);
+					})}
+				</Table.Row>
+			);
+		});
+	};
+
 	const rowRender = () => {
+		if (loading) {
+			return renderSkeleton();
+		}
 		if (!isEmpty(data)) {
 			const renderedRows = map(data, (rowData, index) => {
 				if (!isEmpty(headerDetail)) {
@@ -794,6 +844,8 @@ const BodyTable = ({
 					searchParams={searchParams}
 					totalRows={totalRows}
 					mergeConfig={mergeConfig}
+					loading={loading}
+					skeletonRows={skeletonRows}
 				/>
 				<ImageViewer
 					imageUrl={opentImagePreview.src}
@@ -852,6 +904,8 @@ BodyTable.propTypes = {
 	hasMore: PropTypes.bool,
 	mergeConfig: PropTypes.object,
 	downloadFileFetcher: PropTypes.func,
+	loading: PropTypes.bool,
+	skeletonRows: PropTypes.number,
 };
 
 export default BodyTable;

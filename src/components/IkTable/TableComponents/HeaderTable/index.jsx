@@ -89,7 +89,7 @@ const HeaderTable = ({
 					line1 = {},
 					line2 = {},
 					hidden = false,
-					color = "hsl(0, 0%, 80%)",
+					color = "#f8fafc",
 					style = {},
 					orderKey,
 				},
