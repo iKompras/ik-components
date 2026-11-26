@@ -80,14 +80,15 @@ const FooterTable = ({ searchParams, setSearchParams, dataHandler, totalRows, vi
 										onChange={(e, { value }) => {
 											rowSelector(value);
 										}}
-										options={[
-											{ key: "1", value: 5, text: "5" },
-											{ key: "2", value: 10, text: "10" },
-											{ key: "3", value: 15, text: "15" },
-											{ key: "4", value: 20, text: "20" },
-											{ key: "5", value: 25, text: "25" },
-											{ key: "6", value: 50, text: "50" },
-										]}
+										options={(() => {
+											const base = [5, 10, 15, 20, 25, 50];
+											if (searchParams.rows && !base.includes(searchParams.rows)) {
+												base.unshift(searchParams.rows);
+											}
+											return base.map((val, idx) => {
+												return { key: String(idx + 1), value: val, text: String(val) };
+											});
+										})()}
 									/>
 								</div>
 							</div>

@@ -11,6 +11,7 @@ import { get, isEmpty, pick, debounce, map, flatten } from "lodash";
 //	components
 import Input from "../../components/Input";
 import PDFRender from "../../components/PDFRender";
+import FilterSelector from "../../../FilterSelector/FilterBar";
 
 // modals
 import AdvancedFilter from "../../Modals/AdvancedFilter";
@@ -45,6 +46,7 @@ const TopPlace = ({
 	searchRefresh,
 	topPlaceClassName,
 	hidePrintButtons = false,
+	loading = false,
 }) => {
 	//	hooks
 	const [searchQuery, setSearchQuery] = useState("");
@@ -120,18 +122,44 @@ const TopPlace = ({
 		},
 	});
 
-	const handlePDFPrint = () => {
-		if (typeof get(print, "onPrint", null) === "function") {
-			return print.onPrint();
+	const isPdfLoading = loading || preventPDFDowload || Boolean(get(print, "loadingPDF", false));
+	const isExcelLoading = loading || preventExcelDowload || Boolean(get(print, "loadingExcel", false));
+
+	const handlePDFPrint = async () => {
+		if (isPdfLoading || isExcelLoading) return;
+		const customOnPrint = get(print, "onPrint", null);
+		if (typeof customOnPrint === "function") {
+			setPreventPDFDowload(true);
+			try {
+				await customOnPrint();
+			} finally {
+				setPreventPDFDowload(false);
+			}
+			return;
 		}
-		dataHandler({ ...searchParams, rows: totalRows, page: 1 }, true);
-		setPreventPDFDowload(true);
+		if (dataHandler) {
+			setPreventPDFDowload(true);
+			dataHandler({ ...searchParams, rows: totalRows, page: 1 }, true);
+		}
 	};
 
 	// EXCEL
-	const handleExcelPrint = () => {
-		dataHandler({ ...searchParams, rows: totalRows, page: 1 }, true);
-		setPreventExcelDowload(true);
+	const handleExcelPrint = async () => {
+		if (isPdfLoading || isExcelLoading) return;
+		const customOnExcel = get(print, "onExcel", null);
+		if (typeof customOnExcel === "function") {
+			setPreventExcelDowload(true);
+			try {
+				await customOnExcel();
+			} finally {
+				setPreventExcelDowload(false);
+			}
+			return;
+		}
+		if (dataHandler) {
+			setPreventExcelDowload(true);
+			dataHandler({ ...searchParams, rows: totalRows, page: 1 }, true);
+		}
 	};
 
 	// Filter
@@ -174,7 +202,9 @@ const TopPlace = ({
 			params = { ...searchParamsClearKeys, page: 1, fields };
 		}
 		setSearchParams(params);
-		dataHandler(params);
+		if (dataHandler) {
+			dataHandler(params);
+		}
 	};
 
 	const groupSearchableItems = () => {
@@ -199,8 +229,6 @@ const TopPlace = ({
 	const changeHandler = () => {
 		filterHandler({});
 	};
-
-	const debouncedChangeHandler = useCallback(debounce(changeHandler, 1000), [searchQuery]);
 
 	//	TopButtonsRender
 	const topButtonsRender = () => {
@@ -345,9 +373,16 @@ const TopPlace = ({
 		filterHandler({ value: {} });
 	};
 
-	const handleInput = (event) => {
-		debouncedChangeHandler.cancel();
-		setSearchQuery(event);
+	const debouncedFilter = useCallback(
+		debounce((nextQuery, nextField) => {
+			filterHandler({ newSearchQuery: nextQuery, newField: nextField });
+		}, 500),
+		[searchField, searchableItems, searchParams]
+	);
+
+	const handleInput = (nextQuery) => {
+		setSearchQuery(nextQuery);
+		debouncedFilter(nextQuery, searchField);
 	};
 
 	return (
@@ -362,44 +397,71 @@ const TopPlace = ({
 						}}>
 						<div className={styles.searchWrapper}>
 							{!isClearButton && (
-								<Input
+								<FilterSelector
 									className={styles.searchInput}
 									name="searchString"
+									compact
+									loading={loading}
 									disabled={get(searcher, "searchDisabled", false)}
-									onKeyUp={debouncedChangeHandler}
-									onChange={(event) => {
-										handleInput(event.target.value);
+									placeholder={get(searcher, "placeholder", "Buscar...")}
+									fields={searchOptions}
+									fieldValue={searchField}
+									onFieldChange={(nextField) => {
+										setSearchField(nextField);
+										if (!isEmpty(searchQuery)) {
+											debouncedFilter.cancel();
+											filterHandler({ newField: nextField });
+										}
 									}}
-									placeholder="Buscar"
 									value={searchQuery}
-									onClear={onClear}
-									dropdown={{
-										disabled: get(searcher, "searchDisabled", false),
-										options: searchOptions,
-										name: "searchField",
-										onChange: (e, { value }) => {
-											setSearchField(value);
-											if (!isEmpty(searchQuery)) filterHandler({ newField: value });
-										},
-										value: searchField,
+									onChange={(nextQuery) => {
+										handleInput(nextQuery);
+									}}
+									onSearch={({ query, field }) => {
+										debouncedFilter.cancel();
+										filterHandler({ newSearchQuery: query, newField: field });
+									}}
+									onClear={() => {
+										debouncedFilter.cancel();
+										onClear();
 									}}
 								/>
 							)}
 							{get(searcher, "filterButton", true) && (
 								<Button
+									type="button"
+									title="Filtro avanzado"
 									disabled={get(searcher, "searchDisabled", false)}
-									className={`${styles.filterButton} ${get(searcher, "hideOnMobile", false) ? styles.hideOnMobile : ""}`}
+									className={`${styles.filterButton} ${
+										Object.values(formData || {}).some((v) => {
+											return !isEmpty(v);
+										})
+											? styles.filterButtonActive
+											: ""
+									} ${get(searcher, "hideOnMobile", false) ? styles.hideOnMobile : ""}`}
 									onClick={() => {
 										setOpenAvancedFilter(true);
 									}}>
-									<Icon className={styles.addButtonIcon} name="filter" />
+									<Icon className={styles.filterButtonIcon} name="sliders horizontal" />
+									<span className={styles.filterButtonText}>Filtros</span>
+									{Object.values(formData || {}).filter((v) => {
+										return !isEmpty(v);
+									}).length > 0 && (
+										<span className={styles.filterCountBadge}>
+											{
+												Object.values(formData || {}).filter((v) => {
+													return !isEmpty(v);
+												}).length
+											}
+										</span>
+									)}
 								</Button>
 							)}
 
 							{isClearButton && (
-								<Button className={styles.clearButton} onClick={clearFilter}>
-									<Icon name="filter" />
-									Limpiar
+								<Button type="button" className={styles.clearButton} onClick={clearFilter}>
+									<Icon name="times circle outline" />
+									Limpiar filtros
 								</Button>
 							)}
 						</div>
@@ -427,9 +489,27 @@ const TopPlace = ({
 					{extraAddButtons}
 
 					{get(print, "printable", true) && (
-						<div className={hidePrintButtons ? styles.hidePrintButtonsMobile : ""}>
-							{get(print, "visiblePDF", true) && <Button onClick={handlePDFPrint} className={styles.printButton} primary icon="print" />}
-							{get(print, "visibleExcel", true) && <Button className={styles.exelButton} icon="file excel" onClick={handleExcelPrint} />}
+						<div className={`${styles.printGroup} ${hidePrintButtons ? styles.hidePrintButtonsMobile : ""}`}>
+							{get(print, "visiblePDF", true) && (
+								<Button
+									type="button"
+									title="Imprimir / PDF"
+									disabled={isPdfLoading || isExcelLoading || Boolean(get(print, "disabledPDF", false))}
+									onClick={handlePDFPrint}
+									className={styles.printButton}>
+									<Icon loading={isPdfLoading} name={isPdfLoading ? "spinner" : "print"} style={{ margin: 0 }} />
+								</Button>
+							)}
+							{get(print, "visibleExcel", true) && (
+								<Button
+									type="button"
+									title="Exportar a Excel"
+									disabled={isPdfLoading || isExcelLoading || Boolean(get(print, "disabledExcel", false))}
+									className={styles.exelButton}
+									onClick={handleExcelPrint}>
+									<Icon loading={isExcelLoading} name={isExcelLoading ? "spinner" : "file excel"} style={{ margin: 0 }} />
+								</Button>
+							)}
 						</div>
 					)}
 				</div>
@@ -506,6 +586,7 @@ TopPlace.propTypes = {
 	topPlaceClassName: PropTypes.string,
 	hidePrintButtons: PropTypes.bool,
 	extraAddButtons: PropTypes.node,
+	loading: PropTypes.bool,
 };
 
 export default TopPlace;

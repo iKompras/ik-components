@@ -126,6 +126,7 @@ const IkTable = ({
 					setIsClearButton={setIsClearButton}
 					topPlaceClassName={topPlaceClassName}
 					hidePrintButtons={hidePrintButtons}
+					loading={loading}
 				/>
 			)}
 			{mobileCardView && (

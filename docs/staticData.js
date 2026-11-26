@@ -10,6 +10,7 @@ export const COMPONENTS_DATA = [
 	{ id: "text-area", name: "TextArea", category: "Componentes", tag: "Formularios" },
 	{ id: "input", name: "Input", category: "Componentes", tag: "Formularios" },
 	{ id: "dropdown", name: "Dropdown", category: "Componentes", tag: "Formularios & Selección" },
+	{ id: "filter-selector", name: "FilterSelector", category: "Componentes", tag: "Filtros & Búsqueda" },
 	{ id: "toggle", name: "Toggle", category: "Componentes", tag: "Formularios & Switch" },
 	{ id: "color-picker", name: "ColorPicker", category: "Componentes", tag: "Formularios & Color" },
 	{ id: "sidebar", name: "SideBar", category: "Componentes", tag: "Navegación" },
@@ -609,6 +610,58 @@ export const COMPONENT_PROPS = {
 			description: "Muestra el borde de error y mensaje de validación inferior.",
 		},
 	],
+	filterSelector: [
+		{ name: "label", type: "node", default: "undefined", description: "Etiqueta superior del filtro." },
+		{ name: "placeholder", type: "string", default: '"Buscar o filtrar..."', description: "Texto guía del input de búsqueda." },
+		{
+			name: "fields",
+			type: "array",
+			default: "[]",
+			description: "Criterios de filtrado para el selector izquierdo ({ value, text, icon }).",
+		},
+		{ name: "options", type: "array", default: "[]", description: "Lista de opciones/usuarios ({ value, text, subtitle, avatar, icon })." },
+		{ name: "multiple", type: "bool", default: "false", description: "Permite selección múltiple con chips e indicador de cantidad." },
+		{ name: "selectedValues", type: "array", default: "undefined", description: "Valores seleccionados (modo controlado)." },
+		{
+			name: "onChange",
+			type: "func",
+			default: "undefined",
+			description: "Callback al escribir: (query, { field, selected, name }) => {}.",
+		},
+		{ name: "onSelectChange", type: "func", default: "undefined", description: "Callback al seleccionar opciones/usuarios." },
+		{ name: "onFieldChange", type: "func", default: "undefined", description: "Callback al cambiar el criterio de filtrado." },
+		{ name: "debounceMs", type: "number", default: "0", description: "Retraso en ms para emitir onChange al escribir." },
+		{ name: "loading", type: "bool", default: "false", description: "Muestra spinner y opciones skeleton mientras carga." },
+		{ name: "rounded", type: "bool", default: "false", description: "Estilo píldora totalmente redondeado." },
+		{ name: "compact", type: "bool", default: "false", description: "Altura reducida para barras densas." },
+		{ name: "showSubmitButton", type: "bool", default: "false", description: "Muestra un botón de acción 'Buscar' a la derecha." },
+		{
+			name: "useModal",
+			type: "bool",
+			default: "false",
+			description: "Activa la versión modal con tabla paginada, skeleton y búsqueda remota.",
+		},
+		{
+			name: "fetchOptions",
+			type: "func",
+			default: "null",
+			description: "Función async ({ query, field, page, rows }) => ({ data, totalRows }) para modo modal.",
+		},
+		{ name: "modalTitle", type: "string", default: '"Buscar y seleccionar"', description: "Título del modal cuando useModal es true." },
+		{
+			name: "modalView",
+			type: '"table" | "list"',
+			default: '"table"',
+			description: "Vista dentro del modal: tabla IkTable o lista interactiva.",
+		},
+		{
+			name: "modalColumns",
+			type: "array",
+			default: "[]",
+			description: "Columnas personalizadas [{ key, label }] para la tabla del modal.",
+		},
+		{ name: "pageSize", type: "number", default: "5", description: "Filas por página en el modo modal." },
+	],
 };
 
 export const CODE_SNIPPETS = {
@@ -1014,5 +1067,30 @@ const [files, setFiles] = useState([
   popover={false}
   value={color}
   onChange={setColor}
+/>`,
+	filterSelector: `import { FilterSelector } from '@ikompras/ik-components';
+
+// 1. Filtro de usuarios en tareas (selección múltiple + criterios)
+<FilterSelector
+  label="Filtrar por responsable"
+  placeholder="Buscar usuario..."
+  fields={[
+    { value: 'all', text: 'Todos', icon: 'filter' },
+    { value: 'user', text: 'Responsable', icon: 'user' },
+  ]}
+  options={usersList}
+  multiple
+  selectedValues={selectedUsers}
+  onSelectChange={setSelectedUsers}
+  onChange={(query, { field }) => handleFilter(query, field)}
+  showSubmitButton
+/>
+
+// 2. Modo InputFilter simple con debounce
+<FilterSelector
+  placeholder="Buscar tareas..."
+  fields={fields}
+  debounceMs={250}
+  onChange={(query, { field }) => fetchTasks({ query, field })}
 />`,
 };

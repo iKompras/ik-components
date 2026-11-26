@@ -9,6 +9,32 @@ import styles from "./styles.module.css";
 
 const IkTableSection = () => {
 	const [isLoading, setIsLoading] = useState(false);
+	const [filteredData, setFilteredData] = useState(IK_TABLE_SAMPLE_DATA);
+
+	const handleData = (params = {}) => {
+		const reserved = ["rows", "page", "orderKey", "orderDir", "fields"];
+		const activeKeys = Object.keys(params).filter((k) => {
+			return !reserved.includes(k) && params[k];
+		});
+		if (activeKeys.length === 0) {
+			setFilteredData(IK_TABLE_SAMPLE_DATA);
+			return;
+		}
+		const next = IK_TABLE_SAMPLE_DATA.filter((row) => {
+			return activeKeys.every((field) => {
+				const q = String(params[field]).toLowerCase().trim();
+				if (field === "all") {
+					return Object.values(row).some((val) => {
+						return String(val).toLowerCase().includes(q);
+					});
+				}
+				return String(row[field] ?? "")
+					.toLowerCase()
+					.includes(q);
+			});
+		});
+		setFilteredData(next);
+	};
 
 	const handleAddClick = () => {
 		// eslint-disable-next-line no-alert
@@ -40,7 +66,15 @@ const IkTableSection = () => {
 					<h3 className={styles.title} style={{ margin: 0 }}>
 						<Icon name="sliders horizontal" /> Playground Interactivo
 					</h3>
-					<Button size="small" toggle active={isLoading} onClick={() => setIsLoading((prev) => !prev)}>
+					<Button
+						size="small"
+						toggle
+						active={isLoading}
+						onClick={() => {
+							return setIsLoading((prev) => {
+								return !prev;
+							});
+						}}>
 						<Icon name={isLoading ? "eye" : "spinner"} />
 						{isLoading ? "Mostrar datos" : "Simular carga (Skeleton)"}
 					</Button>
@@ -48,13 +82,29 @@ const IkTableSection = () => {
 				<div className={styles.playgroundCard}>
 					<IkTable
 						columns={IK_TABLE_COLUMNS}
-						data={IK_TABLE_SAMPLE_DATA}
-						totalRows={IK_TABLE_SAMPLE_DATA.length}
+						data={filteredData}
+						totalRows={filteredData.length}
+						dataHandler={handleData}
 						defaultParams={{ rows: 5, page: 1 }}
 						showAddButton
 						addButton={{ label: "Nuevo Usuario", icon: "plus" }}
 						onAddButtonClick={handleAddClick}
 						searcher={{ placeholder: "Buscar usuarios...", show: true }}
+						print={{
+							printable: true,
+							visiblePDF: true,
+							visibleExcel: true,
+							onPrint: () => {
+								return new Promise((resolve) => {
+									setTimeout(resolve, 1500);
+								});
+							},
+							onExcel: () => {
+								return new Promise((resolve) => {
+									setTimeout(resolve, 1500);
+								});
+							},
+						}}
 						visibleTopPlace
 						visiblePagination
 						loading={isLoading}
