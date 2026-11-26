@@ -383,6 +383,7 @@
 		opacity: 0;
 		transform: translateY(-4px);
 	}
+
 	to {
 		opacity: 1;
 		transform: translateY(0);
@@ -545,6 +546,7 @@
 	0% {
 		background-position: 200% 0;
 	}
+
 	100% {
 		background-position: -200% 0;
 	}
@@ -896,7 +898,7 @@
    ========================================================================== */
 
 .containerAsInput {
-	gap: 0.25rem;
+	gap: 0.35rem;
 }
 
 .containerAsInput .labelRow {
@@ -908,8 +910,8 @@
 }
 
 .asInput {
-	min-height: 38px;
-	height: 38px;
+	min-height: 32px;
+	height: 32px;
 	border-radius: 0.25rem;
 	border-color: var(--inputShader, #cbd5e1);
 	box-shadow: none;
@@ -943,7 +945,7 @@
 }
 
 .asInput .inputArea {
-	padding: 0.15rem 0.5rem 0.15rem 0.75rem;
+	padding: 0 0.5rem 0 0.75rem;
 	height: 100%;
 	flex-wrap: nowrap;
 }
@@ -956,7 +958,12 @@
 
 .asInput .modalTriggerBtn,
 .asInput .submitBtn {
-	height: 28px;
-	padding: 0 0.65rem;
-	font-size: 0.8rem;
+	height: 24px;
+	padding: 0 0.55rem;
+	font-size: 0.78rem;
+}
+
+.asInput .chip {
+	height: 22px;
+	font-size: 0.75rem;
 }
