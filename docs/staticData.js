@@ -634,6 +634,12 @@ export const COMPONENT_PROPS = {
 		{ name: "loading", type: "bool", default: "false", description: "Muestra spinner y opciones skeleton mientras carga." },
 		{ name: "rounded", type: "bool", default: "false", description: "Estilo píldora totalmente redondeado." },
 		{ name: "compact", type: "bool", default: "false", description: "Altura reducida para barras densas." },
+		{
+			name: "asInput",
+			type: "bool",
+			default: "false",
+			description: "Adapta altura (38px), bordes y label para alinear exactamente con Input en formularios.",
+		},
 		{ name: "showSubmitButton", type: "bool", default: "false", description: "Muestra un botón de acción 'Buscar' a la derecha." },
 		{
 			name: "useModal",

@@ -333,7 +333,6 @@ const FilterModal = ({
 							{isLoading ? (
 								Array.from({ length: pageSize }).map((_, idx) => {
 									return (
-										 
 										<div key={`list-sk-${idx}`} className={styles.skeletonOption}>
 											<div className={styles.skeletonCircle} />
 											<div className={styles.skeletonLines}>

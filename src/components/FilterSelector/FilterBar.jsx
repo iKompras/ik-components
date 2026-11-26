@@ -47,6 +47,7 @@ const FilterSelector = forwardRef((props, ref) => {
 		name,
 		id,
 		useModal = false,
+		asInput = false,
 		onOpenModal,
 	} = props;
 
@@ -283,7 +284,10 @@ const FilterSelector = forwardRef((props, ref) => {
 	const hasClearableContent = Boolean(query) || activeSelected.length > 0;
 
 	return (
-		<div ref={containerRef} className={`${styles.container} ${!fluid ? styles.inline : ""} ${className}`} style={style}>
+		<div
+			ref={containerRef}
+			className={`${styles.container} ${!fluid ? styles.inline : ""} ${asInput ? styles.containerAsInput : ""} ${className}`}
+			style={style}>
 			{label && (
 				<label htmlFor={id} className={styles.labelRow}>
 					<span>{label}</span>
@@ -292,9 +296,9 @@ const FilterSelector = forwardRef((props, ref) => {
 			)}
 
 			<div
-				className={`${styles.filterBar} ${isFocused ? styles.filterBarFocused : ""} ${error ? styles.filterBarError : ""} ${
-					rounded ? styles.rounded : ""
-				} ${compact ? styles.compact : ""} ${disabled ? styles.disabled : ""}`}>
+				className={`${styles.filterBar} ${asInput ? styles.asInput : ""} ${isFocused ? styles.filterBarFocused : ""} ${
+					error ? styles.filterBarError : ""
+				} ${rounded ? styles.rounded : ""} ${compact ? styles.compact : ""} ${disabled ? styles.disabled : ""}`}>
 				{hasFields && !useModal && (
 					<div className={styles.fieldSelectorWrapper}>
 						<button
@@ -459,7 +463,6 @@ const FilterSelector = forwardRef((props, ref) => {
 							{loading ? (
 								Array.from({ length: 4 }).map((_, idx) => {
 									return (
-										 
 										<div key={`filter-sk-${idx}`} className={styles.skeletonOption}>
 											<div className={styles.skeletonCircle} />
 											<div className={styles.skeletonLines}>
@@ -583,6 +586,7 @@ FilterSelector.propTypes = {
 	name: PropTypes.string,
 	id: PropTypes.string,
 	useModal: PropTypes.bool,
+	asInput: PropTypes.bool,
 	onOpenModal: PropTypes.func,
 };
 

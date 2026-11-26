@@ -22,6 +22,7 @@ const FilterSelector = forwardRef((props, ref) => {
 		onChange,
 		loading = false,
 		value,
+		asInput = false,
 		...rest
 	} = props;
 
@@ -40,6 +41,7 @@ const FilterSelector = forwardRef((props, ref) => {
 				ref={ref}
 				{...rest}
 				useModal={useModal}
+				asInput={asInput}
 				placeholder={placeholder}
 				options={options}
 				multiple={multiple}
@@ -115,6 +117,7 @@ FilterSelector.propTypes = {
 	onChange: PropTypes.func,
 	loading: PropTypes.bool,
 	value: PropTypes.string,
+	asInput: PropTypes.bool,
 };
 
 export default FilterSelector;
