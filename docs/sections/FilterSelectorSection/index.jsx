@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Icon, Button } from "semantic-ui-react";
-import { FilterSelector } from "../../../src/index.js";
+import { FilterSelector, Input } from "../../../src/index.js";
 import SectionHeader from "../../components/SectionHeader";
 import CodeBlock from "../../components/CodeBlock";
 import PropsTable from "../../components/PropsTable";
@@ -39,6 +39,8 @@ const FilterSelectorSection = () => {
 
 	const [modalTableUsers, setModalTableUsers] = useState([1]);
 	const [modalListUsers, setModalListUsers] = useState([2]);
+	const [formUser, setFormUser] = useState([1]);
+	const [taskTitle, setTaskTitle] = useState("");
 
 	const simulateRemoteFetch = ({ query, field, page, rows }) => {
 		return new Promise((resolve) => {
@@ -188,6 +190,38 @@ const FilterSelectorSection = () => {
 						<div className={styles.stateBox}>
 							Seleccionados (Lista): <code>{JSON.stringify(modalListUsers)}</code>
 						</div>
+					</div>
+				</div>
+			</div>
+
+			<div className={styles.section}>
+				<h3 className={styles.title}>
+					<Icon name="wpforms" /> Modo Formulario (asInput) alineado con Input
+				</h3>
+				<div className={styles.playgroundCard}>
+					<div className={styles.grid}>
+						<Input
+							label="Título de la tarea"
+							placeholder="Ej. Revisar factura..."
+							value={taskTitle}
+							onChange={(e) => {
+								return setTaskTitle(e.target.value);
+							}}
+						/>
+						<FilterSelector
+							asInput
+							useModal
+							modalView="list"
+							label="Responsable asignado"
+							placeholder="Seleccionar usuario..."
+							options={TASK_USERS}
+							fetchOptions={simulateRemoteFetch}
+							multiple
+							selectedValues={formUser}
+							onSelectChange={(vals) => {
+								return setFormUser(vals || []);
+							}}
+						/>
 					</div>
 				</div>
 			</div>

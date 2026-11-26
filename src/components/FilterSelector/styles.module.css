@@ -890,3 +890,73 @@
 .modalListItemSelected:hover {
 	background-color: #dbeafe;
 }
+
+/* ==========================================================================
+   Form Input Alignment Mode (asInput)
+   ========================================================================== */
+
+.containerAsInput {
+	gap: 0.25rem;
+}
+
+.containerAsInput .labelRow {
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: #334155;
+	line-height: 1.25;
+	margin: 0;
+}
+
+.asInput {
+	min-height: 38px;
+	height: 38px;
+	border-radius: 0.25rem;
+	border-color: var(--inputShader, #cbd5e1);
+	box-shadow: none;
+}
+
+.asInput.rounded {
+	border-radius: 9999px;
+}
+
+.asInput.filterBarFocused {
+	border-color: var(--inputFocus, #3b82f6) !important;
+	box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.14) !important;
+}
+
+.asInput.filterBarError {
+	border-color: var(--red500, #ef4444) !important;
+}
+
+.asInput.disabled {
+	background-color: hsl(0, 0%, 90%);
+	border-color: var(--inputShader, #cbd5e1);
+}
+
+.asInput .fieldTrigger {
+	border-radius: 0.2rem 0 0 0.2rem;
+	font-size: 0.85rem;
+}
+
+.asInput.rounded .fieldTrigger {
+	border-radius: 9999px 0 0 9999px;
+}
+
+.asInput .inputArea {
+	padding: 0.15rem 0.5rem 0.15rem 0.75rem;
+	height: 100%;
+	flex-wrap: nowrap;
+}
+
+.asInput .textInput {
+	height: 100%;
+	font-size: 0.875rem;
+	line-height: 1.25;
+}
+
+.asInput .modalTriggerBtn,
+.asInput .submitBtn {
+	height: 28px;
+	padding: 0 0.65rem;
+	font-size: 0.8rem;
+}
