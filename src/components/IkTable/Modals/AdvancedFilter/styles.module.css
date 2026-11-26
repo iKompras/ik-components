@@ -1,102 +1,268 @@
-.modal {
-	width: 45% !important;
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	width: 100%;
+	box-sizing: border-box;
 }
 
-@media only screen and (max-width: 1200px) {
-	.modal {
-		width: 50% !important;
-	}
-}
-
-@media only screen and (max-width: 850px) {
-	.modal {
-		width: 65% !important;
-	}
-}
-
-@media only screen and (max-width: 670px) {
-	.modal {
-		width: 90% !important;
-	}
-}
-
-.modalHeader {
-	padding-top: 10px !important;
-	padding-bottom: 10px !important;
-	color: var(--fontsHeader) !important;
-	background-color: var(--header) !important;
-}
-
-.modalFooter {
-	display: flex !important;
+.toolbar {
+	display: flex;
+	align-items: center;
 	justify-content: space-between;
-	padding-top: 10px !important;
-	padding-bottom: 10px !important;
-	/* color: var(--fontHeader) !important;
-	background-color: var(--header) !important; */
+	gap: 0.75rem;
+	flex-wrap: wrap;
+	padding-bottom: 0.75rem;
+	border-bottom: 1px solid #e2e8f0;
+}
+
+.statusSummary {
+	display: flex;
+	align-items: center;
+	gap: 0.65rem;
+	flex-wrap: wrap;
+}
+
+.statusBadge {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	padding: 0.3rem 0.7rem;
+	border-radius: 9999px;
+	background-color: #e2e8f0;
+	color: #1e293b;
+	font-size: 0.8rem;
+	font-weight: 600;
+}
+
+.helperText {
+	font-size: 0.8125rem;
+	color: #64748b;
+}
+
+.fieldSearchBox {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	min-width: 210px;
+	height: 36px;
+	padding: 0 0.65rem;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	background-color: #ffffff;
+	gap: 0.4rem;
+}
+
+.fieldSearchBox:focus-within {
+	border-color: #3b82f6;
+	box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.14);
+}
+
+.fieldSearchIcon {
+	color: #94a3b8 !important;
+	margin: 0 !important;
+	font-size: 0.85em !important;
+}
+
+.fieldSearchInput {
+	border: none;
+	outline: none;
+	background: transparent;
+	font-size: 0.85rem;
+	color: #0f172a;
+	width: 100%;
+	min-width: 0;
+}
+
+.fieldSearchClear {
+	border: none;
+	background: transparent;
+	color: #94a3b8;
+	cursor: pointer;
+	font-size: 1rem;
+	line-height: 1;
+	padding: 0 0.15rem;
+}
+
+.fieldSearchClear:hover {
+	color: #475569;
+}
+
+/* Active filter chips */
+.activeChipsBar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.45rem;
+	padding: 0.6rem 0.75rem;
+	background-color: #ffffff;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+}
+
+.activeChip {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35rem;
+	padding: 0.25rem 0.6rem;
+	background-color: #eff6ff;
+	border: 1px solid #bfdbfe;
+	border-radius: 9999px;
+	font-size: 0.78rem;
+	color: #1e40af;
+}
+
+.activeChipLabel {
+	font-weight: 600;
+}
+
+.activeChipValue {
+	max-width: 160px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.activeChipRemove {
+	border: none;
+	background: transparent;
+	color: #3b82f6;
+	cursor: pointer;
+	font-size: 0.9rem;
+	line-height: 1;
+	padding: 0 0.1rem;
+}
+
+.activeChipRemove:hover {
+	color: #1d4ed8;
+}
+
+/* Responsive grid of filter fields */
+.fieldsGrid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 1rem 1.25rem;
+	width: 100%;
+}
+
+.fieldCard {
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
+	min-width: 0;
+}
+
+.fieldLabel {
+	font-size: 0.85rem;
+	font-weight: 600;
+	color: #334155;
+	line-height: 1.25;
+}
+
+.fieldInputWrap {
+	display: flex;
+	align-items: center;
+	gap: 0.45rem;
+	height: 38px;
+	padding: 0 0.65rem;
+	background-color: #ffffff;
+	border: 1px solid #cbd5e1;
+	border-radius: 8px;
+	box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+	transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.fieldInputWrap:hover {
+	border-color: #94a3b8;
+}
+
+.fieldInputWrap:focus-within {
+	border-color: #3b82f6;
+	box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.14);
+}
+
+.fieldInputIcon {
+	color: #94a3b8 !important;
+	margin: 0 !important;
+	font-size: 0.875em !important;
+	flex-shrink: 0;
+}
+
+.fieldInput {
+	flex: 1;
+	min-width: 0;
+	border: none;
+	outline: none;
+	background: transparent;
+	color: #0f172a;
+	font-size: 0.875rem;
+	line-height: 1.4;
+	font-family: inherit;
+}
+
+.fieldInput::placeholder {
+	color: #94a3b8;
+}
+
+.fieldInputClear {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 22px;
+	height: 22px;
+	border: none;
+	border-radius: 50%;
+	background: transparent;
+	color: #94a3b8;
+	cursor: pointer;
+	padding: 0;
+	flex-shrink: 0;
+	transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+.fieldInputClear:hover {
+	background-color: #f1f5f9;
+	color: #475569;
 }
 
 .inputChannel {
-	margin-bottom: 0.5rem !important;
+	margin-bottom: 0 !important;
 }
 
-.booleanField {
-	display: flex !important;
-	flex-direction: column !important;
-	margin-bottom: 0.5rem !important;
+.emptyFields {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	padding: 2rem 1rem;
+	color: #64748b;
+	font-size: 0.875rem;
 }
 
-.booleanLabel {
-	font-weight: 700 !important;
-	color: #000000 !important;
-	margin-bottom: 0.3rem !important;
-	font-size: 0.92857143em;
-}
-
-.positiveButton {
-	margin: 0 1.5rem 0 0 !important;
-	padding: 0.3rem 0.4rem !important;
-	min-width: 10rem !important;
-	color: var(--fontsButtons) !important;
-	border: 1px solid var(--fontsButtons) !important;
+.clearAllBtn {
+	display: inline-flex !important;
+	align-items: center !important;
+	gap: 0.35rem !important;
+	background-color: #f1f5f9 !important;
+	color: #475569 !important;
+	border: 1px solid #cbd5e1 !important;
 	border-radius: 1.5rem !important;
-	background-color: transparent !important;
+	padding: 0.4rem 1rem !important;
+	font-weight: 600 !important;
+	margin-right: auto !important;
 }
 
-.positiveButton:hover {
-	color: var(--fontsButtons) !important;
-	background-color: var(--buttons) !important;
+.clearAllBtn:hover:not(:disabled) {
+	background-color: #e2e8f0 !important;
+	color: #0f172a !important;
 }
 
-.negativeButton {
-	margin: 0 1.5rem 0 0 !important;
-	padding: 0.3rem 0.4rem !important;
-	min-width: 10rem !important;
-	color: #e90d0d !important;
-	border: 1px solid #e90d0d !important;
-	border-radius: 1.5rem !important;
-	background-color: #ffffff !important;
-}
+@media (max-width: 640px) {
+	.fieldsGrid {
+		grid-template-columns: 1fr;
+	}
 
-.negativeButton:hover {
-	background-color: #e90d0d !important;
-	color: #ffffff !important;
-}
-
-.clearButton {
-	padding: 0.5rem 2rem !important;
-	color: #ffffff !important;
-	background-color: var(--gray500) !important;
-}
-
-.gridColumnLeft {
-	margin: 0 !important;
-	padding: 0 !important;
-	padding-right: 0.5rem !important;
-}
-
-.gridColumnRight {
-	margin: 0 !important;
-	padding: 0 !important;
-	padding-left: 0.5rem !important;
+	.fieldSearchBox {
+		width: 100%;
+	}
 }

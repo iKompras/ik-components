@@ -1,0 +1,63 @@
+.container {
+	width: 100%;
+}
+
+.section {
+	margin-bottom: 2.5rem;
+}
+
+.title {
+	font-size: 1.15rem;
+	font-weight: 700;
+	margin: 0 0 1rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.playgroundCard {
+	background: #ffffff;
+	color: #1e293b;
+	border-radius: 12px;
+	padding: 1.5rem;
+	box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.controlsRow {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	margin-bottom: 1.25rem;
+}
+
+.grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 1.5rem;
+}
+
+.demoCard {
+	background: #ffffff;
+	color: #1e293b;
+	border-radius: 12px;
+	padding: 1.25rem;
+	border: 1px solid #e2e8f0;
+	box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+.demoTitle {
+	font-size: 0.95rem;
+	font-weight: 700;
+	margin: 0 0 0.75rem;
+	color: #334155;
+}
+
+.stateBox {
+	margin-top: 1rem;
+	padding: 0.75rem 1rem;
+	background: #f8fafc;
+	border: 1px solid #e2e8f0;
+	border-radius: 8px;
+	font-size: 0.82rem;
+	color: #475569;
+}

@@ -17,6 +17,7 @@ import ToggleSection from "../sections/ToggleSection";
 import ColorPickerSection from "../sections/ColorPickerSection";
 import FileManagerSection from "../sections/FileManagerSection";
 import DropdownSection from "../sections/DropdownSection";
+import FilterSelectorSection from "../sections/FilterSelectorSection";
 
 import styles from "./styles.module.css";
 
@@ -29,6 +30,7 @@ const SECTIONS_MAP = {
 	card: <CardSection />,
 	"file-manager": <FileManagerSection />,
 	dropdown: <DropdownSection />,
+	"filter-selector": <FilterSelectorSection />,
 	toggle: <ToggleSection />,
 	"color-picker": <ColorPickerSection />,
 	text: <TextSection />,

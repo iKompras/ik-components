@@ -10,6 +10,8 @@ export { default as TextArea } from "./components/TextArea";
 export { default as Input } from "./components/Input";
 export { default as SideBar } from "./components/SideBar";
 export { default as SideBarMenu } from "./components/SideBarMenu";
+export { default as FilterSelector } from "./components/FilterSelector";
+export { default as InputFilter } from "./components/FilterSelector";
 
 // Modals
 export { default as IkModal } from "./components/IkModal";
